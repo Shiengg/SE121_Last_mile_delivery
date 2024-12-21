@@ -7,3 +7,9 @@
 |-------|--------|---------------------|----------------------|
 |   1   |22521312|    Trần Nhật Tân    |22521312@gm.uit.edu.vn|
 |   2   |22521693|    Nguyễn Duy Vũ    |22521693@gm.uit.edu.vn|
+
+## Giới thiệu môn học:
+* **Tên môn học:** Đồ án 1
+* **Mã môn học:** SE121
+* **Mã lớp:** SE121.P11
+* **Giảng viên**: Nguyễn Công Hoan
