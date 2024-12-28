@@ -2,20 +2,29 @@ import axios from 'axios';
 
 class AuthService {
   login = async (username, password) => {
-    // Gọi API login ở đây
-    // Giả lập response cho ví dụ
-    const response = { role: this.getMockRole(username) };
-    
-    // Lưu thông tin đăng nhập
-    localStorage.setItem('userRole', response.role);
-    localStorage.setItem('isAuthenticated', 'true');
-    
-    return response.role;
+    try {
+      const response = await axios.post('/api/auth/login', { username, password });
+      const { token, role } = response.data;
+      
+      // Lưu token và role vào localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('userRole', role);
+      localStorage.setItem('isAuthenticated', 'true');
+      
+      // Cấu hình axios để tự động gửi token trong header
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      return role;
+    } catch (error) {
+      throw error;
+    }
   };
 
   logout = () => {
+    localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     localStorage.removeItem('isAuthenticated');
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   isAuthenticated = () => {
