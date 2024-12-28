@@ -1,16 +1,25 @@
-import React from 'react'
-import { Route, Router } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
-const App = () => {
+function App() {
   return (
-    // <Router>
-    //   <Route>
-    //     <Route path='/admin' element={<AdminDashboard />}/>
-    //   </Route>
-    // </Router>
-    <AdminDashboard/>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route 
+          path="/admin-dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        {/* Thêm các routes khác tương tự */}
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
