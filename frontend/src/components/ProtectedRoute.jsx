@@ -1,15 +1,27 @@
 import { Navigate } from 'react-router-dom';
+import authService from '../services/authService';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const role = localStorage.getItem('role');
-  const token = localStorage.getItem('token');
+  const isAuthenticated = authService.isAuthenticated();
+  const userRole = authService.getCurrentUserRole();
 
-  if (!token) {
-    return <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    // Chưa đăng nhập -> chuyển về trang login
+    return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(role)) {
-    return <Navigate to="/" />;
+  if (!allowedRoles.includes(userRole)) {
+    // Không có quyền truy cập -> chuyển về trang phù hợp với role
+    switch (userRole) {
+      case 'Admin':
+        return <Navigate to="/admin-dashboard" replace />;
+      case 'DeliveryStaff':
+        return <Navigate to="/delivery-dashboard" replace />;
+      case 'Customer':
+        return <Navigate to="/customer-tracking" replace />;
+      default:
+        return <Navigate to="/login" replace />;
+    }
   }
 
   return children;
