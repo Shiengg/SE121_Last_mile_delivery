@@ -1,0 +1,9952 @@
+[{
+  "_id": {
+    "$oid": "67684fa53ec4999325775620"
+  },
+  "code": "00001",
+  "name": "Phường Phúc Xá",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775621"
+  },
+  "code": "00004",
+  "name": "Phường Trúc Bạch",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775622"
+  },
+  "code": "00006",
+  "name": "Phường Vĩnh Phúc",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775623"
+  },
+  "code": "00007",
+  "name": "Phường Cống Vị",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775624"
+  },
+  "code": "00008",
+  "name": "Phường Liễu Giai",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775625"
+  },
+  "code": "00010",
+  "name": "Phường Nguyễn Trung Trực",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775626"
+  },
+  "code": "00013",
+  "name": "Phường Quán Thánh",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775627"
+  },
+  "code": "00016",
+  "name": "Phường Ngọc Hà",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775628"
+  },
+  "code": "00019",
+  "name": "Phường Điện Biên",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775629"
+  },
+  "code": "00022",
+  "name": "Phường Đội Cấn",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562a"
+  },
+  "code": "00025",
+  "name": "Phường Ngọc Khánh",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562b"
+  },
+  "code": "00028",
+  "name": "Phường Kim Mã",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562c"
+  },
+  "code": "00031",
+  "name": "Phường Giảng Võ",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562d"
+  },
+  "code": "00034",
+  "name": "Phường Thành Công",
+  "district_id": "001"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562e"
+  },
+  "code": "00037",
+  "name": "Phường Phúc Tân",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577562f"
+  },
+  "code": "00040",
+  "name": "Phường Đồng Xuân",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775630"
+  },
+  "code": "00043",
+  "name": "Phường Hàng Mã",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775631"
+  },
+  "code": "00046",
+  "name": "Phường Hàng Buồm",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775632"
+  },
+  "code": "00049",
+  "name": "Phường Hàng Đào",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775633"
+  },
+  "code": "00052",
+  "name": "Phường Hàng Bồ",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775634"
+  },
+  "code": "00055",
+  "name": "Phường Cửa Đông",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775635"
+  },
+  "code": "00058",
+  "name": "Phường Lý Thái Tổ",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775636"
+  },
+  "code": "00061",
+  "name": "Phường Hàng Bạc",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775637"
+  },
+  "code": "00064",
+  "name": "Phường Hàng Gai",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775638"
+  },
+  "code": "00067",
+  "name": "Phường Chương Dương",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775639"
+  },
+  "code": "00070",
+  "name": "Phường Hàng Trống",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563a"
+  },
+  "code": "00073",
+  "name": "Phường Cửa Nam",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563b"
+  },
+  "code": "00076",
+  "name": "Phường Hàng Bông",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563c"
+  },
+  "code": "00079",
+  "name": "Phường Tràng Tiền",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563d"
+  },
+  "code": "00082",
+  "name": "Phường Trần Hưng Đạo",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563e"
+  },
+  "code": "00085",
+  "name": "Phường Phan Chu Trinh",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577563f"
+  },
+  "code": "00088",
+  "name": "Phường Hàng Bài",
+  "district_id": "002"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775640"
+  },
+  "code": "00091",
+  "name": "Phường Phú Thượng",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775641"
+  },
+  "code": "00094",
+  "name": "Phường Nhật Tân",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775642"
+  },
+  "code": "00097",
+  "name": "Phường Tứ Liên",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775643"
+  },
+  "code": "00100",
+  "name": "Phường Quảng An",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775644"
+  },
+  "code": "00103",
+  "name": "Phường Xuân La",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775645"
+  },
+  "code": "00106",
+  "name": "Phường Yên Phụ",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775646"
+  },
+  "code": "00109",
+  "name": "Phường Bưởi",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775647"
+  },
+  "code": "00112",
+  "name": "Phường Thụy Khuê",
+  "district_id": "003"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775648"
+  },
+  "code": "00115",
+  "name": "Phường Thượng Thanh",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775649"
+  },
+  "code": "00118",
+  "name": "Phường Ngọc Thụy",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564a"
+  },
+  "code": "00121",
+  "name": "Phường Giang Biên",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564b"
+  },
+  "code": "00124",
+  "name": "Phường Đức Giang",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564c"
+  },
+  "code": "00127",
+  "name": "Phường Việt Hưng",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564d"
+  },
+  "code": "00130",
+  "name": "Phường Gia Thụy",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564e"
+  },
+  "code": "00133",
+  "name": "Phường Ngọc Lâm",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577564f"
+  },
+  "code": "00136",
+  "name": "Phường Phúc Lợi",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775650"
+  },
+  "code": "00139",
+  "name": "Phường Bồ Đề",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775651"
+  },
+  "code": "00142",
+  "name": "Phường Sài Đồng",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775652"
+  },
+  "code": "00145",
+  "name": "Phường Long Biên",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775653"
+  },
+  "code": "00148",
+  "name": "Phường Thạch Bàn",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775654"
+  },
+  "code": "00151",
+  "name": "Phường Phúc Đồng",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775655"
+  },
+  "code": "00154",
+  "name": "Phường Cự Khối",
+  "district_id": "004"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775656"
+  },
+  "code": "00157",
+  "name": "Phường Nghĩa Đô",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775657"
+  },
+  "code": "00160",
+  "name": "Phường Nghĩa Tân",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775658"
+  },
+  "code": "00163",
+  "name": "Phường Mai Dịch",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775659"
+  },
+  "code": "00166",
+  "name": "Phường Dịch Vọng",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565a"
+  },
+  "code": "00167",
+  "name": "Phường Dịch Vọng Hậu",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565b"
+  },
+  "code": "00169",
+  "name": "Phường Quan Hoa",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565c"
+  },
+  "code": "00172",
+  "name": "Phường Yên Hoà",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565d"
+  },
+  "code": "00175",
+  "name": "Phường Trung Hoà",
+  "district_id": "005"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565e"
+  },
+  "code": "00178",
+  "name": "Phường Cát Linh",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577565f"
+  },
+  "code": "00181",
+  "name": "Phường Văn Miếu",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775660"
+  },
+  "code": "00184",
+  "name": "Phường Quốc Tử Giám",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775661"
+  },
+  "code": "00187",
+  "name": "Phường Láng Thượng",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775662"
+  },
+  "code": "00190",
+  "name": "Phường Ô Chợ Dừa",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775663"
+  },
+  "code": "00193",
+  "name": "Phường Văn Chương",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775664"
+  },
+  "code": "00196",
+  "name": "Phường Hàng Bột",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775665"
+  },
+  "code": "00199",
+  "name": "Phường Láng Hạ",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775666"
+  },
+  "code": "00202",
+  "name": "Phường Khâm Thiên",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775667"
+  },
+  "code": "00205",
+  "name": "Phường Thổ Quan",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775668"
+  },
+  "code": "00208",
+  "name": "Phường Nam Đồng",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775669"
+  },
+  "code": "00211",
+  "name": "Phường Trung Phụng",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566a"
+  },
+  "code": "00214",
+  "name": "Phường Quang Trung",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566b"
+  },
+  "code": "00217",
+  "name": "Phường Trung Liệt",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566c"
+  },
+  "code": "00220",
+  "name": "Phường Phương Liên",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566d"
+  },
+  "code": "00223",
+  "name": "Phường Thịnh Quang",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566e"
+  },
+  "code": "00226",
+  "name": "Phường Trung Tự",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577566f"
+  },
+  "code": "00229",
+  "name": "Phường Kim Liên",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775670"
+  },
+  "code": "00232",
+  "name": "Phường Phương Mai",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775671"
+  },
+  "code": "00235",
+  "name": "Phường Ngã Tư Sở",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775672"
+  },
+  "code": "00238",
+  "name": "Phường Khương Thượng",
+  "district_id": "006"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775673"
+  },
+  "code": "00241",
+  "name": "Phường Nguyễn Du",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775674"
+  },
+  "code": "00244",
+  "name": "Phường Bạch Đằng",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775675"
+  },
+  "code": "00247",
+  "name": "Phường Phạm Đình Hổ",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775676"
+  },
+  "code": "00256",
+  "name": "Phường Lê Đại Hành",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775677"
+  },
+  "code": "00259",
+  "name": "Phường Đồng Nhân",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775678"
+  },
+  "code": "00262",
+  "name": "Phường Phố Huế",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775679"
+  },
+  "code": "00265",
+  "name": "Phường Đống Mác",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567a"
+  },
+  "code": "00268",
+  "name": "Phường Thanh Lương",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567b"
+  },
+  "code": "00271",
+  "name": "Phường Thanh Nhàn",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567c"
+  },
+  "code": "00274",
+  "name": "Phường Cầu Dền",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567d"
+  },
+  "code": "00277",
+  "name": "Phường Bách Khoa",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567e"
+  },
+  "code": "00280",
+  "name": "Phường Đồng Tâm",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577567f"
+  },
+  "code": "00283",
+  "name": "Phường Vĩnh Tuy",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775680"
+  },
+  "code": "00286",
+  "name": "Phường Bạch Mai",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775681"
+  },
+  "code": "00289",
+  "name": "Phường Quỳnh Mai",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775682"
+  },
+  "code": "00292",
+  "name": "Phường Quỳnh Lôi",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775683"
+  },
+  "code": "00295",
+  "name": "Phường Minh Khai",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775684"
+  },
+  "code": "00298",
+  "name": "Phường Trương Định",
+  "district_id": "007"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775685"
+  },
+  "code": "00301",
+  "name": "Phường Thanh Trì",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775686"
+  },
+  "code": "00304",
+  "name": "Phường Vĩnh Hưng",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775687"
+  },
+  "code": "00307",
+  "name": "Phường Định Công",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775688"
+  },
+  "code": "00310",
+  "name": "Phường Mai Động",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775689"
+  },
+  "code": "00313",
+  "name": "Phường Tương Mai",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568a"
+  },
+  "code": "00316",
+  "name": "Phường Đại Kim",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568b"
+  },
+  "code": "00319",
+  "name": "Phường Tân Mai",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568c"
+  },
+  "code": "00322",
+  "name": "Phường Hoàng Văn Thụ",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568d"
+  },
+  "code": "00325",
+  "name": "Phường Giáp Bát",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568e"
+  },
+  "code": "00328",
+  "name": "Phường Lĩnh Nam",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577568f"
+  },
+  "code": "00331",
+  "name": "Phường Thịnh Liệt",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775690"
+  },
+  "code": "00334",
+  "name": "Phường Trần Phú",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775691"
+  },
+  "code": "00337",
+  "name": "Phường Hoàng Liệt",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775692"
+  },
+  "code": "00340",
+  "name": "Phường Yên Sở",
+  "district_id": "008"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775693"
+  },
+  "code": "00343",
+  "name": "Phường Nhân Chính",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775694"
+  },
+  "code": "00346",
+  "name": "Phường Thượng Đình",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775695"
+  },
+  "code": "00349",
+  "name": "Phường Khương Trung",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775696"
+  },
+  "code": "00352",
+  "name": "Phường Khương Mai",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775697"
+  },
+  "code": "00355",
+  "name": "Phường Thanh Xuân Trung",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775698"
+  },
+  "code": "00358",
+  "name": "Phường Phương Liệt",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775699"
+  },
+  "code": "00361",
+  "name": "Phường Hạ Đình",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569a"
+  },
+  "code": "00364",
+  "name": "Phường Khương Đình",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569b"
+  },
+  "code": "00367",
+  "name": "Phường Thanh Xuân Bắc",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569c"
+  },
+  "code": "00370",
+  "name": "Phường Thanh Xuân Nam",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569d"
+  },
+  "code": "00373",
+  "name": "Phường Kim Giang",
+  "district_id": "009"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569e"
+  },
+  "code": "00376",
+  "name": "Thị trấn Sóc Sơn",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577569f"
+  },
+  "code": "00379",
+  "name": "Xã Bắc Sơn",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a0"
+  },
+  "code": "00382",
+  "name": "Xã Minh Trí",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a1"
+  },
+  "code": "00385",
+  "name": "Xã Hồng Kỳ",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a2"
+  },
+  "code": "00388",
+  "name": "Xã Nam Sơn",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a3"
+  },
+  "code": "00391",
+  "name": "Xã Trung Giã",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a4"
+  },
+  "code": "00394",
+  "name": "Xã Tân Hưng",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a5"
+  },
+  "code": "00397",
+  "name": "Xã Minh Phú",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a6"
+  },
+  "code": "00400",
+  "name": "Xã Phù Linh",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a7"
+  },
+  "code": "00403",
+  "name": "Xã Bắc Phú",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a8"
+  },
+  "code": "00406",
+  "name": "Xã Tân Minh",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756a9"
+  },
+  "code": "00409",
+  "name": "Xã Quang Tiến",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756aa"
+  },
+  "code": "00412",
+  "name": "Xã Hiền Ninh",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ab"
+  },
+  "code": "00415",
+  "name": "Xã Tân Dân",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ac"
+  },
+  "code": "00418",
+  "name": "Xã Tiên Dược",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ad"
+  },
+  "code": "00421",
+  "name": "Xã Việt Long",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ae"
+  },
+  "code": "00424",
+  "name": "Xã Xuân Giang",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756af"
+  },
+  "code": "00427",
+  "name": "Xã Mai Đình",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b0"
+  },
+  "code": "00430",
+  "name": "Xã Đức Hoà",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b1"
+  },
+  "code": "00433",
+  "name": "Xã Thanh Xuân",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b2"
+  },
+  "code": "00436",
+  "name": "Xã Đông Xuân",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b3"
+  },
+  "code": "00439",
+  "name": "Xã Kim Lũ",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b4"
+  },
+  "code": "00442",
+  "name": "Xã Phú Cường",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b5"
+  },
+  "code": "00445",
+  "name": "Xã Phú Minh",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b6"
+  },
+  "code": "00448",
+  "name": "Xã Phù Lỗ",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b7"
+  },
+  "code": "00451",
+  "name": "Xã Xuân Thu",
+  "district_id": "016"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b8"
+  },
+  "code": "00454",
+  "name": "Thị trấn Đông Anh",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756b9"
+  },
+  "code": "00457",
+  "name": "Xã Xuân Nộn",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ba"
+  },
+  "code": "00460",
+  "name": "Xã Thuỵ Lâm",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756bb"
+  },
+  "code": "00463",
+  "name": "Xã Bắc Hồng",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756bc"
+  },
+  "code": "00466",
+  "name": "Xã Nguyên Khê",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756bd"
+  },
+  "code": "00469",
+  "name": "Xã Nam Hồng",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756be"
+  },
+  "code": "00472",
+  "name": "Xã Tiên Dương",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756bf"
+  },
+  "code": "00475",
+  "name": "Xã Vân Hà",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c0"
+  },
+  "code": "00478",
+  "name": "Xã Uy Nỗ",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c1"
+  },
+  "code": "00481",
+  "name": "Xã Vân Nội",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c2"
+  },
+  "code": "00484",
+  "name": "Xã Liên Hà",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c3"
+  },
+  "code": "00487",
+  "name": "Xã Việt Hùng",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c4"
+  },
+  "code": "00490",
+  "name": "Xã Kim Nỗ",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c5"
+  },
+  "code": "00493",
+  "name": "Xã Kim Chung",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c6"
+  },
+  "code": "00496",
+  "name": "Xã Dục Tú",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c7"
+  },
+  "code": "00499",
+  "name": "Xã Đại Mạch",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c8"
+  },
+  "code": "00502",
+  "name": "Xã Vĩnh Ngọc",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756c9"
+  },
+  "code": "00505",
+  "name": "Xã Cổ Loa",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ca"
+  },
+  "code": "00508",
+  "name": "Xã Hải Bối",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756cb"
+  },
+  "code": "00511",
+  "name": "Xã Xuân Canh",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756cc"
+  },
+  "code": "00514",
+  "name": "Xã Võng La",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756cd"
+  },
+  "code": "00517",
+  "name": "Xã Tàm Xá",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ce"
+  },
+  "code": "00520",
+  "name": "Xã Mai Lâm",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756cf"
+  },
+  "code": "00523",
+  "name": "Xã Đông Hội",
+  "district_id": "017"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d0"
+  },
+  "code": "00526",
+  "name": "Thị trấn Yên Viên",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d1"
+  },
+  "code": "00529",
+  "name": "Xã Yên Thường",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d2"
+  },
+  "code": "00532",
+  "name": "Xã Yên Viên",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d3"
+  },
+  "code": "00535",
+  "name": "Xã Ninh Hiệp",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d4"
+  },
+  "code": "00538",
+  "name": "Xã Đình Xuyên",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d5"
+  },
+  "code": "00541",
+  "name": "Xã Dương Hà",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d6"
+  },
+  "code": "00544",
+  "name": "Xã Phù Đổng",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d7"
+  },
+  "code": "00547",
+  "name": "Xã Trung Mầu",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d8"
+  },
+  "code": "00550",
+  "name": "Xã Lệ Chi",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756d9"
+  },
+  "code": "00553",
+  "name": "Xã Cổ Bi",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756da"
+  },
+  "code": "00556",
+  "name": "Xã Đặng Xá",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756db"
+  },
+  "code": "00559",
+  "name": "Xã Phú Thị",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756dc"
+  },
+  "code": "00562",
+  "name": "Xã Kim Sơn",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756dd"
+  },
+  "code": "00565",
+  "name": "Thị trấn Trâu Quỳ",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756de"
+  },
+  "code": "00568",
+  "name": "Xã Dương Quang",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756df"
+  },
+  "code": "00571",
+  "name": "Xã Dương Xá",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e0"
+  },
+  "code": "00574",
+  "name": "Xã Đông Dư",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e1"
+  },
+  "code": "00577",
+  "name": "Xã Đa Tốn",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e2"
+  },
+  "code": "00580",
+  "name": "Xã Kiêu Kỵ",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e3"
+  },
+  "code": "00583",
+  "name": "Xã Bát Tràng",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e4"
+  },
+  "code": "00586",
+  "name": "Xã Kim Lan",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e5"
+  },
+  "code": "00589",
+  "name": "Xã Văn Đức",
+  "district_id": "018"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e6"
+  },
+  "code": "00592",
+  "name": "Phường Cầu Diễn",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e7"
+  },
+  "code": "00622",
+  "name": "Phường Xuân Phương",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e8"
+  },
+  "code": "00623",
+  "name": "Phường Phương Canh",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756e9"
+  },
+  "code": "00625",
+  "name": "Phường Mỹ Đình 1",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ea"
+  },
+  "code": "00626",
+  "name": "Phường Mỹ Đình 2",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756eb"
+  },
+  "code": "00628",
+  "name": "Phường Tây Mỗ",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ec"
+  },
+  "code": "00631",
+  "name": "Phường Mễ Trì",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ed"
+  },
+  "code": "00632",
+  "name": "Phường Phú Đô",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ee"
+  },
+  "code": "00634",
+  "name": "Phường Đại Mỗ",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ef"
+  },
+  "code": "00637",
+  "name": "Phường Trung Văn",
+  "district_id": "019"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f0"
+  },
+  "code": "00640",
+  "name": "Thị trấn Văn Điển",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f1"
+  },
+  "code": "00643",
+  "name": "Xã Tân Triều",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f2"
+  },
+  "code": "00646",
+  "name": "Xã Thanh Liệt",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f3"
+  },
+  "code": "00649",
+  "name": "Xã Tả Thanh Oai",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f4"
+  },
+  "code": "00652",
+  "name": "Xã Hữu Hoà",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f5"
+  },
+  "code": "00655",
+  "name": "Xã Tam Hiệp",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f6"
+  },
+  "code": "00658",
+  "name": "Xã Tứ Hiệp",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f7"
+  },
+  "code": "00661",
+  "name": "Xã Yên Mỹ",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f8"
+  },
+  "code": "00664",
+  "name": "Xã Vĩnh Quỳnh",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756f9"
+  },
+  "code": "00667",
+  "name": "Xã Ngũ Hiệp",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756fa"
+  },
+  "code": "00670",
+  "name": "Xã Duyên Hà",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756fb"
+  },
+  "code": "00673",
+  "name": "Xã Ngọc Hồi",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756fc"
+  },
+  "code": "00676",
+  "name": "Xã Vạn Phúc",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756fd"
+  },
+  "code": "00679",
+  "name": "Xã Đại áng",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756fe"
+  },
+  "code": "00682",
+  "name": "Xã Liên Ninh",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257756ff"
+  },
+  "code": "00685",
+  "name": "Xã Đông Mỹ",
+  "district_id": "020"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775700"
+  },
+  "code": "00595",
+  "name": "Phường Thượng Cát",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775701"
+  },
+  "code": "00598",
+  "name": "Phường Liên Mạc",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775702"
+  },
+  "code": "00601",
+  "name": "Phường Đông Ngạc",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775703"
+  },
+  "code": "00602",
+  "name": "Phường Đức Thắng",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775704"
+  },
+  "code": "00604",
+  "name": "Phường Thụy Phương",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775705"
+  },
+  "code": "00607",
+  "name": "Phường Tây Tựu",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775706"
+  },
+  "code": "00610",
+  "name": "Phường Xuân Đỉnh",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775707"
+  },
+  "code": "00611",
+  "name": "Phường Xuân Tảo",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775708"
+  },
+  "code": "00613",
+  "name": "Phường Minh Khai",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775709"
+  },
+  "code": "00616",
+  "name": "Phường Cổ Nhuế 1",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570a"
+  },
+  "code": "00617",
+  "name": "Phường Cổ Nhuế 2",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570b"
+  },
+  "code": "00619",
+  "name": "Phường Phú Diễn",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570c"
+  },
+  "code": "00620",
+  "name": "Phường Phúc Diễn",
+  "district_id": "021"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570d"
+  },
+  "code": "08973",
+  "name": "Thị trấn Chi Đông",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570e"
+  },
+  "code": "08974",
+  "name": "Xã Đại Thịnh",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577570f"
+  },
+  "code": "08977",
+  "name": "Xã Kim Hoa",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775710"
+  },
+  "code": "08980",
+  "name": "Xã Thạch Đà",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775711"
+  },
+  "code": "08983",
+  "name": "Xã Tiến Thắng",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775712"
+  },
+  "code": "08986",
+  "name": "Xã Tự Lập",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775713"
+  },
+  "code": "08989",
+  "name": "Thị trấn Quang Minh",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775714"
+  },
+  "code": "08992",
+  "name": "Xã Thanh Lâm",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775715"
+  },
+  "code": "08995",
+  "name": "Xã Tam Đồng",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775716"
+  },
+  "code": "08998",
+  "name": "Xã Liên Mạc",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775717"
+  },
+  "code": "09001",
+  "name": "Xã Vạn Yên",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775718"
+  },
+  "code": "09004",
+  "name": "Xã Chu Phan",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775719"
+  },
+  "code": "09007",
+  "name": "Xã Tiến Thịnh",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571a"
+  },
+  "code": "09010",
+  "name": "Xã Mê Linh",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571b"
+  },
+  "code": "09013",
+  "name": "Xã Văn Khê",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571c"
+  },
+  "code": "09016",
+  "name": "Xã Hoàng Kim",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571d"
+  },
+  "code": "09019",
+  "name": "Xã Tiền Phong",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571e"
+  },
+  "code": "09022",
+  "name": "Xã Tráng Việt",
+  "district_id": "250"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577571f"
+  },
+  "code": "09538",
+  "name": "Phường Nguyễn Trãi",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775720"
+  },
+  "code": "09541",
+  "name": "Phường Mộ Lao",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775721"
+  },
+  "code": "09542",
+  "name": "Phường Văn Quán",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775722"
+  },
+  "code": "09544",
+  "name": "Phường Vạn Phúc",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775723"
+  },
+  "code": "09547",
+  "name": "Phường Yết Kiêu",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775724"
+  },
+  "code": "09550",
+  "name": "Phường Quang Trung",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775725"
+  },
+  "code": "09551",
+  "name": "Phường La Khê",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775726"
+  },
+  "code": "09552",
+  "name": "Phường Phú La",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775727"
+  },
+  "code": "09553",
+  "name": "Phường Phúc La",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775728"
+  },
+  "code": "09556",
+  "name": "Phường Hà Cầu",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775729"
+  },
+  "code": "09562",
+  "name": "Phường Yên Nghĩa",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572a"
+  },
+  "code": "09565",
+  "name": "Phường Kiến Hưng",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572b"
+  },
+  "code": "09568",
+  "name": "Phường Phú Lãm",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572c"
+  },
+  "code": "09571",
+  "name": "Phường Phú Lương",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572d"
+  },
+  "code": "10117",
+  "name": "Phường Đồng Mai",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572e"
+  },
+  "code": "09886",
+  "name": "Phường Dương Nội",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577572f"
+  },
+  "code": "10123",
+  "name": "Phường Biên Giang",
+  "district_id": "268"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775730"
+  },
+  "code": "09574",
+  "name": "Phường Lê Lợi",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775731"
+  },
+  "code": "09577",
+  "name": "Phường Phú Thịnh",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775732"
+  },
+  "code": "09580",
+  "name": "Phường Ngô Quyền",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775733"
+  },
+  "code": "09583",
+  "name": "Phường Quang Trung",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775734"
+  },
+  "code": "09586",
+  "name": "Phường Sơn Lộc",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775735"
+  },
+  "code": "09589",
+  "name": "Phường Xuân Khanh",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775736"
+  },
+  "code": "09592",
+  "name": "Xã Đường Lâm",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775737"
+  },
+  "code": "09595",
+  "name": "Phường Viên Sơn",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775738"
+  },
+  "code": "09598",
+  "name": "Xã Xuân Sơn",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775739"
+  },
+  "code": "09601",
+  "name": "Phường Trung Hưng",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573a"
+  },
+  "code": "09604",
+  "name": "Xã Thanh Mỹ",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573b"
+  },
+  "code": "09607",
+  "name": "Phường Trung Sơn Trầm",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573c"
+  },
+  "code": "09610",
+  "name": "Xã Kim Sơn",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573d"
+  },
+  "code": "09613",
+  "name": "Xã Sơn Đông",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573e"
+  },
+  "code": "09616",
+  "name": "Xã Cổ Đông",
+  "district_id": "269"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577573f"
+  },
+  "code": "09619",
+  "name": "Thị trấn Tây Đằng",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775740"
+  },
+  "code": "09625",
+  "name": "Xã Phú Cường",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775741"
+  },
+  "code": "09628",
+  "name": "Xã Cổ Đô",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775742"
+  },
+  "code": "09631",
+  "name": "Xã Tản Hồng",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775743"
+  },
+  "code": "09634",
+  "name": "Xã Vạn Thắng",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775744"
+  },
+  "code": "09637",
+  "name": "Xã Châu Sơn",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775745"
+  },
+  "code": "09640",
+  "name": "Xã Phong Vân",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775746"
+  },
+  "code": "09643",
+  "name": "Xã Phú Đông",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775747"
+  },
+  "code": "09646",
+  "name": "Xã Phú Phương",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775748"
+  },
+  "code": "09649",
+  "name": "Xã Phú Châu",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775749"
+  },
+  "code": "09652",
+  "name": "Xã Thái Hòa",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574a"
+  },
+  "code": "09655",
+  "name": "Xã Đồng Thái",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574b"
+  },
+  "code": "09658",
+  "name": "Xã Phú Sơn",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574c"
+  },
+  "code": "09661",
+  "name": "Xã Minh Châu",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574d"
+  },
+  "code": "09664",
+  "name": "Xã Vật Lại",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574e"
+  },
+  "code": "09667",
+  "name": "Xã Chu Minh",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577574f"
+  },
+  "code": "09670",
+  "name": "Xã Tòng Bạt",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775750"
+  },
+  "code": "09673",
+  "name": "Xã Cẩm Lĩnh",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775751"
+  },
+  "code": "09676",
+  "name": "Xã Sơn Đà",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775752"
+  },
+  "code": "09679",
+  "name": "Xã Đông Quang",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775753"
+  },
+  "code": "09682",
+  "name": "Xã Tiên Phong",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775754"
+  },
+  "code": "09685",
+  "name": "Xã Thụy An",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775755"
+  },
+  "code": "09688",
+  "name": "Xã Cam Thượng",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775756"
+  },
+  "code": "09691",
+  "name": "Xã Thuần Mỹ",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775757"
+  },
+  "code": "09694",
+  "name": "Xã Tản Lĩnh",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775758"
+  },
+  "code": "09697",
+  "name": "Xã Ba Trại",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775759"
+  },
+  "code": "09700",
+  "name": "Xã Minh Quang",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575a"
+  },
+  "code": "09703",
+  "name": "Xã Ba Vì",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575b"
+  },
+  "code": "09706",
+  "name": "Xã Vân Hòa",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575c"
+  },
+  "code": "09709",
+  "name": "Xã Yên Bài",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575d"
+  },
+  "code": "09712",
+  "name": "Xã Khánh Thượng",
+  "district_id": "271"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575e"
+  },
+  "code": "09715",
+  "name": "Thị trấn Phúc Thọ",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577575f"
+  },
+  "code": "09718",
+  "name": "Xã Vân Hà",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775760"
+  },
+  "code": "09721",
+  "name": "Xã Vân Phúc",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775761"
+  },
+  "code": "09724",
+  "name": "Xã Vân Nam",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775762"
+  },
+  "code": "09727",
+  "name": "Xã Xuân Đình",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775763"
+  },
+  "code": "09733",
+  "name": "Xã Sen Phương",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775764"
+  },
+  "code": "09739",
+  "name": "Xã Võng Xuyên",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775765"
+  },
+  "code": "09742",
+  "name": "Xã Thọ Lộc",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775766"
+  },
+  "code": "09745",
+  "name": "Xã Long Xuyên",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775767"
+  },
+  "code": "09748",
+  "name": "Xã Thượng Cốc",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775768"
+  },
+  "code": "09751",
+  "name": "Xã Hát Môn",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775769"
+  },
+  "code": "09754",
+  "name": "Xã Tích Giang",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576a"
+  },
+  "code": "09757",
+  "name": "Xã Thanh Đa",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576b"
+  },
+  "code": "09760",
+  "name": "Xã Trạch Mỹ Lộc",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576c"
+  },
+  "code": "09763",
+  "name": "Xã Phúc Hòa",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576d"
+  },
+  "code": "09766",
+  "name": "Xã Ngọc Tảo",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576e"
+  },
+  "code": "09769",
+  "name": "Xã Phụng Thượng",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577576f"
+  },
+  "code": "09772",
+  "name": "Xã Tam Thuấn",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775770"
+  },
+  "code": "09775",
+  "name": "Xã Tam Hiệp",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775771"
+  },
+  "code": "09778",
+  "name": "Xã Hiệp Thuận",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775772"
+  },
+  "code": "09781",
+  "name": "Xã Liên Hiệp",
+  "district_id": "272"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775773"
+  },
+  "code": "09784",
+  "name": "Thị trấn Phùng",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775774"
+  },
+  "code": "09787",
+  "name": "Xã Trung Châu",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775775"
+  },
+  "code": "09790",
+  "name": "Xã Thọ An",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775776"
+  },
+  "code": "09793",
+  "name": "Xã Thọ Xuân",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775777"
+  },
+  "code": "09796",
+  "name": "Xã Hồng Hà",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775778"
+  },
+  "code": "09799",
+  "name": "Xã Liên Hồng",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775779"
+  },
+  "code": "09802",
+  "name": "Xã Liên Hà",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577a"
+  },
+  "code": "09805",
+  "name": "Xã Hạ Mỗ",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577b"
+  },
+  "code": "09808",
+  "name": "Xã Liên Trung",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577c"
+  },
+  "code": "09811",
+  "name": "Xã Phương Đình",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577d"
+  },
+  "code": "09814",
+  "name": "Xã Thượng Mỗ",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577e"
+  },
+  "code": "09817",
+  "name": "Xã Tân Hội",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577577f"
+  },
+  "code": "09820",
+  "name": "Xã Tân Lập",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775780"
+  },
+  "code": "09823",
+  "name": "Xã Đan Phượng",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775781"
+  },
+  "code": "09826",
+  "name": "Xã Đồng Tháp",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775782"
+  },
+  "code": "09829",
+  "name": "Xã Song Phượng",
+  "district_id": "273"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775783"
+  },
+  "code": "09832",
+  "name": "Thị trấn Trạm Trôi",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775784"
+  },
+  "code": "09835",
+  "name": "Xã Đức Thượng",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775785"
+  },
+  "code": "09838",
+  "name": "Xã Minh Khai",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775786"
+  },
+  "code": "09841",
+  "name": "Xã Dương Liễu",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775787"
+  },
+  "code": "09844",
+  "name": "Xã Di Trạch",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775788"
+  },
+  "code": "09847",
+  "name": "Xã Đức Giang",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775789"
+  },
+  "code": "09850",
+  "name": "Xã Cát Quế",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578a"
+  },
+  "code": "09853",
+  "name": "Xã Kim Chung",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578b"
+  },
+  "code": "09856",
+  "name": "Xã Yên Sở",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578c"
+  },
+  "code": "09859",
+  "name": "Xã Sơn Đồng",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578d"
+  },
+  "code": "09862",
+  "name": "Xã Vân Canh",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578e"
+  },
+  "code": "09865",
+  "name": "Xã Đắc Sở",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577578f"
+  },
+  "code": "09868",
+  "name": "Xã Lại Yên",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775790"
+  },
+  "code": "09871",
+  "name": "Xã Tiền Yên",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775791"
+  },
+  "code": "09874",
+  "name": "Xã Song Phương",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775792"
+  },
+  "code": "09877",
+  "name": "Xã An Khánh",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775793"
+  },
+  "code": "09880",
+  "name": "Xã An Thượng",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775794"
+  },
+  "code": "09883",
+  "name": "Xã Vân Côn",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775795"
+  },
+  "code": "09889",
+  "name": "Xã La Phù",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775796"
+  },
+  "code": "09892",
+  "name": "Xã Đông La",
+  "district_id": "274"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775797"
+  },
+  "code": "09895",
+  "name": "Thị trấn Quốc Oai",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775798"
+  },
+  "code": "09898",
+  "name": "Xã Sài Sơn",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775799"
+  },
+  "code": "09901",
+  "name": "Xã Phượng Cách",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579a"
+  },
+  "code": "09904",
+  "name": "Xã Yên Sơn",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579b"
+  },
+  "code": "09907",
+  "name": "Xã Ngọc Liệp",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579c"
+  },
+  "code": "09910",
+  "name": "Xã Ngọc Mỹ",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579d"
+  },
+  "code": "09913",
+  "name": "Xã Liệp Tuyết",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579e"
+  },
+  "code": "09916",
+  "name": "Xã Thạch Thán",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577579f"
+  },
+  "code": "09919",
+  "name": "Xã Đồng Quang",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a0"
+  },
+  "code": "09922",
+  "name": "Xã Phú Cát",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a1"
+  },
+  "code": "09925",
+  "name": "Xã Tuyết Nghĩa",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a2"
+  },
+  "code": "09928",
+  "name": "Xã Nghĩa Hương",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a3"
+  },
+  "code": "09931",
+  "name": "Xã Cộng Hòa",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a4"
+  },
+  "code": "09934",
+  "name": "Xã Tân Phú",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a5"
+  },
+  "code": "09937",
+  "name": "Xã Đại Thành",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a6"
+  },
+  "code": "09940",
+  "name": "Xã Phú Mãn",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a7"
+  },
+  "code": "09943",
+  "name": "Xã Cấn Hữu",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a8"
+  },
+  "code": "09946",
+  "name": "Xã Tân Hòa",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757a9"
+  },
+  "code": "09949",
+  "name": "Xã Hòa Thạch",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757aa"
+  },
+  "code": "09952",
+  "name": "Xã Đông Yên",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ab"
+  },
+  "code": "04939",
+  "name": "Xã Đông Xuân",
+  "district_id": "275"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ac"
+  },
+  "code": "04927",
+  "name": "Xã Yên Trung",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ad"
+  },
+  "code": "04930",
+  "name": "Xã Yên Bình",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ae"
+  },
+  "code": "04936",
+  "name": "Xã Tiến Xuân",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757af"
+  },
+  "code": "09955",
+  "name": "Thị trấn Liên Quan",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b0"
+  },
+  "code": "09958",
+  "name": "Xã Đại Đồng",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b1"
+  },
+  "code": "09961",
+  "name": "Xã Cẩm Yên",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b2"
+  },
+  "code": "09964",
+  "name": "Xã Lại Thượng",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b3"
+  },
+  "code": "09967",
+  "name": "Xã Phú Kim",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b4"
+  },
+  "code": "09970",
+  "name": "Xã Hương Ngải",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b5"
+  },
+  "code": "09973",
+  "name": "Xã Canh Nậu",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b6"
+  },
+  "code": "09976",
+  "name": "Xã Kim Quan",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b7"
+  },
+  "code": "09979",
+  "name": "Xã Dị Nậu",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b8"
+  },
+  "code": "09982",
+  "name": "Xã Bình Yên",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757b9"
+  },
+  "code": "09985",
+  "name": "Xã Chàng Sơn",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ba"
+  },
+  "code": "09988",
+  "name": "Xã Thạch Hoà",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757bb"
+  },
+  "code": "09991",
+  "name": "Xã Cần Kiệm",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757bc"
+  },
+  "code": "09994",
+  "name": "Xã Hữu Bằng",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757bd"
+  },
+  "code": "09997",
+  "name": "Xã Phùng Xá",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757be"
+  },
+  "code": "10000",
+  "name": "Xã Tân Xã",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757bf"
+  },
+  "code": "10003",
+  "name": "Xã Thạch Xá",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c0"
+  },
+  "code": "10006",
+  "name": "Xã Bình Phú",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c1"
+  },
+  "code": "10009",
+  "name": "Xã Hạ Bằng",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c2"
+  },
+  "code": "10012",
+  "name": "Xã Đồng Trúc",
+  "district_id": "276"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c3"
+  },
+  "code": "10015",
+  "name": "Thị trấn Chúc Sơn",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c4"
+  },
+  "code": "10018",
+  "name": "Thị trấn Xuân Mai",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c5"
+  },
+  "code": "10021",
+  "name": "Xã Phụng Châu",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c6"
+  },
+  "code": "10024",
+  "name": "Xã Tiên Phương",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c7"
+  },
+  "code": "10027",
+  "name": "Xã Đông Sơn",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c8"
+  },
+  "code": "10030",
+  "name": "Xã Đông Phương Yên",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757c9"
+  },
+  "code": "10033",
+  "name": "Xã Phú Nghĩa",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ca"
+  },
+  "code": "10039",
+  "name": "Xã Trường Yên",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757cb"
+  },
+  "code": "10042",
+  "name": "Xã Ngọc Hòa",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757cc"
+  },
+  "code": "10045",
+  "name": "Xã Thủy Xuân Tiên",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757cd"
+  },
+  "code": "10048",
+  "name": "Xã Thanh Bình",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ce"
+  },
+  "code": "10051",
+  "name": "Xã Trung Hòa",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757cf"
+  },
+  "code": "10054",
+  "name": "Xã Đại Yên",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d0"
+  },
+  "code": "10057",
+  "name": "Xã Thụy Hương",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d1"
+  },
+  "code": "10060",
+  "name": "Xã Tốt Động",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d2"
+  },
+  "code": "10063",
+  "name": "Xã Lam Điền",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d3"
+  },
+  "code": "10066",
+  "name": "Xã Tân Tiến",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d4"
+  },
+  "code": "10069",
+  "name": "Xã Nam Phương Tiến",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d5"
+  },
+  "code": "10072",
+  "name": "Xã Hợp Đồng",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d6"
+  },
+  "code": "10075",
+  "name": "Xã Hoàng Văn Thụ",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d7"
+  },
+  "code": "10078",
+  "name": "Xã Hoàng Diệu",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d8"
+  },
+  "code": "10081",
+  "name": "Xã Hữu Văn",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757d9"
+  },
+  "code": "10084",
+  "name": "Xã Quảng Bị",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757da"
+  },
+  "code": "10087",
+  "name": "Xã Mỹ Lương",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757db"
+  },
+  "code": "10090",
+  "name": "Xã Thượng Vực",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757dc"
+  },
+  "code": "10093",
+  "name": "Xã Hồng Phong",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757dd"
+  },
+  "code": "10096",
+  "name": "Xã Đồng Phú",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757de"
+  },
+  "code": "10099",
+  "name": "Xã Trần Phú",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757df"
+  },
+  "code": "10102",
+  "name": "Xã Văn Võ",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e0"
+  },
+  "code": "10105",
+  "name": "Xã Đồng Lạc",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e1"
+  },
+  "code": "10108",
+  "name": "Xã Hòa Chính",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e2"
+  },
+  "code": "10111",
+  "name": "Xã Phú Nam An",
+  "district_id": "277"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e3"
+  },
+  "code": "10114",
+  "name": "Thị trấn Kim Bài",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e4"
+  },
+  "code": "10126",
+  "name": "Xã Bích Hòa",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e5"
+  },
+  "code": "10129",
+  "name": "Xã Mỹ Hưng",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e6"
+  },
+  "code": "10132",
+  "name": "Xã Cao Viên",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e7"
+  },
+  "code": "10135",
+  "name": "Xã Bình Minh",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e8"
+  },
+  "code": "10138",
+  "name": "Xã Tam Hưng",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757e9"
+  },
+  "code": "10141",
+  "name": "Xã Thanh Cao",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ea"
+  },
+  "code": "10144",
+  "name": "Xã Thanh Thùy",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757eb"
+  },
+  "code": "10147",
+  "name": "Xã Thanh Mai",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ec"
+  },
+  "code": "10150",
+  "name": "Xã Thanh Văn",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ed"
+  },
+  "code": "10153",
+  "name": "Xã Đỗ Động",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ee"
+  },
+  "code": "10156",
+  "name": "Xã Kim An",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ef"
+  },
+  "code": "10159",
+  "name": "Xã Kim Thư",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f0"
+  },
+  "code": "10162",
+  "name": "Xã Phương Trung",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f1"
+  },
+  "code": "10165",
+  "name": "Xã Tân Ước",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f2"
+  },
+  "code": "10168",
+  "name": "Xã Dân Hòa",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f3"
+  },
+  "code": "10171",
+  "name": "Xã Liên Châu",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f4"
+  },
+  "code": "10174",
+  "name": "Xã Cao Dương",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f5"
+  },
+  "code": "10177",
+  "name": "Xã Xuân Dương",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f6"
+  },
+  "code": "10180",
+  "name": "Xã Hồng Dương",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f7"
+  },
+  "code": "10120",
+  "name": "Xã Cự Khê",
+  "district_id": "278"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f8"
+  },
+  "code": "10183",
+  "name": "Thị trấn Thường Tín",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757f9"
+  },
+  "code": "10186",
+  "name": "Xã Ninh Sở",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757fa"
+  },
+  "code": "10189",
+  "name": "Xã Nhị Khê",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757fb"
+  },
+  "code": "10192",
+  "name": "Xã Duyên Thái",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757fc"
+  },
+  "code": "10195",
+  "name": "Xã Khánh Hà",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757fd"
+  },
+  "code": "10198",
+  "name": "Xã Hòa Bình",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757fe"
+  },
+  "code": "10201",
+  "name": "Xã Văn Bình",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec49993257757ff"
+  },
+  "code": "10204",
+  "name": "Xã Hiền Giang",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775800"
+  },
+  "code": "10207",
+  "name": "Xã Hồng Vân",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775801"
+  },
+  "code": "10210",
+  "name": "Xã Vân Tảo",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775802"
+  },
+  "code": "10213",
+  "name": "Xã Liên Phương",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775803"
+  },
+  "code": "10216",
+  "name": "Xã Văn Phú",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775804"
+  },
+  "code": "10219",
+  "name": "Xã Tự Nhiên",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775805"
+  },
+  "code": "10222",
+  "name": "Xã Tiền Phong",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775806"
+  },
+  "code": "10225",
+  "name": "Xã Hà Hồi",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775807"
+  },
+  "code": "10228",
+  "name": "Xã Thư Phú",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775808"
+  },
+  "code": "10231",
+  "name": "Xã Nguyễn Trãi",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775809"
+  },
+  "code": "10234",
+  "name": "Xã Quất Động",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580a"
+  },
+  "code": "10237",
+  "name": "Xã Chương Dương",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580b"
+  },
+  "code": "10240",
+  "name": "Xã Tân Minh",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580c"
+  },
+  "code": "10243",
+  "name": "Xã Lê Lợi",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580d"
+  },
+  "code": "10246",
+  "name": "Xã Thắng Lợi",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580e"
+  },
+  "code": "10249",
+  "name": "Xã Dũng Tiến",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577580f"
+  },
+  "code": "10252",
+  "name": "Xã Thống Nhất",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775810"
+  },
+  "code": "10255",
+  "name": "Xã Nghiêm Xuyên",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775811"
+  },
+  "code": "10258",
+  "name": "Xã Tô Hiệu",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775812"
+  },
+  "code": "10261",
+  "name": "Xã Văn Tự",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775813"
+  },
+  "code": "10264",
+  "name": "Xã Vạn Điểm",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775814"
+  },
+  "code": "10267",
+  "name": "Xã Minh Cường",
+  "district_id": "279"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775815"
+  },
+  "code": "10270",
+  "name": "Thị trấn Phú Minh",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775816"
+  },
+  "code": "10273",
+  "name": "Thị trấn Phú Xuyên",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775817"
+  },
+  "code": "10276",
+  "name": "Xã Hồng Minh",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775818"
+  },
+  "code": "10279",
+  "name": "Xã Phượng Dực",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775819"
+  },
+  "code": "10282",
+  "name": "Xã Nam Tiến",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581a"
+  },
+  "code": "10288",
+  "name": "Xã Tri Trung",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581b"
+  },
+  "code": "10291",
+  "name": "Xã Đại Thắng",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581c"
+  },
+  "code": "10294",
+  "name": "Xã Phú Túc",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581d"
+  },
+  "code": "10297",
+  "name": "Xã Văn Hoàng",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581e"
+  },
+  "code": "10300",
+  "name": "Xã Hồng Thái",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577581f"
+  },
+  "code": "10303",
+  "name": "Xã Hoàng Long",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775820"
+  },
+  "code": "10306",
+  "name": "Xã Quang Trung",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775821"
+  },
+  "code": "10309",
+  "name": "Xã Nam Phong",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775822"
+  },
+  "code": "10312",
+  "name": "Xã Nam Triều",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775823"
+  },
+  "code": "10315",
+  "name": "Xã Tân Dân",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775824"
+  },
+  "code": "10318",
+  "name": "Xã Sơn Hà",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775825"
+  },
+  "code": "10321",
+  "name": "Xã Chuyên Mỹ",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775826"
+  },
+  "code": "10324",
+  "name": "Xã Khai Thái",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775827"
+  },
+  "code": "10327",
+  "name": "Xã Phúc Tiến",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775828"
+  },
+  "code": "10330",
+  "name": "Xã Vân Từ",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775829"
+  },
+  "code": "10333",
+  "name": "Xã Tri Thủy",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582a"
+  },
+  "code": "10336",
+  "name": "Xã Đại Xuyên",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582b"
+  },
+  "code": "10339",
+  "name": "Xã Phú Yên",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582c"
+  },
+  "code": "10342",
+  "name": "Xã Bạch Hạ",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582d"
+  },
+  "code": "10345",
+  "name": "Xã Quang Lãng",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582e"
+  },
+  "code": "10348",
+  "name": "Xã Châu Can",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577582f"
+  },
+  "code": "10351",
+  "name": "Xã Minh Tân",
+  "district_id": "280"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775830"
+  },
+  "code": "10354",
+  "name": "Thị trấn Vân Đình",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775831"
+  },
+  "code": "10357",
+  "name": "Xã Viên An",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775832"
+  },
+  "code": "10360",
+  "name": "Xã Viên Nội",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775833"
+  },
+  "code": "10363",
+  "name": "Xã Hoa Sơn",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775834"
+  },
+  "code": "10366",
+  "name": "Xã Quảng Phú Cầu",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775835"
+  },
+  "code": "10369",
+  "name": "Xã Trường Thịnh",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775836"
+  },
+  "code": "10372",
+  "name": "Xã Cao Thành",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775837"
+  },
+  "code": "10375",
+  "name": "Xã Liên Bạt",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775838"
+  },
+  "code": "10378",
+  "name": "Xã Sơn Công",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775839"
+  },
+  "code": "10381",
+  "name": "Xã Đồng Tiến",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583a"
+  },
+  "code": "10384",
+  "name": "Xã Phương Tú",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583b"
+  },
+  "code": "10387",
+  "name": "Xã Trung Tú",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583c"
+  },
+  "code": "10390",
+  "name": "Xã Đồng Tân",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583d"
+  },
+  "code": "10393",
+  "name": "Xã Tảo Dương Văn",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583e"
+  },
+  "code": "10396",
+  "name": "Xã Vạn Thái",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577583f"
+  },
+  "code": "10399",
+  "name": "Xã Minh Đức",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775840"
+  },
+  "code": "10402",
+  "name": "Xã Hòa Lâm",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775841"
+  },
+  "code": "10405",
+  "name": "Xã Hòa Xá",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775842"
+  },
+  "code": "10408",
+  "name": "Xã Trầm Lộng",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775843"
+  },
+  "code": "10411",
+  "name": "Xã Kim Đường",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775844"
+  },
+  "code": "10414",
+  "name": "Xã Hòa Nam",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775845"
+  },
+  "code": "10417",
+  "name": "Xã Hòa Phú",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775846"
+  },
+  "code": "10420",
+  "name": "Xã Đội Bình",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775847"
+  },
+  "code": "10423",
+  "name": "Xã Đại Hùng",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775848"
+  },
+  "code": "10426",
+  "name": "Xã Đông Lỗ",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775849"
+  },
+  "code": "10429",
+  "name": "Xã Phù Lưu",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584a"
+  },
+  "code": "10432",
+  "name": "Xã Đại Cường",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584b"
+  },
+  "code": "10435",
+  "name": "Xã Lưu Hoàng",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584c"
+  },
+  "code": "10438",
+  "name": "Xã Hồng Quang",
+  "district_id": "281"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584d"
+  },
+  "code": "10441",
+  "name": "Thị trấn Đại Nghĩa",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584e"
+  },
+  "code": "10444",
+  "name": "Xã Đồng Tâm",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577584f"
+  },
+  "code": "10447",
+  "name": "Xã Thượng Lâm",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775850"
+  },
+  "code": "10450",
+  "name": "Xã Tuy Lai",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775851"
+  },
+  "code": "10453",
+  "name": "Xã Phúc Lâm",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775852"
+  },
+  "code": "10456",
+  "name": "Xã Mỹ Thành",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775853"
+  },
+  "code": "10459",
+  "name": "Xã Bột Xuyên",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775854"
+  },
+  "code": "10462",
+  "name": "Xã An Mỹ",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775855"
+  },
+  "code": "10465",
+  "name": "Xã Hồng Sơn",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775856"
+  },
+  "code": "10468",
+  "name": "Xã Lê Thanh",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775857"
+  },
+  "code": "10471",
+  "name": "Xã Xuy Xá",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775858"
+  },
+  "code": "10474",
+  "name": "Xã Phùng Xá",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775859"
+  },
+  "code": "10477",
+  "name": "Xã Phù Lưu Tế",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585a"
+  },
+  "code": "10480",
+  "name": "Xã Đại Hưng",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585b"
+  },
+  "code": "10483",
+  "name": "Xã Vạn Kim",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585c"
+  },
+  "code": "10486",
+  "name": "Xã Đốc Tín",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585d"
+  },
+  "code": "10489",
+  "name": "Xã Hương Sơn",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585e"
+  },
+  "code": "10492",
+  "name": "Xã Hùng Tiến",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec499932577585f"
+  },
+  "code": "10495",
+  "name": "Xã An Tiến",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775860"
+  },
+  "code": "10498",
+  "name": "Xã Hợp Tiến",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775861"
+  },
+  "code": "10501",
+  "name": "Xã Hợp Thanh",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "67684fa53ec4999325775862"
+  },
+  "code": "10504",
+  "name": "Xã An Phú",
+  "district_id": "282"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775864"
+  },
+  "code": "11296",
+  "name": "Phường Quán Toan",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775865"
+  },
+  "code": "11299",
+  "name": "Phường Hùng Vương",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775866"
+  },
+  "code": "11302",
+  "name": "Phường Sở Dầu",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775867"
+  },
+  "code": "11308",
+  "name": "Phường Hạ Lý",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775868"
+  },
+  "code": "11311",
+  "name": "Phường Minh Khai",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775869"
+  },
+  "code": "11314",
+  "name": "Phường Trại Chuối",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586a"
+  },
+  "code": "11320",
+  "name": "Phường Hoàng Văn Thụ",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586b"
+  },
+  "code": "11323",
+  "name": "Phường Phan Bội Châu",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586c"
+  },
+  "code": "11305",
+  "name": "Phường Thượng Lý",
+  "district_id": "303"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586d"
+  },
+  "code": "11365",
+  "name": "Phường Đổng Quốc Bình",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586e"
+  },
+  "code": "11341",
+  "name": "Phường Lạc Viên",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577586f"
+  },
+  "code": "11329",
+  "name": "Phường Máy Chai",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775870"
+  },
+  "code": "11332",
+  "name": "Phường Máy Tơ",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775871"
+  },
+  "code": "11335",
+  "name": "Phường Vạn Mỹ",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775872"
+  },
+  "code": "11338",
+  "name": "Phường Cầu Tre",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775873"
+  },
+  "code": "11344",
+  "name": "Phường Cầu Đất",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775874"
+  },
+  "code": "11347",
+  "name": "Phường Gia Viên",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775875"
+  },
+  "code": "11350",
+  "name": "Phường Đông Khê",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775876"
+  },
+  "code": "11356",
+  "name": "Phường Lê Lợi",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775877"
+  },
+  "code": "11359",
+  "name": "Phường Đằng Giang",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775878"
+  },
+  "code": "11362",
+  "name": "Phường Lạch Tray",
+  "district_id": "304"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775879"
+  },
+  "code": "11368",
+  "name": "Phường Cát Dài",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587a"
+  },
+  "code": "11374",
+  "name": "Phường Lam Sơn",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587b"
+  },
+  "code": "11383",
+  "name": "Phường Hồ Nam",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587c"
+  },
+  "code": "11386",
+  "name": "Phường Trại Cau",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587d"
+  },
+  "code": "11389",
+  "name": "Phường Dư Hàng",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587e"
+  },
+  "code": "11395",
+  "name": "Phường Đông Hải",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577587f"
+  },
+  "code": "11398",
+  "name": "Phường Niệm Nghĩa",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775880"
+  },
+  "code": "11401",
+  "name": "Phường Nghĩa Xá",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775881"
+  },
+  "code": "11404",
+  "name": "Phường Dư Hàng Kênh",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775882"
+  },
+  "code": "11405",
+  "name": "Phường Kênh Dương",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775883"
+  },
+  "code": "11407",
+  "name": "Phường Vĩnh Niệm",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775884"
+  },
+  "code": "11371",
+  "name": "Phường An Biên",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775885"
+  },
+  "code": "11380",
+  "name": "Phường Trần Nguyên Hãn",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775886"
+  },
+  "code": "11392",
+  "name": "Phường Hàng Kênh",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775887"
+  },
+  "code": "11377",
+  "name": "Phường An Dương",
+  "district_id": "305"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775888"
+  },
+  "code": "11410",
+  "name": "Phường Đông Hải 1",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775889"
+  },
+  "code": "11411",
+  "name": "Phường Đông Hải 2",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588a"
+  },
+  "code": "11413",
+  "name": "Phường Đằng Lâm",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588b"
+  },
+  "code": "11414",
+  "name": "Phường Thành Tô",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588c"
+  },
+  "code": "11416",
+  "name": "Phường Đằng Hải",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588d"
+  },
+  "code": "11419",
+  "name": "Phường Nam Hải",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588e"
+  },
+  "code": "11422",
+  "name": "Phường Cát Bi",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577588f"
+  },
+  "code": "11425",
+  "name": "Phường Tràng Cát",
+  "district_id": "306"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775890"
+  },
+  "code": "11428",
+  "name": "Phường Quán Trữ",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775891"
+  },
+  "code": "11429",
+  "name": "Phường Lãm Hà",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775892"
+  },
+  "code": "11434",
+  "name": "Phường Bắc Sơn",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775893"
+  },
+  "code": "11437",
+  "name": "Phường Nam Sơn",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775894"
+  },
+  "code": "11440",
+  "name": "Phường Ngọc Sơn",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775895"
+  },
+  "code": "11443",
+  "name": "Phường Trần Thành Ngọ",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775896"
+  },
+  "code": "11446",
+  "name": "Phường Văn Đẩu",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775897"
+  },
+  "code": "11452",
+  "name": "Phường Tràng Minh",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775898"
+  },
+  "code": "11449",
+  "name": "Phường Phù Liễn",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775899"
+  },
+  "code": "11431",
+  "name": "Phường Đồng Hoà",
+  "district_id": "307"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589a"
+  },
+  "code": "11455",
+  "name": "Phường Ngọc Xuyên",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589b"
+  },
+  "code": "11458",
+  "name": "Phường Hải Sơn",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589c"
+  },
+  "code": "11461",
+  "name": "Phường Vạn Hương",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589d"
+  },
+  "code": "11465",
+  "name": "Phường Minh Đức",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589e"
+  },
+  "code": "11467",
+  "name": "Phường Bàng La",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577589f"
+  },
+  "code": "11737",
+  "name": "Phường Hợp Đức",
+  "district_id": "308"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a0"
+  },
+  "code": "11740",
+  "name": "Phường Tân Thành",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a1"
+  },
+  "code": "11683",
+  "name": "Phường Đa Phúc",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a2"
+  },
+  "code": "11686",
+  "name": "Phường Hưng Đạo",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a3"
+  },
+  "code": "11689",
+  "name": "Phường Anh Dũng",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a4"
+  },
+  "code": "11692",
+  "name": "Phường Hải Thành",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a5"
+  },
+  "code": "11707",
+  "name": "Phường Hoà Nghĩa",
+  "district_id": "309"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a6"
+  },
+  "code": "11578",
+  "name": "Xã Dương Quan",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a7"
+  },
+  "code": "11473",
+  "name": "Thị trấn Minh Đức",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a8"
+  },
+  "code": "11572",
+  "name": "Xã Hoa Động",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758a9"
+  },
+  "code": "11557",
+  "name": "Xã Thiên Hương",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758aa"
+  },
+  "code": "11506",
+  "name": "Xã Quảng Thanh",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ab"
+  },
+  "code": "11527",
+  "name": "Xã Hoà Bình",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ac"
+  },
+  "code": "11533",
+  "name": "Xã An Lư",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ad"
+  },
+  "code": "11539",
+  "name": "Xã Ngũ Lão",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ae"
+  },
+  "code": "11551",
+  "name": "Xã Lập Lễ",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758af"
+  },
+  "code": "11545",
+  "name": "Xã Tam Hưng",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b0"
+  },
+  "code": "11569",
+  "name": "Xã Lâm Động",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b1"
+  },
+  "code": "11521",
+  "name": "Xã Mỹ Đồng",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b2"
+  },
+  "code": "11512",
+  "name": "Xã Kênh Giang",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b3"
+  },
+  "code": "11488",
+  "name": "Xã Lưu Kiếm",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b4"
+  },
+  "code": "11560",
+  "name": "Xã Thuỷ Sơn",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b5"
+  },
+  "code": "11530",
+  "name": "Xã Trung Hà",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b6"
+  },
+  "code": "11542",
+  "name": "Xã Phục Lễ",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b7"
+  },
+  "code": "11500",
+  "name": "Xã Minh Tân",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b8"
+  },
+  "code": "11485",
+  "name": "Xã Liên Khê",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758b9"
+  },
+  "code": "11503",
+  "name": "Xã Phù Ninh",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ba"
+  },
+  "code": "11518",
+  "name": "Xã Cao Nhân",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758bb"
+  },
+  "code": "11470",
+  "name": "Thị trấn Núi Đèo",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758bc"
+  },
+  "code": "11476",
+  "name": "Xã Lại Xuân",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758bd"
+  },
+  "code": "11479",
+  "name": "Xã An Sơn",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758be"
+  },
+  "code": "11482",
+  "name": "Xã Kỳ Sơn",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758bf"
+  },
+  "code": "11491",
+  "name": "Xã Lưu Kỳ",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c0"
+  },
+  "code": "11494",
+  "name": "Xã Gia Minh",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c1"
+  },
+  "code": "11497",
+  "name": "Xã Gia Đức",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c2"
+  },
+  "code": "11509",
+  "name": "Xã Chính Mỹ",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c3"
+  },
+  "code": "11515",
+  "name": "Xã Hợp Thành",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c4"
+  },
+  "code": "11524",
+  "name": "Xã Đông Sơn",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c5"
+  },
+  "code": "11536",
+  "name": "Xã Thuỷ Triều",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c6"
+  },
+  "code": "11548",
+  "name": "Xã Phả Lễ",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c7"
+  },
+  "code": "11554",
+  "name": "Xã Kiền Bái",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c8"
+  },
+  "code": "11563",
+  "name": "Xã Thuỷ Đường",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758c9"
+  },
+  "code": "11566",
+  "name": "Xã Hoàng Động",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ca"
+  },
+  "code": "11575",
+  "name": "Xã Tân Dương",
+  "district_id": "311"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758cb"
+  },
+  "code": "11605",
+  "name": "Xã Bắc Sơn",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758cc"
+  },
+  "code": "11611",
+  "name": "Xã Lê Lợi",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758cd"
+  },
+  "code": "11620",
+  "name": "Xã Quốc Tuấn",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ce"
+  },
+  "code": "11587",
+  "name": "Xã Đại Bản",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758cf"
+  },
+  "code": "11602",
+  "name": "Xã An Hồng",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d0"
+  },
+  "code": "11599",
+  "name": "Xã An Hưng",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d1"
+  },
+  "code": "11623",
+  "name": "Xã An Đồng",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d2"
+  },
+  "code": "11590",
+  "name": "Xã An Hoà",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d3"
+  },
+  "code": "11617",
+  "name": "Xã Đồng Thái",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d4"
+  },
+  "code": "11626",
+  "name": "Xã Hồng Thái",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d5"
+  },
+  "code": "11593",
+  "name": "Xã Hồng Phong",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d6"
+  },
+  "code": "11584",
+  "name": "Xã Lê Thiện",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d7"
+  },
+  "code": "11581",
+  "name": "Thị trấn An Dương",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d8"
+  },
+  "code": "11608",
+  "name": "Xã Nam Sơn",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758d9"
+  },
+  "code": "11596",
+  "name": "Xã Tân Tiến",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758da"
+  },
+  "code": "11614",
+  "name": "Xã Đặng Cương",
+  "district_id": "312"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758db"
+  },
+  "code": "11629",
+  "name": "Thị trấn An Lão",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758dc"
+  },
+  "code": "11632",
+  "name": "Xã Bát Trang",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758dd"
+  },
+  "code": "11635",
+  "name": "Xã Trường Thọ",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758de"
+  },
+  "code": "11638",
+  "name": "Xã Trường Thành",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758df"
+  },
+  "code": "11641",
+  "name": "Xã An Tiến",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e0"
+  },
+  "code": "11644",
+  "name": "Xã Quang Hưng",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e1"
+  },
+  "code": "11647",
+  "name": "Xã Quang Trung",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e2"
+  },
+  "code": "11650",
+  "name": "Xã Quốc Tuấn",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e3"
+  },
+  "code": "11653",
+  "name": "Xã An Thắng",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e4"
+  },
+  "code": "11656",
+  "name": "Thị trấn Trường Sơn",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e5"
+  },
+  "code": "11659",
+  "name": "Xã Tân Dân",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e6"
+  },
+  "code": "11662",
+  "name": "Xã Thái Sơn",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e7"
+  },
+  "code": "11665",
+  "name": "Xã Tân Viên",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e8"
+  },
+  "code": "11668",
+  "name": "Xã Mỹ Đức",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758e9"
+  },
+  "code": "11671",
+  "name": "Xã Chiến Thắng",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ea"
+  },
+  "code": "11674",
+  "name": "Xã An Thọ",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758eb"
+  },
+  "code": "11677",
+  "name": "Xã An Thái",
+  "district_id": "313"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ec"
+  },
+  "code": "11680",
+  "name": "Thị trấn Núi Đối",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ed"
+  },
+  "code": "11743",
+  "name": "Xã Tân Trào",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ee"
+  },
+  "code": "11746",
+  "name": "Xã Đoàn Xá",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ef"
+  },
+  "code": "11749",
+  "name": "Xã Tú Sơn",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f0"
+  },
+  "code": "11752",
+  "name": "Xã Đại Hợp",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f1"
+  },
+  "code": "11710",
+  "name": "Xã Ngũ Phúc",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f2"
+  },
+  "code": "11713",
+  "name": "Xã Kiến Quốc",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f3"
+  },
+  "code": "11716",
+  "name": "Xã Du Lễ",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f4"
+  },
+  "code": "11719",
+  "name": "Xã Thuỵ Hương",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f5"
+  },
+  "code": "11722",
+  "name": "Xã Thanh Sơn",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f6"
+  },
+  "code": "11725",
+  "name": "Xã Minh Tân",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f7"
+  },
+  "code": "11731",
+  "name": "Xã Ngũ Đoan",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f8"
+  },
+  "code": "11734",
+  "name": "Xã Tân Phong",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758f9"
+  },
+  "code": "11695",
+  "name": "Xã Đông Phương",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758fa"
+  },
+  "code": "11698",
+  "name": "Xã Thuận Thiên",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758fb"
+  },
+  "code": "11701",
+  "name": "Xã Hữu Bằng",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758fc"
+  },
+  "code": "11704",
+  "name": "Xã Đại Đồng",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758fd"
+  },
+  "code": "11728",
+  "name": "Xã Đại Hà",
+  "district_id": "314"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758fe"
+  },
+  "code": "11791",
+  "name": "Xã Quang Phục",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec49993257758ff"
+  },
+  "code": "11755",
+  "name": "Thị trấn Tiên Lãng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775900"
+  },
+  "code": "11758",
+  "name": "Xã Đại Thắng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775901"
+  },
+  "code": "11761",
+  "name": "Xã Tiên Cường",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775902"
+  },
+  "code": "11764",
+  "name": "Xã Tự Cường",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775903"
+  },
+  "code": "11770",
+  "name": "Xã Quyết Tiến",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775904"
+  },
+  "code": "11773",
+  "name": "Xã Khởi Nghĩa",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775905"
+  },
+  "code": "11776",
+  "name": "Xã Tiên Thanh",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775906"
+  },
+  "code": "11779",
+  "name": "Xã Cấp Tiến",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775907"
+  },
+  "code": "11782",
+  "name": "Xã Kiến Thiết",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775908"
+  },
+  "code": "11785",
+  "name": "Xã Đoàn Lập",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775909"
+  },
+  "code": "11788",
+  "name": "Xã Bạch Đằng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590a"
+  },
+  "code": "11794",
+  "name": "Xã Toàn Thắng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590b"
+  },
+  "code": "11797",
+  "name": "Xã Tiên Thắng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590c"
+  },
+  "code": "11800",
+  "name": "Xã Tiên Minh",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590d"
+  },
+  "code": "11803",
+  "name": "Xã Bắc Hưng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590e"
+  },
+  "code": "11806",
+  "name": "Xã Nam Hưng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577590f"
+  },
+  "code": "11809",
+  "name": "Xã Hùng Thắng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775910"
+  },
+  "code": "11812",
+  "name": "Xã Tây Hưng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775911"
+  },
+  "code": "11815",
+  "name": "Xã Đông Hưng",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775912"
+  },
+  "code": "11821",
+  "name": "Xã Vinh Quang",
+  "district_id": "315"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775913"
+  },
+  "code": "11824",
+  "name": "Thị trấn Vĩnh Bảo",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775914"
+  },
+  "code": "11827",
+  "name": "Xã Dũng Tiến",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775915"
+  },
+  "code": "11830",
+  "name": "Xã Giang Biên",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775916"
+  },
+  "code": "11833",
+  "name": "Xã Thắng Thuỷ",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775917"
+  },
+  "code": "11836",
+  "name": "Xã Trung Lập",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775918"
+  },
+  "code": "11839",
+  "name": "Xã Việt Tiến",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775919"
+  },
+  "code": "11842",
+  "name": "Xã Vĩnh An",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591a"
+  },
+  "code": "11845",
+  "name": "Xã Vĩnh Long",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591b"
+  },
+  "code": "11851",
+  "name": "Xã Hùng Tiến",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591c"
+  },
+  "code": "11854",
+  "name": "Xã An Hoà",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591d"
+  },
+  "code": "11857",
+  "name": "Xã Tân Hưng",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591e"
+  },
+  "code": "11860",
+  "name": "Xã Tân Liên",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577591f"
+  },
+  "code": "11863",
+  "name": "Xã Nhân Hoà",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775920"
+  },
+  "code": "11869",
+  "name": "Xã Hưng Nhân",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775921"
+  },
+  "code": "11872",
+  "name": "Xã Vinh Quang",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775922"
+  },
+  "code": "11878",
+  "name": "Xã Thanh Lương",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775923"
+  },
+  "code": "11881",
+  "name": "Xã Liên Am",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775924"
+  },
+  "code": "11884",
+  "name": "Xã Lý Học",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775925"
+  },
+  "code": "11890",
+  "name": "Xã Hoà Bình",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775926"
+  },
+  "code": "11893",
+  "name": "Xã Tiền Phong",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775927"
+  },
+  "code": "11899",
+  "name": "Xã Cộng Hiền",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775928"
+  },
+  "code": "11902",
+  "name": "Xã Cao Minh",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775929"
+  },
+  "code": "11905",
+  "name": "Xã Cổ Am",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592a"
+  },
+  "code": "11908",
+  "name": "Xã Vĩnh Tiến",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592b"
+  },
+  "code": "11911",
+  "name": "Xã Trấn Dương",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592c"
+  },
+  "code": "11848",
+  "name": "Xã Hiệp Hoà",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592d"
+  },
+  "code": "11866",
+  "name": "Xã Tam Đa",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592e"
+  },
+  "code": "11875",
+  "name": "Xã Đồng Minh",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577592f"
+  },
+  "code": "11896",
+  "name": "Xã Vĩnh Phong",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775930"
+  },
+  "code": "11887",
+  "name": "Xã Tam Cường",
+  "district_id": "316"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775931"
+  },
+  "code": "11914",
+  "name": "Thị trấn Cát Bà",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775932"
+  },
+  "code": "11917",
+  "name": "Thị trấn Cát Hải",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775933"
+  },
+  "code": "11920",
+  "name": "Xã Nghĩa Lộ",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775934"
+  },
+  "code": "11923",
+  "name": "Xã Đồng Bài",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775935"
+  },
+  "code": "11926",
+  "name": "Xã Hoàng Châu",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775936"
+  },
+  "code": "11929",
+  "name": "Xã Văn Phong",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775937"
+  },
+  "code": "11932",
+  "name": "Xã Phù Long",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775938"
+  },
+  "code": "11935",
+  "name": "Xã Gia Luận",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec4999325775939"
+  },
+  "code": "11938",
+  "name": "Xã Hiền Hào",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577593a"
+  },
+  "code": "11941",
+  "name": "Xã Trân Châu",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577593b"
+  },
+  "code": "11944",
+  "name": "Xã Việt Hải",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "676850703ec499932577593c"
+  },
+  "code": "11947",
+  "name": "Xã Xuân Đám",
+  "district_id": "317"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775941"
+  },
+  "code": "20194",
+  "name": "Phường Hòa Hiệp Bắc",
+  "district_id": "490"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775942"
+  },
+  "code": "20195",
+  "name": "Phường Hòa Hiệp Nam",
+  "district_id": "490"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775943"
+  },
+  "code": "20197",
+  "name": "Phường Hòa Khánh Bắc",
+  "district_id": "490"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775944"
+  },
+  "code": "20198",
+  "name": "Phường Hòa Khánh Nam",
+  "district_id": "490"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775945"
+  },
+  "code": "20200",
+  "name": "Phường Hòa Minh",
+  "district_id": "490"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775946"
+  },
+  "code": "20203",
+  "name": "Phường Tam Thuận",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775947"
+  },
+  "code": "20206",
+  "name": "Phường Thanh Khê Tây",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775948"
+  },
+  "code": "20212",
+  "name": "Phường Tân Chính",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775949"
+  },
+  "code": "20218",
+  "name": "Phường Vĩnh Trung",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594a"
+  },
+  "code": "20224",
+  "name": "Phường An Khê",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594b"
+  },
+  "code": "20225",
+  "name": "Phường Hòa Khê",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594c"
+  },
+  "code": "20207",
+  "name": "Phường Thanh Khê Đông",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594d"
+  },
+  "code": "20209",
+  "name": "Phường Xuân Hà",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594e"
+  },
+  "code": "20221",
+  "name": "Phường Thạc Gián",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577594f"
+  },
+  "code": "20215",
+  "name": "Phường Chính Gián",
+  "district_id": "491"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775950"
+  },
+  "code": "20242",
+  "name": "Phường Phước Ninh",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775951"
+  },
+  "code": "20254",
+  "name": "Phường Bình Thuận",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775952"
+  },
+  "code": "20236",
+  "name": "Phường Hải Châu  I",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775953"
+  },
+  "code": "20227",
+  "name": "Phường Thanh Bình",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775954"
+  },
+  "code": "20230",
+  "name": "Phường Thuận Phước",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775955"
+  },
+  "code": "20233",
+  "name": "Phường Thạch Thang",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775956"
+  },
+  "code": "20239",
+  "name": "Phường Hải Châu II",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775957"
+  },
+  "code": "20245",
+  "name": "Phường Hòa Thuận Tây",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775958"
+  },
+  "code": "20246",
+  "name": "Phường Hòa Thuận Đông",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775959"
+  },
+  "code": "20248",
+  "name": "Phường Nam Dương",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595a"
+  },
+  "code": "20251",
+  "name": "Phường Bình Hiên",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595b"
+  },
+  "code": "20257",
+  "name": "Phường Hòa Cường Bắc",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595c"
+  },
+  "code": "20258",
+  "name": "Phường Hòa Cường Nam",
+  "district_id": "492"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595d"
+  },
+  "code": "20263",
+  "name": "Phường Thọ Quang",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595e"
+  },
+  "code": "20266",
+  "name": "Phường Nại Hiên Đông",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577595f"
+  },
+  "code": "20269",
+  "name": "Phường Mân Thái",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775960"
+  },
+  "code": "20272",
+  "name": "Phường An Hải Bắc",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775961"
+  },
+  "code": "20275",
+  "name": "Phường Phước Mỹ",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775962"
+  },
+  "code": "20281",
+  "name": "Phường An Hải Đông",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775963"
+  },
+  "code": "20278",
+  "name": "Phường An Hải Tây",
+  "district_id": "493"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775964"
+  },
+  "code": "20284",
+  "name": "Phường Mỹ An",
+  "district_id": "494"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775965"
+  },
+  "code": "20285",
+  "name": "Phường Khuê Mỹ",
+  "district_id": "494"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775966"
+  },
+  "code": "20287",
+  "name": "Phường Hoà Quý",
+  "district_id": "494"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775967"
+  },
+  "code": "20290",
+  "name": "Phường Hoà Hải",
+  "district_id": "494"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775968"
+  },
+  "code": "20311",
+  "name": "Phường Hòa Thọ Tây",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775969"
+  },
+  "code": "20312",
+  "name": "Phường Hòa Thọ Đông",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596a"
+  },
+  "code": "20314",
+  "name": "Phường Hòa Xuân",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596b"
+  },
+  "code": "20260",
+  "name": "Phường Khuê Trung",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596c"
+  },
+  "code": "20305",
+  "name": "Phường Hòa Phát",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596d"
+  },
+  "code": "20306",
+  "name": "Phường Hòa An",
+  "district_id": "495"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596e"
+  },
+  "code": "20308",
+  "name": "Xã Hòa Nhơn",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec499932577596f"
+  },
+  "code": "20317",
+  "name": "Xã Hòa Phú",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775970"
+  },
+  "code": "20320",
+  "name": "Xã Hòa Phong",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775971"
+  },
+  "code": "20323",
+  "name": "Xã Hòa Châu",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775972"
+  },
+  "code": "20326",
+  "name": "Xã Hòa Tiến",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775973"
+  },
+  "code": "20329",
+  "name": "Xã Hòa Phước",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775974"
+  },
+  "code": "20332",
+  "name": "Xã Hòa Khương",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775975"
+  },
+  "code": "20293",
+  "name": "Xã Hòa Bắc",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775976"
+  },
+  "code": "20296",
+  "name": "Xã Hòa Liên",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775977"
+  },
+  "code": "20299",
+  "name": "Xã Hòa Ninh",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "6768511e3ec4999325775978"
+  },
+  "code": "20302",
+  "name": "Xã Hòa Sơn",
+  "district_id": "497"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577597b"
+  },
+  "code": "26734",
+  "name": "Phường Tân Định",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577597c"
+  },
+  "code": "26737",
+  "name": "Phường Đa Kao",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577597d"
+  },
+  "code": "26740",
+  "name": "Phường Bến Nghé",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577597e"
+  },
+  "code": "26743",
+  "name": "Phường Bến Thành",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577597f"
+  },
+  "code": "26746",
+  "name": "Phường Nguyễn Thái Bình",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775980"
+  },
+  "code": "26749",
+  "name": "Phường Phạm Ngũ Lão",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775981"
+  },
+  "code": "26752",
+  "name": "Phường Cầu Ông Lãnh",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775982"
+  },
+  "code": "26755",
+  "name": "Phường Cô Giang",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775983"
+  },
+  "code": "26758",
+  "name": "Phường Nguyễn Cư Trinh",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775984"
+  },
+  "code": "26761",
+  "name": "Phường Cầu Kho",
+  "district_id": "760"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775985"
+  },
+  "code": "26764",
+  "name": "Phường Thạnh Xuân",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775986"
+  },
+  "code": "26767",
+  "name": "Phường Thạnh Lộc",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775987"
+  },
+  "code": "26770",
+  "name": "Phường Hiệp Thành",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775988"
+  },
+  "code": "26773",
+  "name": "Phường Thới An",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775989"
+  },
+  "code": "26776",
+  "name": "Phường Tân Chánh Hiệp",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598a"
+  },
+  "code": "26779",
+  "name": "Phường An Phú Đông",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598b"
+  },
+  "code": "26782",
+  "name": "Phường Tân Thới Hiệp",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598c"
+  },
+  "code": "26785",
+  "name": "Phường Trung Mỹ Tây",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598d"
+  },
+  "code": "26787",
+  "name": "Phường Tân Hưng Thuận",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598e"
+  },
+  "code": "26788",
+  "name": "Phường Đông Hưng Thuận",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577598f"
+  },
+  "code": "26791",
+  "name": "Phường Tân Thới Nhất",
+  "district_id": "761"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775990"
+  },
+  "code": "26869",
+  "name": "Phường 15",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775991"
+  },
+  "code": "26872",
+  "name": "Phường 13",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775992"
+  },
+  "code": "26875",
+  "name": "Phường 17",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775993"
+  },
+  "code": "26876",
+  "name": "Phường 6",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775994"
+  },
+  "code": "26878",
+  "name": "Phường 16",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775995"
+  },
+  "code": "26881",
+  "name": "Phường 12",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775996"
+  },
+  "code": "26882",
+  "name": "Phường 14",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775997"
+  },
+  "code": "26884",
+  "name": "Phường 10",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775998"
+  },
+  "code": "26887",
+  "name": "Phường 05",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775999"
+  },
+  "code": "26890",
+  "name": "Phường 07",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599a"
+  },
+  "code": "26893",
+  "name": "Phường 04",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599b"
+  },
+  "code": "26896",
+  "name": "Phường 01",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599c"
+  },
+  "code": "26897",
+  "name": "Phường 9",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599d"
+  },
+  "code": "26898",
+  "name": "Phường 8",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599e"
+  },
+  "code": "26899",
+  "name": "Phường 11",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec499932577599f"
+  },
+  "code": "26902",
+  "name": "Phường 03",
+  "district_id": "764"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a0"
+  },
+  "code": "26905",
+  "name": "Phường 13",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a1"
+  },
+  "code": "26908",
+  "name": "Phường 11",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a2"
+  },
+  "code": "26911",
+  "name": "Phường 27",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a3"
+  },
+  "code": "26914",
+  "name": "Phường 26",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a4"
+  },
+  "code": "26917",
+  "name": "Phường 12",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a5"
+  },
+  "code": "26920",
+  "name": "Phường 25",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a6"
+  },
+  "code": "26923",
+  "name": "Phường 05",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a7"
+  },
+  "code": "26926",
+  "name": "Phường 07",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a8"
+  },
+  "code": "26929",
+  "name": "Phường 24",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759a9"
+  },
+  "code": "26932",
+  "name": "Phường 06",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759aa"
+  },
+  "code": "26935",
+  "name": "Phường 14",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ab"
+  },
+  "code": "26938",
+  "name": "Phường 15",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ac"
+  },
+  "code": "26941",
+  "name": "Phường 02",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ad"
+  },
+  "code": "26944",
+  "name": "Phường 01",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ae"
+  },
+  "code": "26947",
+  "name": "Phường 03",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759af"
+  },
+  "code": "26950",
+  "name": "Phường 17",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b0"
+  },
+  "code": "26953",
+  "name": "Phường 21",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b1"
+  },
+  "code": "26956",
+  "name": "Phường 22",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b2"
+  },
+  "code": "26959",
+  "name": "Phường 19",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b3"
+  },
+  "code": "26962",
+  "name": "Phường 28",
+  "district_id": "765"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b4"
+  },
+  "code": "26965",
+  "name": "Phường 02",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b5"
+  },
+  "code": "26968",
+  "name": "Phường 04",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b6"
+  },
+  "code": "26971",
+  "name": "Phường 12",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b7"
+  },
+  "code": "26974",
+  "name": "Phường 13",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b8"
+  },
+  "code": "26977",
+  "name": "Phường 01",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759b9"
+  },
+  "code": "26980",
+  "name": "Phường 03",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ba"
+  },
+  "code": "26983",
+  "name": "Phường 11",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759bb"
+  },
+  "code": "26986",
+  "name": "Phường 07",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759bc"
+  },
+  "code": "26989",
+  "name": "Phường 05",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759bd"
+  },
+  "code": "26992",
+  "name": "Phường 10",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759be"
+  },
+  "code": "26995",
+  "name": "Phường 06",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759bf"
+  },
+  "code": "26998",
+  "name": "Phường 08",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c0"
+  },
+  "code": "27001",
+  "name": "Phường 09",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c1"
+  },
+  "code": "27004",
+  "name": "Phường 14",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c2"
+  },
+  "code": "27007",
+  "name": "Phường 15",
+  "district_id": "766"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c3"
+  },
+  "code": "27010",
+  "name": "Phường Tân Sơn Nhì",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c4"
+  },
+  "code": "27013",
+  "name": "Phường Tây Thạnh",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c5"
+  },
+  "code": "27016",
+  "name": "Phường Sơn Kỳ",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c6"
+  },
+  "code": "27019",
+  "name": "Phường Tân Quý",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c7"
+  },
+  "code": "27022",
+  "name": "Phường Tân Thành",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c8"
+  },
+  "code": "27025",
+  "name": "Phường Phú Thọ Hòa",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759c9"
+  },
+  "code": "27028",
+  "name": "Phường Phú Thạnh",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ca"
+  },
+  "code": "27031",
+  "name": "Phường Phú Trung",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759cb"
+  },
+  "code": "27034",
+  "name": "Phường Hòa Thạnh",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759cc"
+  },
+  "code": "27037",
+  "name": "Phường Hiệp Tân",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759cd"
+  },
+  "code": "27040",
+  "name": "Phường Tân Thới Hòa",
+  "district_id": "767"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ce"
+  },
+  "code": "27043",
+  "name": "Phường 04",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759cf"
+  },
+  "code": "27046",
+  "name": "Phường 05",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d0"
+  },
+  "code": "27049",
+  "name": "Phường 09",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d1"
+  },
+  "code": "27052",
+  "name": "Phường 07",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d2"
+  },
+  "code": "27055",
+  "name": "Phường 03",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d3"
+  },
+  "code": "27058",
+  "name": "Phường 01",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d4"
+  },
+  "code": "27061",
+  "name": "Phường 02",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d5"
+  },
+  "code": "27064",
+  "name": "Phường 08",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d6"
+  },
+  "code": "27067",
+  "name": "Phường 15",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d7"
+  },
+  "code": "27070",
+  "name": "Phường 10",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d8"
+  },
+  "code": "27073",
+  "name": "Phường 11",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759d9"
+  },
+  "code": "27076",
+  "name": "Phường 17",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759da"
+  },
+  "code": "27085",
+  "name": "Phường 13",
+  "district_id": "768"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759db"
+  },
+  "code": "27088",
+  "name": "Phường Thảo Điền",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759dc"
+  },
+  "code": "27091",
+  "name": "Phường An Phú",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759dd"
+  },
+  "code": "27094",
+  "name": "Phường An Khánh",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759de"
+  },
+  "code": "27097",
+  "name": "Phường Bình Trưng Đông",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759df"
+  },
+  "code": "27100",
+  "name": "Phường Bình Trưng Tây",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e0"
+  },
+  "code": "27109",
+  "name": "Phường Cát Lái",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e1"
+  },
+  "code": "27112",
+  "name": "Phường Thạnh Mỹ Lợi",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e2"
+  },
+  "code": "27115",
+  "name": "Phường An Lợi Đông",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e3"
+  },
+  "code": "27118",
+  "name": "Phường Thủ Thiêm",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e4"
+  },
+  "code": "26794",
+  "name": "Phường Linh Xuân",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e5"
+  },
+  "code": "26797",
+  "name": "Phường Bình Chiểu",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e6"
+  },
+  "code": "26800",
+  "name": "Phường Linh Trung",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e7"
+  },
+  "code": "26803",
+  "name": "Phường Tam Bình",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e8"
+  },
+  "code": "26806",
+  "name": "Phường Tam Phú",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759e9"
+  },
+  "code": "26809",
+  "name": "Phường Hiệp Bình Phước",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ea"
+  },
+  "code": "26812",
+  "name": "Phường Hiệp Bình Chánh",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759eb"
+  },
+  "code": "26815",
+  "name": "Phường Linh Chiểu",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ec"
+  },
+  "code": "26818",
+  "name": "Phường Linh Tây",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ed"
+  },
+  "code": "26821",
+  "name": "Phường Linh Đông",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ee"
+  },
+  "code": "26824",
+  "name": "Phường Bình Thọ",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ef"
+  },
+  "code": "26827",
+  "name": "Phường Trường Thọ",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f0"
+  },
+  "code": "26830",
+  "name": "Phường Long Bình",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f1"
+  },
+  "code": "26833",
+  "name": "Phường Long Thạnh Mỹ",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f2"
+  },
+  "code": "26836",
+  "name": "Phường Tân Phú",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f3"
+  },
+  "code": "26839",
+  "name": "Phường Hiệp Phú",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f4"
+  },
+  "code": "26842",
+  "name": "Phường Tăng Nhơn Phú A",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f5"
+  },
+  "code": "26845",
+  "name": "Phường Tăng Nhơn Phú B",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f6"
+  },
+  "code": "26848",
+  "name": "Phường Phước Long B",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f7"
+  },
+  "code": "26851",
+  "name": "Phường Phước Long A",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f8"
+  },
+  "code": "26854",
+  "name": "Phường Trường Thạnh",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759f9"
+  },
+  "code": "26857",
+  "name": "Phường Long Phước",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759fa"
+  },
+  "code": "26860",
+  "name": "Phường Long Trường",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759fb"
+  },
+  "code": "26863",
+  "name": "Phường Phước Bình",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759fc"
+  },
+  "code": "26866",
+  "name": "Phường Phú Hữu",
+  "district_id": "769"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759fd"
+  },
+  "code": "27127",
+  "name": "Phường 14",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759fe"
+  },
+  "code": "27130",
+  "name": "Phường 12",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec49993257759ff"
+  },
+  "code": "27133",
+  "name": "Phường 11",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a00"
+  },
+  "code": "27136",
+  "name": "Phường 13",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a01"
+  },
+  "code": "27139",
+  "name": "Phường Võ Thị Sáu",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a02"
+  },
+  "code": "27142",
+  "name": "Phường 09",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a03"
+  },
+  "code": "27145",
+  "name": "Phường 10",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a04"
+  },
+  "code": "27148",
+  "name": "Phường 04",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a05"
+  },
+  "code": "27151",
+  "name": "Phường 05",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a06"
+  },
+  "code": "27154",
+  "name": "Phường 03",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a07"
+  },
+  "code": "27157",
+  "name": "Phường 02",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a08"
+  },
+  "code": "27160",
+  "name": "Phường 01",
+  "district_id": "770"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a09"
+  },
+  "code": "27163",
+  "name": "Phường 15",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0a"
+  },
+  "code": "27166",
+  "name": "Phường 13",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0b"
+  },
+  "code": "27169",
+  "name": "Phường 14",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0c"
+  },
+  "code": "27172",
+  "name": "Phường 12",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0d"
+  },
+  "code": "27175",
+  "name": "Phường 11",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0e"
+  },
+  "code": "27178",
+  "name": "Phường 10",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a0f"
+  },
+  "code": "27181",
+  "name": "Phường 09",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a10"
+  },
+  "code": "27184",
+  "name": "Phường 01",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a11"
+  },
+  "code": "27187",
+  "name": "Phường 08",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a12"
+  },
+  "code": "27190",
+  "name": "Phường 02",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a13"
+  },
+  "code": "27193",
+  "name": "Phường 04",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a14"
+  },
+  "code": "27196",
+  "name": "Phường 07",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a15"
+  },
+  "code": "27199",
+  "name": "Phường 05",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a16"
+  },
+  "code": "27202",
+  "name": "Phường 06",
+  "district_id": "771"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a17"
+  },
+  "code": "27208",
+  "name": "Phường 15",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a18"
+  },
+  "code": "27211",
+  "name": "Phường 05",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a19"
+  },
+  "code": "27214",
+  "name": "Phường 14",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1a"
+  },
+  "code": "27217",
+  "name": "Phường 11",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1b"
+  },
+  "code": "27220",
+  "name": "Phường 03",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1c"
+  },
+  "code": "27223",
+  "name": "Phường 10",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1d"
+  },
+  "code": "27226",
+  "name": "Phường 13",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1e"
+  },
+  "code": "27229",
+  "name": "Phường 08",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a1f"
+  },
+  "code": "27232",
+  "name": "Phường 09",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a20"
+  },
+  "code": "27235",
+  "name": "Phường 12",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a21"
+  },
+  "code": "27238",
+  "name": "Phường 07",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a22"
+  },
+  "code": "27241",
+  "name": "Phường 06",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a23"
+  },
+  "code": "27244",
+  "name": "Phường 04",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a24"
+  },
+  "code": "27247",
+  "name": "Phường 01",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a25"
+  },
+  "code": "27250",
+  "name": "Phường 02",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a26"
+  },
+  "code": "27253",
+  "name": "Phường 16",
+  "district_id": "772"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a27"
+  },
+  "code": "27259",
+  "name": "Phường 13",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a28"
+  },
+  "code": "27262",
+  "name": "Phường 09",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a29"
+  },
+  "code": "27265",
+  "name": "Phường 06",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2a"
+  },
+  "code": "27268",
+  "name": "Phường 08",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2b"
+  },
+  "code": "27271",
+  "name": "Phường 10",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2c"
+  },
+  "code": "27277",
+  "name": "Phường 18",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2d"
+  },
+  "code": "27280",
+  "name": "Phường 14",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2e"
+  },
+  "code": "27283",
+  "name": "Phường 04",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a2f"
+  },
+  "code": "27286",
+  "name": "Phường 03",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a30"
+  },
+  "code": "27289",
+  "name": "Phường 16",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a31"
+  },
+  "code": "27292",
+  "name": "Phường 02",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a32"
+  },
+  "code": "27295",
+  "name": "Phường 15",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a33"
+  },
+  "code": "27298",
+  "name": "Phường 01",
+  "district_id": "773"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a34"
+  },
+  "code": "27301",
+  "name": "Phường 04",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a35"
+  },
+  "code": "27304",
+  "name": "Phường 09",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a36"
+  },
+  "code": "27307",
+  "name": "Phường 03",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a37"
+  },
+  "code": "27310",
+  "name": "Phường 12",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a38"
+  },
+  "code": "27313",
+  "name": "Phường 02",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a39"
+  },
+  "code": "27316",
+  "name": "Phường 08",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3a"
+  },
+  "code": "27322",
+  "name": "Phường 07",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3b"
+  },
+  "code": "27325",
+  "name": "Phường 01",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3c"
+  },
+  "code": "27328",
+  "name": "Phường 11",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3d"
+  },
+  "code": "27331",
+  "name": "Phường 14",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3e"
+  },
+  "code": "27334",
+  "name": "Phường 05",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a3f"
+  },
+  "code": "27337",
+  "name": "Phường 06",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a40"
+  },
+  "code": "27340",
+  "name": "Phường 10",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a41"
+  },
+  "code": "27343",
+  "name": "Phường 13",
+  "district_id": "774"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a42"
+  },
+  "code": "27346",
+  "name": "Phường 14",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a43"
+  },
+  "code": "27349",
+  "name": "Phường 13",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a44"
+  },
+  "code": "27352",
+  "name": "Phường 09",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a45"
+  },
+  "code": "27355",
+  "name": "Phường 06",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a46"
+  },
+  "code": "27358",
+  "name": "Phường 12",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a47"
+  },
+  "code": "27361",
+  "name": "Phường 05",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a48"
+  },
+  "code": "27364",
+  "name": "Phường 11",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a49"
+  },
+  "code": "27367",
+  "name": "Phường 02",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4a"
+  },
+  "code": "27370",
+  "name": "Phường 01",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4b"
+  },
+  "code": "27373",
+  "name": "Phường 04",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4c"
+  },
+  "code": "27376",
+  "name": "Phường 08",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4d"
+  },
+  "code": "27379",
+  "name": "Phường 03",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4e"
+  },
+  "code": "27382",
+  "name": "Phường 07",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a4f"
+  },
+  "code": "27385",
+  "name": "Phường 10",
+  "district_id": "775"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a50"
+  },
+  "code": "27388",
+  "name": "Phường 08",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a51"
+  },
+  "code": "27391",
+  "name": "Phường 02",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a52"
+  },
+  "code": "27394",
+  "name": "Phường 01",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a53"
+  },
+  "code": "27397",
+  "name": "Phường 03",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a54"
+  },
+  "code": "27400",
+  "name": "Phường 11",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a55"
+  },
+  "code": "27403",
+  "name": "Phường 09",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a56"
+  },
+  "code": "27406",
+  "name": "Phường 10",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a57"
+  },
+  "code": "27409",
+  "name": "Phường 04",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a58"
+  },
+  "code": "27412",
+  "name": "Phường 13",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a59"
+  },
+  "code": "27415",
+  "name": "Phường 12",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5a"
+  },
+  "code": "27418",
+  "name": "Phường 05",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5b"
+  },
+  "code": "27421",
+  "name": "Phường 14",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5c"
+  },
+  "code": "27424",
+  "name": "Phường 06",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5d"
+  },
+  "code": "27427",
+  "name": "Phường 15",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5e"
+  },
+  "code": "27430",
+  "name": "Phường 16",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a5f"
+  },
+  "code": "27433",
+  "name": "Phường 07",
+  "district_id": "776"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a60"
+  },
+  "code": "27436",
+  "name": "Phường Bình Hưng Hòa",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a61"
+  },
+  "code": "27439",
+  "name": "Phường Bình Hưng Hoà A",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a62"
+  },
+  "code": "27442",
+  "name": "Phường Bình Hưng Hoà B",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a63"
+  },
+  "code": "27445",
+  "name": "Phường Bình Trị Đông",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a64"
+  },
+  "code": "27448",
+  "name": "Phường Bình Trị Đông A",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a65"
+  },
+  "code": "27451",
+  "name": "Phường Bình Trị Đông B",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a66"
+  },
+  "code": "27454",
+  "name": "Phường Tân Tạo",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a67"
+  },
+  "code": "27457",
+  "name": "Phường Tân Tạo A",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a68"
+  },
+  "code": "27460",
+  "name": "Phường  An Lạc",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a69"
+  },
+  "code": "27463",
+  "name": "Phường An Lạc A",
+  "district_id": "777"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6a"
+  },
+  "code": "27466",
+  "name": "Phường Tân Thuận Đông",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6b"
+  },
+  "code": "27469",
+  "name": "Phường Tân Thuận Tây",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6c"
+  },
+  "code": "27472",
+  "name": "Phường Tân Kiểng",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6d"
+  },
+  "code": "27475",
+  "name": "Phường Tân Hưng",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6e"
+  },
+  "code": "27478",
+  "name": "Phường Bình Thuận",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a6f"
+  },
+  "code": "27481",
+  "name": "Phường Tân Quy",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a70"
+  },
+  "code": "27484",
+  "name": "Phường Phú Thuận",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a71"
+  },
+  "code": "27487",
+  "name": "Phường Tân Phú",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a72"
+  },
+  "code": "27490",
+  "name": "Phường Tân Phong",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a73"
+  },
+  "code": "27493",
+  "name": "Phường Phú Mỹ",
+  "district_id": "778"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a74"
+  },
+  "code": "27496",
+  "name": "Thị trấn Củ Chi",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a75"
+  },
+  "code": "27499",
+  "name": "Xã Phú Mỹ Hưng",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a76"
+  },
+  "code": "27502",
+  "name": "Xã An Phú",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a77"
+  },
+  "code": "27505",
+  "name": "Xã Trung Lập Thượng",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a78"
+  },
+  "code": "27508",
+  "name": "Xã An Nhơn Tây",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a79"
+  },
+  "code": "27511",
+  "name": "Xã Nhuận Đức",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7a"
+  },
+  "code": "27514",
+  "name": "Xã Phạm Văn Cội",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7b"
+  },
+  "code": "27517",
+  "name": "Xã Phú Hòa Đông",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7c"
+  },
+  "code": "27520",
+  "name": "Xã Trung Lập Hạ",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7d"
+  },
+  "code": "27523",
+  "name": "Xã Trung An",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7e"
+  },
+  "code": "27526",
+  "name": "Xã Phước Thạnh",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a7f"
+  },
+  "code": "27529",
+  "name": "Xã Phước Hiệp",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a80"
+  },
+  "code": "27532",
+  "name": "Xã Tân An Hội",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a81"
+  },
+  "code": "27535",
+  "name": "Xã Phước Vĩnh An",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a82"
+  },
+  "code": "27538",
+  "name": "Xã Thái Mỹ",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a83"
+  },
+  "code": "27541",
+  "name": "Xã Tân Thạnh Tây",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a84"
+  },
+  "code": "27544",
+  "name": "Xã Hòa Phú",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a85"
+  },
+  "code": "27547",
+  "name": "Xã Tân Thạnh Đông",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a86"
+  },
+  "code": "27550",
+  "name": "Xã Bình Mỹ",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a87"
+  },
+  "code": "27553",
+  "name": "Xã Tân Phú Trung",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a88"
+  },
+  "code": "27556",
+  "name": "Xã Tân Thông Hội",
+  "district_id": "783"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a89"
+  },
+  "code": "27559",
+  "name": "Thị trấn Hóc Môn",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8a"
+  },
+  "code": "27562",
+  "name": "Xã Tân Hiệp",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8b"
+  },
+  "code": "27565",
+  "name": "Xã Nhị Bình",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8c"
+  },
+  "code": "27568",
+  "name": "Xã Đông Thạnh",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8d"
+  },
+  "code": "27571",
+  "name": "Xã Tân Thới Nhì",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8e"
+  },
+  "code": "27574",
+  "name": "Xã Thới Tam Thôn",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a8f"
+  },
+  "code": "27577",
+  "name": "Xã Xuân Thới Sơn",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a90"
+  },
+  "code": "27580",
+  "name": "Xã Tân Xuân",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a91"
+  },
+  "code": "27583",
+  "name": "Xã Xuân Thới Đông",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a92"
+  },
+  "code": "27586",
+  "name": "Xã Trung Chánh",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a93"
+  },
+  "code": "27589",
+  "name": "Xã Xuân Thới Thượng",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a94"
+  },
+  "code": "27592",
+  "name": "Xã Bà Điểm",
+  "district_id": "784"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a95"
+  },
+  "code": "27595",
+  "name": "Thị trấn Tân Túc",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a96"
+  },
+  "code": "27598",
+  "name": "Xã Phạm Văn Hai",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a97"
+  },
+  "code": "27601",
+  "name": "Xã Vĩnh Lộc A",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a98"
+  },
+  "code": "27604",
+  "name": "Xã Vĩnh Lộc B",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a99"
+  },
+  "code": "27607",
+  "name": "Xã Bình Lợi",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9a"
+  },
+  "code": "27610",
+  "name": "Xã Lê Minh Xuân",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9b"
+  },
+  "code": "27613",
+  "name": "Xã Tân Nhựt",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9c"
+  },
+  "code": "27616",
+  "name": "Xã Tân Kiên",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9d"
+  },
+  "code": "27619",
+  "name": "Xã Bình Hưng",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9e"
+  },
+  "code": "27622",
+  "name": "Xã Phong Phú",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775a9f"
+  },
+  "code": "27625",
+  "name": "Xã An Phú Tây",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa0"
+  },
+  "code": "27628",
+  "name": "Xã Hưng Long",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa1"
+  },
+  "code": "27631",
+  "name": "Xã Đa Phước",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa2"
+  },
+  "code": "27634",
+  "name": "Xã Tân Quý Tây",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa3"
+  },
+  "code": "27637",
+  "name": "Xã Bình Chánh",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa4"
+  },
+  "code": "27640",
+  "name": "Xã Quy Đức",
+  "district_id": "785"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa5"
+  },
+  "code": "27643",
+  "name": "Thị trấn Nhà Bè",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa6"
+  },
+  "code": "27646",
+  "name": "Xã Phước Kiển",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa7"
+  },
+  "code": "27649",
+  "name": "Xã Phước Lộc",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa8"
+  },
+  "code": "27652",
+  "name": "Xã Nhơn Đức",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aa9"
+  },
+  "code": "27655",
+  "name": "Xã Phú Xuân",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aaa"
+  },
+  "code": "27658",
+  "name": "Xã Long Thới",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aab"
+  },
+  "code": "27661",
+  "name": "Xã Hiệp Phước",
+  "district_id": "786"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aac"
+  },
+  "code": "27664",
+  "name": "Thị trấn Cần Thạnh",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aad"
+  },
+  "code": "27667",
+  "name": "Xã Bình Khánh",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aae"
+  },
+  "code": "27670",
+  "name": "Xã Tam Thôn Hiệp",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775aaf"
+  },
+  "code": "27673",
+  "name": "Xã An Thới Đông",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775ab0"
+  },
+  "code": "27676",
+  "name": "Xã Thạnh An",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775ab1"
+  },
+  "code": "27679",
+  "name": "Xã Long Hòa",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676851bd3ec4999325775ab2"
+  },
+  "code": "27682",
+  "name": "Xã Lý Nhơn",
+  "district_id": "787"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ab7"
+  },
+  "code": "31117",
+  "name": "Phường Cái Khế",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ab8"
+  },
+  "code": "31120",
+  "name": "Phường An Hòa",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ab9"
+  },
+  "code": "31123",
+  "name": "Phường Thới Bình",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aba"
+  },
+  "code": "31135",
+  "name": "Phường Tân An",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775abb"
+  },
+  "code": "31144",
+  "name": "Phường Xuân Khánh",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775abc"
+  },
+  "code": "31147",
+  "name": "Phường Hưng Lợi",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775abd"
+  },
+  "code": "31149",
+  "name": "Phường An Khánh",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775abe"
+  },
+  "code": "31150",
+  "name": "Phường An Bình",
+  "district_id": "916"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775abf"
+  },
+  "code": "31153",
+  "name": "Phường Châu Văn Liêm",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac0"
+  },
+  "code": "31154",
+  "name": "Phường Thới Hòa",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac1"
+  },
+  "code": "31156",
+  "name": "Phường Thới Long",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac2"
+  },
+  "code": "31157",
+  "name": "Phường Long Hưng",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac3"
+  },
+  "code": "31159",
+  "name": "Phường Thới An",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac4"
+  },
+  "code": "31162",
+  "name": "Phường Phước Thới",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac5"
+  },
+  "code": "31165",
+  "name": "Phường Trường Lạc",
+  "district_id": "917"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac6"
+  },
+  "code": "31168",
+  "name": "Phường Bình Thủy",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac7"
+  },
+  "code": "31169",
+  "name": "Phường Trà An",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac8"
+  },
+  "code": "31171",
+  "name": "Phường Trà Nóc",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ac9"
+  },
+  "code": "31174",
+  "name": "Phường Thới An Đông",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aca"
+  },
+  "code": "31177",
+  "name": "Phường An Thới",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775acb"
+  },
+  "code": "31178",
+  "name": "Phường Bùi Hữu Nghĩa",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775acc"
+  },
+  "code": "31180",
+  "name": "Phường Long Hòa",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775acd"
+  },
+  "code": "31183",
+  "name": "Phường Long Tuyền",
+  "district_id": "918"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ace"
+  },
+  "code": "31186",
+  "name": "Phường Lê Bình",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775acf"
+  },
+  "code": "31189",
+  "name": "Phường Hưng Phú",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad0"
+  },
+  "code": "31192",
+  "name": "Phường Hưng Thạnh",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad1"
+  },
+  "code": "31195",
+  "name": "Phường Ba Láng",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad2"
+  },
+  "code": "31198",
+  "name": "Phường Thường Thạnh",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad3"
+  },
+  "code": "31201",
+  "name": "Phường Phú Thứ",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad4"
+  },
+  "code": "31204",
+  "name": "Phường Tân Phú",
+  "district_id": "919"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad5"
+  },
+  "code": "31207",
+  "name": "Phường Thốt Nốt",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad6"
+  },
+  "code": "31210",
+  "name": "Phường Thới Thuận",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad7"
+  },
+  "code": "31227",
+  "name": "Phường Tân Hưng",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad8"
+  },
+  "code": "31228",
+  "name": "Phường Thuận Hưng",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ad9"
+  },
+  "code": "31212",
+  "name": "Phường Thuận An",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ada"
+  },
+  "code": "31213",
+  "name": "Phường Tân Lộc",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775adb"
+  },
+  "code": "31216",
+  "name": "Phường Trung Nhứt",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775adc"
+  },
+  "code": "31217",
+  "name": "Phường Thạnh Hoà",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775add"
+  },
+  "code": "31219",
+  "name": "Phường Trung Kiên",
+  "district_id": "923"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ade"
+  },
+  "code": "31231",
+  "name": "Thị trấn Thanh An",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775adf"
+  },
+  "code": "31232",
+  "name": "Thị trấn Vĩnh Thạnh",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae0"
+  },
+  "code": "31234",
+  "name": "Xã Thạnh Mỹ",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae1"
+  },
+  "code": "31237",
+  "name": "Xã Vĩnh Trinh",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae2"
+  },
+  "code": "31240",
+  "name": "Xã Thạnh An",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae3"
+  },
+  "code": "31241",
+  "name": "Xã Thạnh Tiến",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae4"
+  },
+  "code": "31243",
+  "name": "Xã Thạnh Thắng",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae5"
+  },
+  "code": "31244",
+  "name": "Xã Thạnh Lợi",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae6"
+  },
+  "code": "31246",
+  "name": "Xã Thạnh Qưới",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae7"
+  },
+  "code": "31252",
+  "name": "Xã Thạnh Lộc",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae8"
+  },
+  "code": "31211",
+  "name": "Xã Vĩnh Bình",
+  "district_id": "924"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775ae9"
+  },
+  "code": "31255",
+  "name": "Xã Trung Hưng",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aea"
+  },
+  "code": "31273",
+  "name": "Xã Đông Hiệp",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aeb"
+  },
+  "code": "31274",
+  "name": "Xã Đông Thắng",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aec"
+  },
+  "code": "31276",
+  "name": "Xã Thới Đông",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aed"
+  },
+  "code": "31277",
+  "name": "Xã Thới Xuân",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aee"
+  },
+  "code": "31249",
+  "name": "Xã Thạnh Phú",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aef"
+  },
+  "code": "31222",
+  "name": "Xã Trung An",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af0"
+  },
+  "code": "31225",
+  "name": "Xã Trung Thạnh",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af1"
+  },
+  "code": "31261",
+  "name": "Thị trấn Cờ Đỏ",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af2"
+  },
+  "code": "31264",
+  "name": "Xã Thới Hưng",
+  "district_id": "925"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af3"
+  },
+  "code": "31299",
+  "name": "Thị trấn Phong Điền",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af4"
+  },
+  "code": "31300",
+  "name": "Xã Nhơn Ái",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af5"
+  },
+  "code": "31303",
+  "name": "Xã Giai Xuân",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af6"
+  },
+  "code": "31306",
+  "name": "Xã Tân Thới",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af7"
+  },
+  "code": "31309",
+  "name": "Xã Trường Long",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af8"
+  },
+  "code": "31312",
+  "name": "Xã Mỹ Khánh",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775af9"
+  },
+  "code": "31315",
+  "name": "Xã Nhơn Nghĩa",
+  "district_id": "926"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775afa"
+  },
+  "code": "31258",
+  "name": "Thị trấn Thới Lai",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775afb"
+  },
+  "code": "31279",
+  "name": "Xã Đông Bình",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775afc"
+  },
+  "code": "31282",
+  "name": "Xã Đông Thuận",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775afd"
+  },
+  "code": "31285",
+  "name": "Xã Thới Tân",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775afe"
+  },
+  "code": "31286",
+  "name": "Xã Trường Thắng",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775aff"
+  },
+  "code": "31288",
+  "name": "Xã Định Môn",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b00"
+  },
+  "code": "31291",
+  "name": "Xã Trường Thành",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b01"
+  },
+  "code": "31294",
+  "name": "Xã Trường Xuân",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b02"
+  },
+  "code": "31297",
+  "name": "Xã Trường Xuân A",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b03"
+  },
+  "code": "31298",
+  "name": "Xã Trường Xuân B",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b04"
+  },
+  "code": "31267",
+  "name": "Xã Thới Thạnh",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b05"
+  },
+  "code": "31268",
+  "name": "Xã Tân Thạnh",
+  "district_id": "927"
+},
+{
+  "_id": {
+    "$oid": "676852423ec4999325775b06"
+  },
+  "code": "31270",
+  "name": "Xã Xuân Thắng",
+  "district_id": "927"
+}]
