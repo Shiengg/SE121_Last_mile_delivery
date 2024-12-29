@@ -4,20 +4,36 @@ const vehicleTypeSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
+        unique: true
     },
     name: {
         type: String,
-        required: true,
-        trim: true
+        required: true
+    },
+    description: {
+        type: String
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     }
-}, {
-    collection: 'VehicleType',
-    timestamps: true
 });
 
-// Index
-vehicleTypeSchema.index({ code: 1 }, { unique: true });
+// Middleware để tự động cập nhật updated_at
+vehicleTypeSchema.pre('save', function(next) {
+    this.updated_at = new Date();
+    next();
+});
 
-module.exports = mongoose.model('VehicleType', vehicleTypeSchema); 
+const VehicleType = mongoose.model('VehicleType', vehicleTypeSchema);
+
+module.exports = VehicleType; 

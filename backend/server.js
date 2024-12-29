@@ -3,9 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./utils/dbConnect');
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const mongoose = require('mongoose');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Thêm middleware CORS
 app.use(cors());
@@ -32,6 +34,7 @@ mongoose.connection.on('connected', async () => {
 
 // Kết nối routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Route mẫu
 app.get('/', (req, res) => {
@@ -41,6 +44,29 @@ app.get('/', (req, res) => {
 // Kiểm tra biến môi trường
 console.log('MongoDB URI:', process.env.MONGODB_URI);
 
-// Khởi chạy server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Kết nối MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        
+        // Log all registered routes
+        console.log('Available routes:');
+        app._router.stack
+            .filter(r => r.route)
+            .forEach(r => {
+                console.log(`${Object.keys(r.route.methods)} ${r.route.path}`);
+            });
+            
+        // Khởi động server
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('MongoDB connection error:', err);
+    });
+
+// Xử lý lỗi không bắt được
+process.on('unhandledRejection', (err) => {
+    console.log('Unhandled Rejection:', err);
+});

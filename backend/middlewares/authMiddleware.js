@@ -1,28 +1,58 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
+const User = require('../models/User');
 
-// Middleware kiểm tra xác thực
-const authenticate = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ message: 'Access Denied' });
-  }
+const authenticate = async (req, res, next) => {
+    try {
+        // Lấy token từ header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({
+                success: false,
+                message: 'No token provided'
+            });
+        }
 
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Gắn thông tin user vào request
-    next();
-  } catch (error) {
-    res.status(403).json({ message: 'Invalid Token' });
-  }
+        const token = authHeader.split(' ')[1];
+        
+        // Verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('Decoded token:', decoded); // Debug log
+
+        // Tìm user
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // Gán user vào request
+        req.user = user;
+        next();
+    } catch (error) {
+        console.error('Auth error:', error); // Debug log
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid or expired token',
+            error: error.message
+        });
+    }
 };
 
-// Middleware phân quyền
-const authorize = (roles) => (req, res, next) => {
-  if (!roles.includes(req.user.role)) {
-    return res.status(403).json({ message: 'Access Denied' });
-  }
-  next();
+const authorize = (roles) => {
+    return (req, res, next) => {
+        console.log('User role:', req.user.role); // Debug log
+        console.log('Required roles:', roles); // Debug log
+        
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                success: false,
+                message: 'You do not have permission to access this resource'
+            });
+        }
+        next();
+    };
 };
 
 module.exports = { authenticate, authorize };

@@ -4,73 +4,59 @@ const shopSchema = new mongoose.Schema({
     shop_id: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
+        unique: true
     },
-    shop_name: {
+    name: {
         type: String,
-        required: true,
-        trim: true
-    },
-    country_id: {
-        type: String,
-        required: true,
-        trim: true,
-        uppercase: true,
-        ref: 'Nation'
-    },
-    province_id: {
-        type: String,
-        required: true,
-        trim: true,
-        ref: 'Province'
-    },
-    district_id: {
-        type: String,
-        required: true,
-        trim: true,
-        ref: 'District'
-    },
-    ward_code: {
-        type: String,
-        required: true,
-        trim: true,
-        ref: 'Ward'
-    },
-    house_number: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    street: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    location: {
-        type: {
-            latitude: Number,
-            longitude: Number
-        },
         required: true
     },
-    shop_type: {
+    address: {
+        street: String,
+        ward: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Ward',
+            required: true
+        },
+        district: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'District',
+            required: true
+        },
+        province: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Province',
+            required: true
+        }
+    },
+    phone: {
         type: String,
-        required: true,
-        trim: true
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     }
-}, {
-    collection: 'Shop',
-    timestamps: true
 });
 
-// Indexes
-shopSchema.index({ shop_id: 1 }, { unique: true });
-shopSchema.index({ country_id: 1 });
-shopSchema.index({ province_id: 1 });
-shopSchema.index({ district_id: 1 });
-shopSchema.index({ ward_code: 1 });
-shopSchema.index({ shop_type: 1 });
-shopSchema.index({ 'location.latitude': 1, 'location.longitude': 1 });
+// Middleware để tự động cập nhật updated_at
+shopSchema.pre('save', function(next) {
+    this.updated_at = new Date();
+    next();
+});
 
-module.exports = mongoose.model('Shop', shopSchema); 
+const Shop = mongoose.model('Shop', shopSchema);
+
+module.exports = Shop; 
