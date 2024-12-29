@@ -1,10 +1,14 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./utils/dbConnect');
 const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
 
 const app = express();
+
+// Thêm middleware CORS
+app.use(cors());
 
 // Middleware
 app.use(express.json());
