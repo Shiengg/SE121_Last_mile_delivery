@@ -3,21 +3,34 @@ import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import DeliveryDashboard from './pages/DeliveryDashboard';
 import CustomerTracking from './pages/CustomerTracking';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 import ProtectedRoute from './components/ProtectedRoute';
+import ShopManagement from './components/Admin/ShopManagement';
+import RouteManagement from './components/Admin/RouteManagement';
+import VehicleManagement from './components/Admin/VehicleManagement';
+import NotFound from './components/Shared/NotFound';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        
+        {/* Admin Dashboard Routes */}
         <Route 
-          path="/admin-dashboard" 
+          path="/admin-dashboard/*" 
           element={
             <ProtectedRoute allowedRoles={['Admin']}>
               <AdminDashboard />
             </ProtectedRoute>
           } 
-        />
+        >
+          <Route path="shops" element={<ShopManagement />} />
+          <Route path="routes" element={<RouteManagement />} />
+          <Route path="vehicle-types" element={<VehicleManagement />} />
+        </Route>
+
         <Route 
           path="/delivery-dashboard" 
           element={
@@ -26,6 +39,7 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        
         <Route 
           path="/customer-tracking" 
           element={
@@ -34,8 +48,28 @@ function App() {
             </ProtectedRoute>
           } 
         />
+
+        {/* Profile & Settings Routes - accessible by all authenticated users */}
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute allowedRoles={['Admin', 'DeliveryStaff', 'Customer']}>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
+        
+        <Route 
+          path="/settings" 
+          element={
+            <ProtectedRoute allowedRoles={['Admin', 'DeliveryStaff', 'Customer']}>
+              <Settings />
+            </ProtectedRoute>
+          } 
+        />
+
         <Route path="/" element={<Login />} />
-        <Route path="*" element={<div>404 - Không tìm thấy trang</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
