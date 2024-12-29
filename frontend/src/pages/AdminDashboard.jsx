@@ -1,18 +1,121 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import Header from '../components/Shared/Header';
 import Footer from '../components/Shared/Footer';
+import axios from 'axios';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [stats, setStats] = useState({
+    shops: 0,
+    routes: 0,
+    vehicles: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data - sau này sẽ lấy từ API
-  const stats = {
-    shops: 25,
-    routes: 15,
-    vehicles: 8
-  };
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        
+        // Debug logs
+        console.log('Using token:', token);
+
+        if (!token) {
+          throw new Error('No token found');
+        }
+
+        const response = await axios.get('http://localhost:5000/api/admin/dashboard-stats', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // Debug logs
+        console.log('API Response:', response.data);
+
+        if (response.data.success) {
+          setStats(response.data.data);
+          setError(null);
+        } else {
+          throw new Error(response.data.message || 'Failed to fetch stats');
+        }
+      } catch (err) {
+        console.error('Error details:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status
+        });
+        
+        if (err.response?.status === 401) {
+          // Token hết hạn hoặc không hợp lệ
+          localStorage.removeItem('token'); // Xóa token
+          // Chuyển hướng về trang login
+          window.location.href = '/login';
+        }
+        
+        setError(err.response?.data?.message || 'Failed to load dashboard statistics');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex flex-col">
+        <Header title="Admin Dashboard" />
+        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-sm p-6 animate-pulse">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="h-12 w-12 bg-gray-200 rounded-xl"></div>
+                  <div className="h-8 w-16 bg-gray-200 rounded"></div>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-6 bg-gray-200 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 rounded w-32"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex flex-col">
+        <Header title="Admin Dashboard" />
+        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const isActivePath = (path) => {
     return location.pathname === path;

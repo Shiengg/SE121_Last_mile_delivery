@@ -4,32 +4,43 @@ const routeSchema = new mongoose.Schema({
     route_code: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
+        unique: true
     },
-    shops: [{
-        type: String,
-        ref: 'Shop',
+    start_point: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ward',
         required: true
-    }],
-    vehicle_type_code: {
-        type: String,
-        required: true,
-        ref: 'VehicleType'
+    },
+    end_point: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ward',
+        required: true
     },
     distance: {
         type: Number,
-        required: true,
-        min: 0
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date,
+        default: Date.now
     }
-}, {
-    collection: 'Route',
-    timestamps: true
 });
 
-// Indexes
-routeSchema.index({ route_code: 1 }, { unique: true });
-routeSchema.index({ vehicle_type_code: 1 });
-routeSchema.index({ shops: 1 });
+// Middleware để tự động cập nhật updated_at
+routeSchema.pre('save', function(next) {
+    this.updated_at = new Date();
+    next();
+});
 
-module.exports = mongoose.model('Route', routeSchema); 
+const Route = mongoose.model('Route', routeSchema);
+
+module.exports = Route; 
