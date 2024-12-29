@@ -3,6 +3,10 @@ const fs = require('fs').promises;
 const crypto = require('crypto');
 require('dotenv').config();
 
+// Thêm biến đếm request và giới hạn
+let requestCount = 0;
+const MAX_REQUESTS = 1000;
+
 function generateObjectId() {
     return crypto.randomBytes(12).toString('hex');
 }
@@ -32,84 +36,50 @@ const POPULAR_CHAINS = {
         'Lotte Mart',
         'MM Mega Market',
         'Big C',
-        'GO! Market'
+        'Lan Chi'
+    ],
+    restaurant: [
+        'KFC',
+        'McDonald',
+        'Jollibee',
+        'Pizza Hut',
+        'Domino Pizza',
+        'Lotteria',
+        'Highland Coffee',
+        'Starbucks',
+        'Phuc Long',
+        'The Coffee House'
     ],
     pharmacy: [
         'Pharmacity',
-        'Guardian',
-        'Medicare',
         'Long Chau',
         'An Khang',
-        'Phano Pharmacy',
-        'Eco Pharmacy',
-        'Pharmacity'
+        'Phano',
+        'Medicare',
+        'Guardian'
     ],
-    restaurant: [
-        'Lotteria',
-        'KFC',
-        'Jollibee',
-        'McDonald\'s',
-        'Pizza Hut',
-        'Domino\'s Pizza',
-        'The Pizza Company',
-        'Burger King',
-        'Texas Chicken',
-        'Popeyes'
-    ],
-    cafe: [
-        'The Coffee House',
-        'Highlands Coffee',
-        'Phuc Long',
-        'Starbucks',
-        'Trung Nguyen',
-        'Paris Baguette',
-        'Tous Les Jours',
-        'Cheese Coffee'
+    electronics: [
+        'FPT Shop',
+        'The Gioi Di Dong',
+        'Dien May Xanh',
+        'CellphoneS',
+        'Vien Thong A',
+        'Nguyen Kim'
     ],
     fashion: [
         'Uniqlo',
         'H&M',
         'Zara',
-        'Muji',
         'Canifa',
-        'NEM',
-        'IVY Moda',
-        'Elise',
-        'Vascara',
-        'Juno'
-    ],
-    electronics: [
-        'FPT Shop',
-        'The Gioi Di Dong',
-        'CellphoneS',
-        'Viet Tel Store',
-        'Nguyen Kim',
-        'Dien May Xanh',
-        'Pico',
-        'Phong Vu'
-    ],
-    books: [
-        'Fahasa',
-        'Nha Nam',
-        'Tiki Books',
-        'Phuong Nam Book',
-        'Thai Ha Books'
+        'Routine',
+        'NEM'
     ],
     beauty: [
-        'Watson\'s',
+        'Guardian',
+        'Watson',
         'The Face Shop',
         'Innisfree',
-        'The Body Shop',
-        'MAC Cosmetics',
         'Olive Young'
-    ],
-    sports: [
-        'Decathlon',
-        'Super Sports',
-        'Nike',
-        'Adidas',
-        'Puma',
-        'Under Armour'
     ]
 };
 
@@ -174,85 +144,140 @@ async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function makeRequestWithRetry(url, retries = 3, delay = 2000) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            const response = await axios.get(url);
-            return response;
-        } catch (error) {
-            if (error.response?.status === 429) {
-                console.log(`Rate limit hit, waiting ${delay/1000}s before retry ${i + 1}/${retries}...`);
-                await sleep(delay);
-                // Tăng thời gian chờ cho lần retry tiếp theo
-                delay *= 2;
-                continue;
-            }
-            throw error;
+async function makeRequestWithRetry(url, retries = 1) {
+    try {
+        const response = await axios.get(url);
+        return response;
+    } catch (error) {
+        if (error.response?.status === 429) {
+            console.log('\n⚠️ Rate limit reached. Please try again later.');
+            // Ném lỗi để dừng chương trình
+            throw new Error('RATE_LIMIT_REACHED');
         }
+        throw error;
     }
-    throw new Error('Max retries reached');
+}
+
+// Thêm mảng API keys
+const HERE_API_KEYS = [
+    process.env.HERE_API_KEY_1,
+    process.env.HERE_API_KEY_2
+];
+let currentApiKeyIndex = 0;
+
+// Thêm function để lấy và chuyển API key
+function getCurrentApiKey() {
+    return HERE_API_KEYS[currentApiKeyIndex];
+}
+
+function switchToNextApiKey() {
+    currentApiKeyIndex++;
+    if (currentApiKeyIndex < HERE_API_KEYS.length) {
+        console.log(`\n🔄 Switching to API Key #${currentApiKeyIndex + 1}`);
+        return true;
+    }
+    return false;
 }
 
 async function findShopsInWard(ward) {
-    const HERE_API_KEY = process.env.HERE_API_KEY;
-    const allShops = [];
+    let allShops = [];
 
     try {
-        for (const [type, chains] of Object.entries(POPULAR_CHAINS)) {
-            for (const chain of chains) {
-                console.log(`\nSearching for "${chain}" (${type}) in ${ward.name}...`);
-                
-                const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(chain + ' ' + ward.name)}&in=circle:21.0285,105.8542;r=2000&limit=3&apiKey=${HERE_API_KEY}`;
-                
-                try {
-                    const response = await makeRequestWithRetry(url);
-                    
-                    if (response.data.items) {
-                        const shops = response.data.items
-                            .filter(item => item.title.toLowerCase().includes(chain.toLowerCase()))
-                            .map((item, index) => {
-                                const { houseNumber, street } = parseAddress(item);
-                                return {
-                                    _id: generateObjectId(),
-                                    shop_id: generateShopId(ward.code, index + 1),
-                                    shop_name: item.title,
-                                    country_id: "VN",
-                                    province_id: ward.district_id.substring(0, 2),
-                                    district_id: ward.district_id,
-                                    ward_code: ward.code,
-                                    house_number: houseNumber,
-                                    street: street,
-                                    latitude: item.position.lat,
-                                    longitude: item.position.lng,
-                                    shop_type: type
-                                };
-                            });
-                        
-                        allShops.push(...shops);
-                    }
-                    
-                    // Tăng delay giữa các request lên 3 giây
-                    await sleep(3000);
-                    
-                } catch (error) {
-                    console.error(`Error searching for ${chain} in ${ward.name}:`, error.message);
-                    continue; // Tiếp tục với chain tiếp theo nếu có lỗi
+        // Giảm số lượng search types và kết hợp các loại tìm kiếm
+        const searchTypes = [
+            'shop store retail',  // Tìm chung các cửa hàng
+            'restaurant cafe food', // Kết hợp nhà hàng và cafe
+            'supermarket convenience', // Kết hợp siêu thị và cửa hàng tiện lợi
+        ];
+
+        for (const searchType of searchTypes) {
+            requestCount++;
+            if (requestCount >= MAX_REQUESTS) {
+                if (switchToNextApiKey()) {
+                    requestCount = 0;
+                    console.log('Continuing with new API key...');
+                } else {
+                    throw new Error('DAILY_LIMIT_REACHED');
                 }
             }
+
+            console.log(`\nRequest #${requestCount}: Searching for "${searchType}" in ${ward.name}...`);
+            
+            // Tăng limit lên 20 để lấy nhiều kết quả hơn trong 1 request
+            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchType + ' ' + ward.name)}&in=circle:21.0285,105.8542;r=3000&limit=20&apiKey=${getCurrentApiKey()}`;
+            
+            try {
+                const response = await makeRequestWithRetry(url);
+                
+                if (response.data.items) {
+                    const shops = response.data.items.map((item, index) => {
+                        const { houseNumber, street } = parseAddress(item);
+                        const shopType = getShopType(item.title, item.categories);
+                        
+                        // Chỉ lấy những shop có type hợp lệ
+                        if (!shopType) return null;
+
+                        return {
+                            _id: generateObjectId(),
+                            shop_id: generateShopId(ward.code, index + 1),
+                            shop_name: item.title,
+                            country_id: "VN",
+                            province_id: ward.district_id.substring(0, 2),
+                            district_id: ward.district_id,
+                            ward_code: ward.code,
+                            house_number: houseNumber,
+                            street: street,
+                            latitude: item.position.lat,
+                            longitude: item.position.lng,
+                            shop_type: shopType,
+                            categories: item.categories || []
+                        };
+                    }).filter(shop => shop !== null); // Lọc bỏ các shop không hợp lệ
+                    
+                    if (shops.length > 0) {
+                        console.log(`Found ${shops.length} shops for ${searchType} in ${ward.name}`);
+                        allShops.push(...shops);
+                    }
+                }
+            } catch (error) {
+                if (error.response?.status === 429) {
+                    if (switchToNextApiKey()) {
+                        requestCount = 0;
+                        console.log('Retrying with new API key...');
+                        continue;
+                    }
+                    throw new Error('RATE_LIMIT_REACHED');
+                }
+                console.error(`Error searching for ${searchType}:`, error.message);
+            }
+            
+            await sleep(2000);
         }
         
-        // Lọc shop trùng lặp
+        // Lọc trùng dựa trên vị trí và tên
         const uniqueShops = allShops.filter((shop, index, self) =>
             index === self.findIndex((s) => (
                 s.latitude === shop.latitude && 
-                s.longitude === shop.longitude
+                s.longitude === shop.longitude &&
+                s.shop_name === shop.shop_name
             ))
         );
         
-        // Trả về tối đa 3 shop cho mỗi ward
-        return uniqueShops.slice(0, 3);
+        console.log(`\nFound ${uniqueShops.length} unique shops in ${ward.name}:`);
+        const typeCount = {};
+        uniqueShops.forEach(shop => {
+            typeCount[shop.shop_type] = (typeCount[shop.shop_type] || 0) + 1;
+        });
+        console.log('Shops by type:', typeCount);
+        
+        // Trả về tất cả shops tìm được (tối đa 20)
+        return uniqueShops.slice(0, 20);
             
     } catch (error) {
+        if (error.message === 'RATE_LIMIT_REACHED' || 
+            error.message === 'DAILY_LIMIT_REACHED') {
+            throw error;
+        }
         console.error(`Error searching shops in ${ward.name}:`, error.message);
         return [];
     }
@@ -260,7 +285,7 @@ async function findShopsInWard(ward) {
 
 async function saveProgress(processedWards) {
     await fs.writeFile(
-        './data/progress.json',
+        './generate_shops/data/progress.json',
         JSON.stringify({
             lastProcessedIndex: processedWards,
             timestamp: new Date().toISOString()
@@ -270,12 +295,18 @@ async function saveProgress(processedWards) {
 
 async function loadProgress() {
     try {
+        // Tạm thời return 0 để bắt đầu từ đầu
+        return 0;
+        
+        // Hoặc uncomment đoạn code này sau khi đã test thành công
+        /*
         const progress = JSON.parse(
-            await fs.readFile('./data/progress.json', 'utf8')
+            await fs.readFile('./generate_shops/data/progress.json', 'utf8')
         );
         return progress.lastProcessedIndex;
+        */
     } catch (error) {
-        return 0; // Bắt đầu từ đầu nếu không có file progress
+        return 0;
     }
 }
 
@@ -283,61 +314,71 @@ async function processAllWards() {
     try {
         console.log('Reading wards data...');
         const rawData = JSON.parse(
-            await fs.readFile('./data/data_ward_Hanoi.json', 'utf8')
+            await fs.readFile('./generate_shops/data/data_ward_Hochiminh.json', 'utf8')
         );
         const wardsData = rawData.Sheet1;
         
-        // Load tiến trình từ lần chạy trước
         const startIndex = await loadProgress();
-        console.log(`Resuming from ward index: ${startIndex}`);
+        console.log(`\n📍 Resuming from ward index: ${startIndex}`);
         
         const allShops = [];
         let processedCount = startIndex;
         const totalWards = wardsData.length;
         
-        console.log(`Starting to process remaining ${totalWards - startIndex} wards...`);
+        console.log(`\n🚀 Starting to process remaining ${totalWards - startIndex} wards...`);
 
-        // Bắt đầu từ vị trí đã lưu
         for (let i = startIndex; i < wardsData.length; i++) {
             const ward = wardsData[i];
-            console.log(`\nProcessing ward ${i + 1}/${totalWards}: ${ward.name}`);
+            console.log(`\n📌 Processing ward ${i + 1}/${totalWards}: ${ward.name}`);
             
-            const shopsInWard = await findShopsInWard(ward);
-            if (shopsInWard.length > 0) {
-                allShops.push(...shopsInWard);
-                console.log(`Found ${shopsInWard.length} shops in ${ward.name}`);
+            try {
+                const shopsInWard = await findShopsInWard(ward);
+                if (shopsInWard.length > 0) {
+                    allShops.push(...shopsInWard);
+                    console.log(`✅ Found ${shopsInWard.length} shops in ${ward.name}`);
+                }
+                
+                processedCount = i + 1;
+                await saveProgress(processedCount);
+                
+            } catch (error) {
+                if (error.message === 'RATE_LIMIT_REACHED') {
+                    console.log('\n⏸️  Process paused due to rate limit');
+                    console.log(`Last processed ward: ${ward.name} (index: ${i})`);
+                    console.log('You can resume later by running the script again\n');
+                    
+                    // Lưu shops đã tìm được trước khi dừng
+                    await saveShops(allShops);
+                    return;
+                }
+                throw error;
             }
-            
-            processedCount = i + 1;
-            // Lưu tiến trình sau mỗi ward
-            await saveProgress(processedCount);
         }
 
-        // Ghi kết quả vào file
-        const outputPath = './data/shops.json';
-        // Đọc shops đã có (nếu có)
-        let existingShops = [];
-        try {
-            existingShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
-        } catch (error) {
-            // File không tồn tại hoặc rỗng
-        }
-
-        // Gộp shops mới với shops cũ
-        const allUniqueShops = [...existingShops, ...allShops];
-        
-        await fs.writeFile(
-            outputPath,
-            JSON.stringify(allUniqueShops, null, 2)
-        );
-
-        console.log('\nCompleted!');
-        console.log(`Total wards processed: ${processedCount}`);
-        console.log(`Total shops found: ${allUniqueShops.length}`);
+        await saveShops(allShops);
+        console.log('\n✨ Completed!');
+        console.log(`📊 Total wards processed: ${processedCount}`);
+        console.log(`🏪 Total shops found: ${allShops.length}`);
 
     } catch (error) {
         console.error('Error processing wards:', error);
     }
+}
+
+async function saveShops(newShops) {
+    const outputPath = './generate_shops/data/shops.json';
+    let existingShops = [];
+    try {
+        existingShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+    } catch (error) {
+        // File không tồn tại hoặc rỗng
+    }
+
+    const allUniqueShops = [...existingShops, ...newShops];
+    await fs.writeFile(
+        outputPath,
+        JSON.stringify(allUniqueShops, null, 2)
+    );
 }
 
 // Chạy script

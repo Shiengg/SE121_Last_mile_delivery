@@ -1,0 +1,284 @@
+{
+"Sheet1":[
+ {
+  "code": "20194",
+  "name": "Phường Hòa Hiệp Bắc",
+  "district_id": "490"
+ },
+ {
+  "code": "20195",
+  "name": "Phường Hòa Hiệp Nam",
+  "district_id": "490"
+ },
+ {
+  "code": "20197",
+  "name": "Phường Hòa Khánh Bắc",
+  "district_id": "490"
+ },
+ {
+  "code": "20198",
+  "name": "Phường Hòa Khánh Nam",
+  "district_id": "490"
+ },
+ {
+  "code": "20200",
+  "name": "Phường Hòa Minh",
+  "district_id": "490"
+ },
+ {
+  "code": "20203",
+  "name": "Phường Tam Thuận",
+  "district_id": "491"
+ },
+ {
+  "code": "20206",
+  "name": "Phường Thanh Khê Tây",
+  "district_id": "491"
+ },
+ {
+  "code": "20212",
+  "name": "Phường Tân Chính",
+  "district_id": "491"
+ },
+ {
+  "code": "20218",
+  "name": "Phường Vĩnh Trung",
+  "district_id": "491"
+ },
+ {
+  "code": "20224",
+  "name": "Phường An Khê",
+  "district_id": "491"
+ },
+ {
+  "code": "20225",
+  "name": "Phường Hòa Khê",
+  "district_id": "491"
+ },
+ {
+  "code": "20207",
+  "name": "Phường Thanh Khê Đông",
+  "district_id": "491"
+ },
+ {
+  "code": "20209",
+  "name": "Phường Xuân Hà",
+  "district_id": "491"
+ },
+ {
+  "code": "20221",
+  "name": "Phường Thạc Gián",
+  "district_id": "491"
+ },
+ {
+  "code": "20215",
+  "name": "Phường Chính Gián",
+  "district_id": "491"
+ },
+ {
+  "code": "20242",
+  "name": "Phường Phước Ninh",
+  "district_id": "492"
+ },
+ {
+  "code": "20254",
+  "name": "Phường Bình Thuận",
+  "district_id": "492"
+ },
+ {
+  "code": "20236",
+  "name": "Phường Hải Châu  I",
+  "district_id": "492"
+ },
+ {
+  "code": "20227",
+  "name": "Phường Thanh Bình",
+  "district_id": "492"
+ },
+ {
+  "code": "20230",
+  "name": "Phường Thuận Phước",
+  "district_id": "492"
+ },
+ {
+  "code": "20233",
+  "name": "Phường Thạch Thang",
+  "district_id": "492"
+ },
+ {
+  "code": "20239",
+  "name": "Phường Hải Châu II",
+  "district_id": "492"
+ },
+ {
+  "code": "20245",
+  "name": "Phường Hòa Thuận Tây",
+  "district_id": "492"
+ },
+ {
+  "code": "20246",
+  "name": "Phường Hòa Thuận Đông",
+  "district_id": "492"
+ },
+ {
+  "code": "20248",
+  "name": "Phường Nam Dương",
+  "district_id": "492"
+ },
+ {
+  "code": "20251",
+  "name": "Phường Bình Hiên",
+  "district_id": "492"
+ },
+ {
+  "code": "20257",
+  "name": "Phường Hòa Cường Bắc",
+  "district_id": "492"
+ },
+ {
+  "code": "20258",
+  "name": "Phường Hòa Cường Nam",
+  "district_id": "492"
+ },
+ {
+  "code": "20263",
+  "name": "Phường Thọ Quang",
+  "district_id": "493"
+ },
+ {
+  "code": "20266",
+  "name": "Phường Nại Hiên Đông",
+  "district_id": "493"
+ },
+ {
+  "code": "20269",
+  "name": "Phường Mân Thái",
+  "district_id": "493"
+ },
+ {
+  "code": "20272",
+  "name": "Phường An Hải Bắc",
+  "district_id": "493"
+ },
+ {
+  "code": "20275",
+  "name": "Phường Phước Mỹ",
+  "district_id": "493"
+ },
+ {
+  "code": "20281",
+  "name": "Phường An Hải Đông",
+  "district_id": "493"
+ },
+ {
+  "code": "20278",
+  "name": "Phường An Hải Tây",
+  "district_id": "493"
+ },
+ {
+  "code": "20284",
+  "name": "Phường Mỹ An",
+  "district_id": "494"
+ },
+ {
+  "code": "20285",
+  "name": "Phường Khuê Mỹ",
+  "district_id": "494"
+ },
+ {
+  "code": "20287",
+  "name": "Phường Hoà Quý",
+  "district_id": "494"
+ },
+ {
+  "code": "20290",
+  "name": "Phường Hoà Hải",
+  "district_id": "494"
+ },
+ {
+  "code": "20311",
+  "name": "Phường Hòa Thọ Tây",
+  "district_id": "495"
+ },
+ {
+  "code": "20312",
+  "name": "Phường Hòa Thọ Đông",
+  "district_id": "495"
+ },
+ {
+  "code": "20314",
+  "name": "Phường Hòa Xuân",
+  "district_id": "495"
+ },
+ {
+  "code": "20260",
+  "name": "Phường Khuê Trung",
+  "district_id": "495"
+ },
+ {
+  "code": "20305",
+  "name": "Phường Hòa Phát",
+  "district_id": "495"
+ },
+ {
+  "code": "20306",
+  "name": "Phường Hòa An",
+  "district_id": "495"
+ },
+ {
+  "code": "20308",
+  "name": "Xã Hòa Nhơn",
+  "district_id": "497"
+ },
+ {
+  "code": "20317",
+  "name": "Xã Hòa Phú",
+  "district_id": "497"
+ },
+ {
+  "code": "20320",
+  "name": "Xã Hòa Phong",
+  "district_id": "497"
+ },
+ {
+  "code": "20323",
+  "name": "Xã Hòa Châu",
+  "district_id": "497"
+ },
+ {
+  "code": "20326",
+  "name": "Xã Hòa Tiến",
+  "district_id": "497"
+ },
+ {
+  "code": "20329",
+  "name": "Xã Hòa Phước",
+  "district_id": "497"
+ },
+ {
+  "code": "20332",
+  "name": "Xã Hòa Khương",
+  "district_id": "497"
+ },
+ {
+  "code": "20293",
+  "name": "Xã Hòa Bắc",
+  "district_id": "497"
+ },
+ {
+  "code": "20296",
+  "name": "Xã Hòa Liên",
+  "district_id": "497"
+ },
+ {
+  "code": "20299",
+  "name": "Xã Hòa Ninh",
+  "district_id": "497"
+ },
+ {
+  "code": "20302",
+  "name": "Xã Hòa Sơn",
+  "district_id": "497"
+ }
+]
+}
