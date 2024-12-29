@@ -1,0 +1,404 @@
+{
+"Sheet1":[
+ {
+  "code": "31117",
+  "name": "Phường Cái Khế",
+  "district_id": "916"
+ },
+ {
+  "code": "31120",
+  "name": "Phường An Hòa",
+  "district_id": "916"
+ },
+ {
+  "code": "31123",
+  "name": "Phường Thới Bình",
+  "district_id": "916"
+ },
+ {
+  "code": "31135",
+  "name": "Phường Tân An",
+  "district_id": "916"
+ },
+ {
+  "code": "31144",
+  "name": "Phường Xuân Khánh",
+  "district_id": "916"
+ },
+ {
+  "code": "31147",
+  "name": "Phường Hưng Lợi",
+  "district_id": "916"
+ },
+ {
+  "code": "31149",
+  "name": "Phường An Khánh",
+  "district_id": "916"
+ },
+ {
+  "code": "31150",
+  "name": "Phường An Bình",
+  "district_id": "916"
+ },
+ {
+  "code": "31153",
+  "name": "Phường Châu Văn Liêm",
+  "district_id": "917"
+ },
+ {
+  "code": "31154",
+  "name": "Phường Thới Hòa",
+  "district_id": "917"
+ },
+ {
+  "code": "31156",
+  "name": "Phường Thới Long",
+  "district_id": "917"
+ },
+ {
+  "code": "31157",
+  "name": "Phường Long Hưng",
+  "district_id": "917"
+ },
+ {
+  "code": "31159",
+  "name": "Phường Thới An",
+  "district_id": "917"
+ },
+ {
+  "code": "31162",
+  "name": "Phường Phước Thới",
+  "district_id": "917"
+ },
+ {
+  "code": "31165",
+  "name": "Phường Trường Lạc",
+  "district_id": "917"
+ },
+ {
+  "code": "31168",
+  "name": "Phường Bình Thủy",
+  "district_id": "918"
+ },
+ {
+  "code": "31169",
+  "name": "Phường Trà An",
+  "district_id": "918"
+ },
+ {
+  "code": "31171",
+  "name": "Phường Trà Nóc",
+  "district_id": "918"
+ },
+ {
+  "code": "31174",
+  "name": "Phường Thới An Đông",
+  "district_id": "918"
+ },
+ {
+  "code": "31177",
+  "name": "Phường An Thới",
+  "district_id": "918"
+ },
+ {
+  "code": "31178",
+  "name": "Phường Bùi Hữu Nghĩa",
+  "district_id": "918"
+ },
+ {
+  "code": "31180",
+  "name": "Phường Long Hòa",
+  "district_id": "918"
+ },
+ {
+  "code": "31183",
+  "name": "Phường Long Tuyền",
+  "district_id": "918"
+ },
+ {
+  "code": "31186",
+  "name": "Phường Lê Bình",
+  "district_id": "919"
+ },
+ {
+  "code": "31189",
+  "name": "Phường Hưng Phú",
+  "district_id": "919"
+ },
+ {
+  "code": "31192",
+  "name": "Phường Hưng Thạnh",
+  "district_id": "919"
+ },
+ {
+  "code": "31195",
+  "name": "Phường Ba Láng",
+  "district_id": "919"
+ },
+ {
+  "code": "31198",
+  "name": "Phường Thường Thạnh",
+  "district_id": "919"
+ },
+ {
+  "code": "31201",
+  "name": "Phường Phú Thứ",
+  "district_id": "919"
+ },
+ {
+  "code": "31204",
+  "name": "Phường Tân Phú",
+  "district_id": "919"
+ },
+ {
+  "code": "31207",
+  "name": "Phường Thốt Nốt",
+  "district_id": "923"
+ },
+ {
+  "code": "31210",
+  "name": "Phường Thới Thuận",
+  "district_id": "923"
+ },
+ {
+  "code": "31227",
+  "name": "Phường Tân Hưng",
+  "district_id": "923"
+ },
+ {
+  "code": "31228",
+  "name": "Phường Thuận Hưng",
+  "district_id": "923"
+ },
+ {
+  "code": "31212",
+  "name": "Phường Thuận An",
+  "district_id": "923"
+ },
+ {
+  "code": "31213",
+  "name": "Phường Tân Lộc",
+  "district_id": "923"
+ },
+ {
+  "code": "31216",
+  "name": "Phường Trung Nhứt",
+  "district_id": "923"
+ },
+ {
+  "code": "31217",
+  "name": "Phường Thạnh Hoà",
+  "district_id": "923"
+ },
+ {
+  "code": "31219",
+  "name": "Phường Trung Kiên",
+  "district_id": "923"
+ },
+ {
+  "code": "31231",
+  "name": "Thị trấn Thanh An",
+  "district_id": "924"
+ },
+ {
+  "code": "31232",
+  "name": "Thị trấn Vĩnh Thạnh",
+  "district_id": "924"
+ },
+ {
+  "code": "31234",
+  "name": "Xã Thạnh Mỹ",
+  "district_id": "924"
+ },
+ {
+  "code": "31237",
+  "name": "Xã Vĩnh Trinh",
+  "district_id": "924"
+ },
+ {
+  "code": "31240",
+  "name": "Xã Thạnh An",
+  "district_id": "924"
+ },
+ {
+  "code": "31241",
+  "name": "Xã Thạnh Tiến",
+  "district_id": "924"
+ },
+ {
+  "code": "31243",
+  "name": "Xã Thạnh Thắng",
+  "district_id": "924"
+ },
+ {
+  "code": "31244",
+  "name": "Xã Thạnh Lợi",
+  "district_id": "924"
+ },
+ {
+  "code": "31246",
+  "name": "Xã Thạnh Qưới",
+  "district_id": "924"
+ },
+ {
+  "code": "31252",
+  "name": "Xã Thạnh Lộc",
+  "district_id": "924"
+ },
+ {
+  "code": "31211",
+  "name": "Xã Vĩnh Bình",
+  "district_id": "924"
+ },
+ {
+  "code": "31255",
+  "name": "Xã Trung Hưng",
+  "district_id": "925"
+ },
+ {
+  "code": "31273",
+  "name": "Xã Đông Hiệp",
+  "district_id": "925"
+ },
+ {
+  "code": "31274",
+  "name": "Xã Đông Thắng",
+  "district_id": "925"
+ },
+ {
+  "code": "31276",
+  "name": "Xã Thới Đông",
+  "district_id": "925"
+ },
+ {
+  "code": "31277",
+  "name": "Xã Thới Xuân",
+  "district_id": "925"
+ },
+ {
+  "code": "31249",
+  "name": "Xã Thạnh Phú",
+  "district_id": "925"
+ },
+ {
+  "code": "31222",
+  "name": "Xã Trung An",
+  "district_id": "925"
+ },
+ {
+  "code": "31225",
+  "name": "Xã Trung Thạnh",
+  "district_id": "925"
+ },
+ {
+  "code": "31261",
+  "name": "Thị trấn Cờ Đỏ",
+  "district_id": "925"
+ },
+ {
+  "code": "31264",
+  "name": "Xã Thới Hưng",
+  "district_id": "925"
+ },
+ {
+  "code": "31299",
+  "name": "Thị trấn Phong Điền",
+  "district_id": "926"
+ },
+ {
+  "code": "31300",
+  "name": "Xã Nhơn Ái",
+  "district_id": "926"
+ },
+ {
+  "code": "31303",
+  "name": "Xã Giai Xuân",
+  "district_id": "926"
+ },
+ {
+  "code": "31306",
+  "name": "Xã Tân Thới",
+  "district_id": "926"
+ },
+ {
+  "code": "31309",
+  "name": "Xã Trường Long",
+  "district_id": "926"
+ },
+ {
+  "code": "31312",
+  "name": "Xã Mỹ Khánh",
+  "district_id": "926"
+ },
+ {
+  "code": "31315",
+  "name": "Xã Nhơn Nghĩa",
+  "district_id": "926"
+ },
+ {
+  "code": "31258",
+  "name": "Thị trấn Thới Lai",
+  "district_id": "927"
+ },
+ {
+  "code": "31279",
+  "name": "Xã Đông Bình",
+  "district_id": "927"
+ },
+ {
+  "code": "31282",
+  "name": "Xã Đông Thuận",
+  "district_id": "927"
+ },
+ {
+  "code": "31285",
+  "name": "Xã Thới Tân",
+  "district_id": "927"
+ },
+ {
+  "code": "31286",
+  "name": "Xã Trường Thắng",
+  "district_id": "927"
+ },
+ {
+  "code": "31288",
+  "name": "Xã Định Môn",
+  "district_id": "927"
+ },
+ {
+  "code": "31291",
+  "name": "Xã Trường Thành",
+  "district_id": "927"
+ },
+ {
+  "code": "31294",
+  "name": "Xã Trường Xuân",
+  "district_id": "927"
+ },
+ {
+  "code": "31297",
+  "name": "Xã Trường Xuân A",
+  "district_id": "927"
+ },
+ {
+  "code": "31298",
+  "name": "Xã Trường Xuân B",
+  "district_id": "927"
+ },
+ {
+  "code": "31267",
+  "name": "Xã Thới Thạnh",
+  "district_id": "927"
+ },
+ {
+  "code": "31268",
+  "name": "Xã Tân Thạnh",
+  "district_id": "927"
+ },
+ {
+  "code": "31270",
+  "name": "Xã Xuân Thắng",
+  "district_id": "927"
+ }
+]
+}
