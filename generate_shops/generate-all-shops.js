@@ -314,7 +314,7 @@ async function processAllWards() {
     try {
         console.log('Reading wards data...');
         const rawData = JSON.parse(
-            await fs.readFile('./generate_shops/data/data_ward_Hochiminh.json', 'utf8')
+            await fs.readFile('./generate_shops/data/data_ward_Haiphong.json', 'utf8')
         );
         const wardsData = rawData.Sheet1;
         
