@@ -10,32 +10,30 @@ const shopSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    address: {
-        street: String,
-        ward: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Ward',
-            required: true
-        },
-        district: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'District',
-            required: true
-        },
-        province: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Province',
-            required: true
-        }
-    },
-    phone: {
+    country_id: {
         type: String,
-        required: true
+        required: true,
+        ref: 'Nation'
     },
-    email: {
+    province_id: {
         type: String,
-        required: true
+        required: true,
+        ref: 'Province'
     },
+    district_id: {
+        type: String,
+        required: true,
+        ref: 'District'
+    },
+    ward_code: {
+        type: String,
+        required: true,
+        ref: 'Ward'
+    },
+    house_number: String,
+    street: String,
+    latitude: Number,
+    longitude: Number,
     status: {
         type: String,
         enum: ['active', 'inactive'],
@@ -49,14 +47,13 @@ const shopSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    collection: 'Shop'
 });
 
-// Middleware để tự động cập nhật updated_at
 shopSchema.pre('save', function(next) {
     this.updated_at = new Date();
     next();
 });
 
-const Shop = mongoose.model('Shop', shopSchema);
-
-module.exports = Shop; 
+module.exports = mongoose.model('Shop', shopSchema); 
