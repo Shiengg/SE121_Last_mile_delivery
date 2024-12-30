@@ -5,6 +5,8 @@ import DeliveryDashboard from './pages/DeliveryDashboard';
 import CustomerTracking from './pages/CustomerTracking';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 import ProtectedRoute from './components/ProtectedRoute';
 import ShopManagement from './components/Admin/ShopManagement';
 import RouteManagement from './components/Admin/RouteManagement';
@@ -16,6 +18,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        
+        {/* Public Routes */}
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
         
         {/* Admin Dashboard Routes */}
         <Route 
