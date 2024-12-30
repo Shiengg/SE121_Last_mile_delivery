@@ -12,4 +12,4 @@
 * **Tên môn học:** Đồ án 1
 * **Mã môn học:** SE121
 * **Mã lớp:** SE121.P11
-* **Giảng viên**: Nguyễn Công Hoan.
+* **Giảng viên**: Nguyễn Công Hoan
