@@ -15,6 +15,6 @@
 * **Giảng viên**: Nguyễn Công Hoan
 
 ## **About software**
-Front-End: ReactJS
-Back-End: NodeJS
-Database: MongoDB
+* **Front-End:** ReactJS
+* **Back-End:** NodeJS
+* **Database:** MongoDB
