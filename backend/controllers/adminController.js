@@ -3,16 +3,15 @@ const Route = require('../models/Route');
 const VehicleType = require('../models/VehicleType');
 const mongoose = require('mongoose');
 
-const getDashboardStats = async (req, res) => {
+exports.getDashboardStats = async (req, res) => {
     try {
         console.log('Fetching dashboard stats...');
 
-        const db = mongoose.connection.db;
-
+        // Sử dụng Promise.all để thực hiện các truy vấn đồng thời
         const [shopCount, routeCount, vehicleCount] = await Promise.all([
-            db.collection('Shop').countDocuments(),
-            db.collection('Route').countDocuments(),
-            db.collection('VehicleType').countDocuments()
+            Shop.countDocuments(),
+            Route.countDocuments(),
+            VehicleType.countDocuments()
         ]);
 
         console.log('Collection counts:', {
@@ -37,8 +36,4 @@ const getDashboardStats = async (req, res) => {
             error: error.message
         });
     }
-};
-
-module.exports = {
-    getDashboardStats
 };

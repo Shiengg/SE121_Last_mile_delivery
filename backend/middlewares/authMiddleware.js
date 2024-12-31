@@ -1,58 +1,47 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const authenticate = async (req, res, next) => {
+exports.protect = async (req, res, next) => {
     try {
-        // Lấy token từ header
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({
-                success: false,
-                message: 'No token provided'
-            });
-        }
-
-        const token = authHeader.split(' ')[1];
+        let token;
         
-        // Verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded token:', decoded); // Debug log
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            token = req.headers.authorization.split(' ')[1];
+        }
 
-        // Tìm user
-        const user = await User.findById(decoded.id);
-        if (!user) {
+        if (!token) {
             return res.status(401).json({
                 success: false,
-                message: 'User not found'
+                message: 'Not authorized to access this route'
             });
         }
 
-        // Gán user vào request
-        req.user = user;
-        next();
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = await User.findById(decoded.id);
+            next();
+        } catch (err) {
+            return res.status(401).json({
+                success: false,
+                message: 'Not authorized to access this route'
+            });
+        }
     } catch (error) {
-        console.error('Auth error:', error); // Debug log
-        return res.status(401).json({
+        res.status(500).json({
             success: false,
-            message: 'Invalid or expired token',
-            error: error.message
+            message: 'Server Error'
         });
     }
 };
 
-const authorize = (roles) => {
+exports.authorize = (...roles) => {
     return (req, res, next) => {
-        console.log('User role:', req.user.role); // Debug log
-        console.log('Required roles:', roles); // Debug log
-        
         if (!roles.includes(req.user.role)) {
             return res.status(403).json({
                 success: false,
-                message: 'You do not have permission to access this resource'
+                message: `User role ${req.user.role} is not authorized to access this route`
             });
         }
         next();
     };
 };
-
-module.exports = { authenticate, authorize };

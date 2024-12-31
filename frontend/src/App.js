@@ -12,6 +12,9 @@ import ShopManagement from './components/Admin/ShopManagement';
 import RouteManagement from './components/Admin/RouteManagement';
 import VehicleManagement from './components/Admin/VehicleManagement';
 import NotFound from './components/Shared/NotFound';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AdminContext } from './contexts/AdminContext';
 
 function App() {
   return (
