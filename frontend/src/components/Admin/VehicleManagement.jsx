@@ -158,13 +158,47 @@ const VehicleManagement = () => {
     });
   };
 
+  const getVehicleStats = () => {
+    const stats = {
+      total: vehicleTypes.length,
+      active: vehicleTypes.filter(v => v.status === 'active').length,
+      inactive: vehicleTypes.filter(v => v.status === 'inactive').length
+    };
+    return stats;
+  };
+
   return (
     <div className="p-4 md:p-6 max-w-7xl mx-auto">
       {/* Header Section */}
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Vehicle Type Management</h2>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <p className="text-gray-600">Total vehicles: {vehicleTypes.length}</p>
+          {/* Stats Section */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+                <span className="text-sm text-gray-600">
+                  Active: <span className="font-semibold text-green-600">{getVehicleStats().active}</span>
+                </span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+                <span className="text-sm text-gray-600">
+                  Inactive: <span className="font-semibold text-red-600">{getVehicleStats().inactive}</span>
+                </span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center">
+                <span className="text-sm text-gray-600">
+                  Total: <span className="font-semibold text-gray-900">{getVehicleStats().total}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Search and Add Button */}
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Search Bar */}
             <div className="relative">
@@ -424,7 +458,11 @@ const VehicleManagement = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className={`w-full px-4 py-2.5 border border-gray-300 rounded-lg transition-all duration-200 
+                      ${selectedVehicle 
+                        ? 'bg-gray-50 cursor-not-allowed' 
+                        : 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                      }`}
                     value={formData.code}
                     onChange={(e) => setFormData({ 
                       ...formData, 
@@ -433,6 +471,7 @@ const VehicleManagement = () => {
                     required
                     placeholder="e.g., BIKE, CAR, TRUCK"
                     style={{ textTransform: 'uppercase' }}
+                    readOnly={selectedVehicle ? true : false}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <span className="text-gray-400">
@@ -441,7 +480,9 @@ const VehicleManagement = () => {
                   </div>
                 </div>
                 <p className="mt-1 text-xs text-gray-500">
-                  A unique identifier for the vehicle type (automatically uppercase)
+                  {selectedVehicle 
+                    ? "Vehicle code cannot be modified after creation"
+                    : "A unique identifier for the vehicle type (automatically uppercase)"}
                 </p>
               </div>
 
