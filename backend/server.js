@@ -6,6 +6,8 @@ const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const mongoose = require('mongoose');
 const vehicleRoutes = require('./routes/vehicleRoutes');
+const activityRoutes = require('./routes/activityRoutes');
+const createTestActivity = require('./utils/testActivity');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -25,11 +27,16 @@ mongoose.connection.on('connected', async () => {
         const collections = await mongoose.connection.db.listCollections().toArray();
         console.log('Available collections:', collections.map(c => c.name));
         
-        // Kiểm tra dữ liệu trong collection Users
-        const users = await mongoose.connection.db.collection('Users').find({}).toArray();
-        console.log('Users in database:', users);
+        // Tạo collection Activities nếu chưa tồn tại
+        if (!collections.find(c => c.name === 'activities')) {
+            await mongoose.connection.db.createCollection('activities');
+            console.log('Activities collection created');
+        }
+        
+        // Uncomment để test
+        // await createTestActivity();
     } catch (error) {
-        console.error('Error checking database:', error);
+        console.error('Error:', error);
     }
 });
 
@@ -37,6 +44,7 @@ mongoose.connection.on('connected', async () => {
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/activities', activityRoutes);
 
 // Route mẫu
 app.get('/', (req, res) => {

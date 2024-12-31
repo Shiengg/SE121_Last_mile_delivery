@@ -1,4 +1,5 @@
 const VehicleType = require('../models/VehicleType');
+const { logActivity } = require('./activityController');
 
 exports.getAllVehicleTypes = async (req, res) => {
     try {
@@ -20,11 +21,30 @@ exports.createVehicleType = async (req, res) => {
     try {
         const newVehicleType = new VehicleType(req.body);
         await newVehicleType.save();
+
+        // Log activity
+        try {
+            await logActivity(
+                'CREATE',
+                'VEHICLE',
+                `New vehicle type ${newVehicleType.code} was added`,
+                req.user._id,
+                {
+                    entityId: newVehicleType._id,
+                    entityName: newVehicleType.code
+                }
+            );
+            console.log('Activity logged successfully');
+        } catch (logError) {
+            console.error('Error logging activity:', logError);
+        }
+
         res.status(201).json({
             success: true,
             data: newVehicleType
         });
     } catch (error) {
+        console.error('Error in createVehicleType:', error);
         res.status(400).json({
             success: false,
             message: 'Error creating vehicle type',
@@ -51,6 +71,19 @@ exports.updateVehicleType = async (req, res) => {
             });
         }
 
+        // Log activity
+        await logActivity(
+            'UPDATE',
+            'VEHICLE',
+            `Vehicle type ${updatedVehicle.code} was updated`,
+            req.user._id,
+            {
+                entityId: updatedVehicle._id,
+                entityName: updatedVehicle.code,
+                changes: updateData
+            }
+        );
+
         res.json({
             success: true,
             data: updatedVehicle
@@ -76,6 +109,18 @@ exports.deleteVehicleType = async (req, res) => {
                 message: 'Vehicle type not found'
             });
         }
+
+        // Log activity
+        await logActivity(
+            'DELETE',
+            'VEHICLE',
+            `Vehicle type ${deletedVehicle.code} was deleted`,
+            req.user._id,
+            {
+                entityId: deletedVehicle._id,
+                entityName: deletedVehicle.code
+            }
+        );
 
         res.json({
             success: true,

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX, FiCheck, FiHash } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { AdminContext } from '../../contexts/AdminContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 
 const VehicleManagement = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
@@ -17,7 +18,11 @@ const VehicleManagement = () => {
     description: '',
     status: 'active'
   });
-  const { fetchStats } = useContext(AdminContext);
+  const { fetchStats, fetchActivities } = useContext(AdminContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 10;
+  const [statusFilter, setStatusFilter] = useState('all');
+  const { updateNotifications } = useNotifications();
 
   useEffect(() => {
     if (selectedVehicle) {
@@ -51,6 +56,14 @@ const VehicleManagement = () => {
       });
       setVehicleTypes(response.data.data);
       setLoading(false);
+      
+      const activitiesResponse = await axios.get('http://localhost:5000/api/activities/recent', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      if (activitiesResponse.data.success) {
+        updateNotifications(activitiesResponse.data.data);
+      }
     } catch (err) {
       setError('Error fetching vehicle types');
       setLoading(false);
@@ -59,10 +72,23 @@ const VehicleManagement = () => {
     }
   };
 
-  const filteredVehicles = vehicleTypes.filter(vehicle =>
-    vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    vehicle.code.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredVehicles = vehicleTypes.filter(vehicle => {
+    const matchesSearch = vehicle.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vehicle.code.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || vehicle.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
+
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = filteredVehicles.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages = Math.ceil(filteredVehicles.length / entriesPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleEdit = (vehicle) => {
     setSelectedVehicle(vehicle);
@@ -87,7 +113,8 @@ const VehicleManagement = () => {
         toast.success('Vehicle type deleted successfully');
         await Promise.all([
           fetchVehicleTypes(),
-          fetchStats()
+          fetchStats(),
+          fetchActivities()
         ]);
       } catch (error) {
         toast.error('Failed to delete vehicle type');
@@ -136,7 +163,8 @@ const VehicleManagement = () => {
       // Refresh data
       await Promise.all([
         fetchVehicleTypes(),
-        fetchStats()
+        fetchStats(),
+        fetchActivities()
       ]);
     } catch (error) {
       const errorMessage = selectedVehicle 
@@ -198,20 +226,60 @@ const VehicleManagement = () => {
             </div>
           </div>
 
-          {/* Search and Add Button */}
+          {/* Filter and Search Section */}
           <div className="flex flex-col sm:flex-row gap-4">
+            {/* Status Filter */}
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-600">Status:</label>
+              <div className="inline-flex rounded-lg shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => setStatusFilter('all')}
+                  className={`px-4 py-2 text-sm font-medium rounded-l-lg border 
+                    ${statusFilter === 'all'
+                      ? 'bg-blue-50 text-blue-600 border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    } transition-colors duration-200`}
+                >
+                  All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStatusFilter('active')}
+                  className={`px-4 py-2 text-sm font-medium border-y 
+                    ${statusFilter === 'active'
+                      ? 'bg-green-50 text-green-600 border-green-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    } transition-colors duration-200`}
+                >
+                  Active
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStatusFilter('inactive')}
+                  className={`px-4 py-2 text-sm font-medium rounded-r-lg border 
+                    ${statusFilter === 'inactive'
+                      ? 'bg-red-50 text-red-600 border-red-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    } transition-colors duration-200`}
+                >
+                  Inactive
+                </button>
+              </div>
+            </div>
+
             {/* Search Bar */}
-            <div className="relative">
+            <div className="relative flex-1">
               <input
                 type="text"
                 placeholder="Search vehicles..."
-                className="w-full sm:w-64 pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full sm:max-w-xs pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
-            
+
             {/* Add Button */}
             <button
               onClick={() => {
@@ -288,7 +356,7 @@ const VehicleManagement = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {filteredVehicles.length === 0 ? (
+                {currentEntries.length === 0 ? (
                   <tr>
                     <td colSpan="5" className="px-6 py-16 text-center">
                       <div className="flex flex-col items-center">
@@ -301,7 +369,7 @@ const VehicleManagement = () => {
                     </td>
                   </tr>
                 ) : (
-                  filteredVehicles.map((vehicle, index) => (
+                  currentEntries.map((vehicle, index) => (
                     <tr 
                       key={vehicle._id}
                       className={`hover:bg-gray-50 transition-colors duration-150 ${
@@ -371,13 +439,18 @@ const VehicleManagement = () => {
           <div className="bg-white px-6 py-4 border-t border-gray-200">
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-600">
-                Showing <span className="font-medium text-gray-900">{vehicleTypes.length}</span> entries
+                Showing <span className="font-medium text-gray-900">{indexOfFirstEntry + 1}</span> to{' '}
+                <span className="font-medium text-gray-900">
+                  {Math.min(indexOfLastEntry, filteredVehicles.length)}
+                </span> of{' '}
+                <span className="font-medium text-gray-900">{filteredVehicles.length}</span> entries
               </p>
               
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  disabled
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
                     disabled:opacity-50 disabled:cursor-not-allowed
                     text-gray-500 bg-white border border-gray-300
@@ -388,29 +461,30 @@ const VehicleManagement = () => {
                 </button>
                 
                 <div className="flex items-center gap-1">
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
-                      text-white bg-blue-600 border border-transparent
-                      hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-                      transition-all duration-200"
-                  >
-                    1
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
-                      text-gray-700 bg-white border border-gray-300
-                      hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-                      transition-all duration-200"
-                  >
-                    2
-                  </button>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index + 1}
+                      type="button"
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                        ${currentPage === index + 1
+                          ? 'text-white bg-blue-600 border border-transparent hover:bg-blue-700'
+                          : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                        }
+                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                        transition-all duration-200`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
                 </div>
 
                 <button
                   type="button"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                    disabled:opacity-50 disabled:cursor-not-allowed
                     text-gray-700 bg-white border border-gray-300
                     hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
                     transition-all duration-200"
