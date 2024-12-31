@@ -6,14 +6,19 @@ const routeSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    start_point: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ward',
+    shop1_id: {
+        type: String,
+        ref: 'Shop',
         required: true
     },
-    end_point: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ward',
+    shop2_id: {
+        type: String,
+        ref: 'Shop',
+        required: true
+    },
+    vehicle_type_id: {
+        type: String,
+        ref: 'VehicleType',
         required: true
     },
     distance: {
@@ -33,14 +38,13 @@ const routeSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    collection: 'Route'
 });
 
-// Middleware để tự động cập nhật updated_at
 routeSchema.pre('save', function(next) {
     this.updated_at = new Date();
     next();
 });
 
-const Route = mongoose.model('Route', routeSchema);
-
-module.exports = Route; 
+module.exports = mongoose.model('Route', routeSchema);

@@ -10,9 +10,7 @@ const vehicleTypeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String
-    },
+    description: String,
     status: {
         type: String,
         enum: ['active', 'inactive'],
@@ -26,14 +24,13 @@ const vehicleTypeSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    collection: 'VehicleType'
 });
 
-// Middleware để tự động cập nhật updated_at
 vehicleTypeSchema.pre('save', function(next) {
     this.updated_at = new Date();
     next();
 });
 
-const VehicleType = mongoose.model('VehicleType', vehicleTypeSchema);
-
-module.exports = VehicleType; 
+module.exports = mongoose.model('VehicleType', vehicleTypeSchema); 
