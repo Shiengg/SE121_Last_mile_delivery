@@ -5,6 +5,7 @@ const connectDB = require('./utils/dbConnect');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const mongoose = require('mongoose');
+const vehicleRoutes = require('./routes/vehicleRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ mongoose.connection.on('connected', async () => {
 // Kết nối routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/vehicles', vehicleRoutes);
 
 // Route mẫu
 app.get('/', (req, res) => {

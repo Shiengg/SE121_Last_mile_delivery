@@ -3,42 +3,24 @@ const Route = require('../models/Route');
 const VehicleType = require('../models/VehicleType');
 const mongoose = require('mongoose');
 
-const getDashboardStats = async (req, res) => {
+exports.getDashboardStats = async (req, res) => {
     try {
-        console.log('Fetching dashboard stats...');
+        // Thêm logic để lấy thống kê dashboard ở đây
+        const stats = {
+            totalUsers: 0,
+            totalOrders: 0,
+            // ... thêm các thống kê khác
+        };
 
-        const db = mongoose.connection.db;
-
-        const [shopCount, routeCount, vehicleCount] = await Promise.all([
-            db.collection('Shop').countDocuments(),
-            db.collection('Route').countDocuments(),
-            db.collection('VehicleType').countDocuments()
-        ]);
-
-        console.log('Collection counts:', {
-            shops: shopCount,
-            routes: routeCount,
-            vehicles: vehicleCount
-        });
-
-        res.status(200).json({
+        res.json({
             success: true,
-            data: {
-                shops: shopCount,
-                routes: routeCount,
-                vehicles: vehicleCount
-            }
+            data: stats
         });
     } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
         res.status(500).json({
             success: false,
-            message: 'Error fetching dashboard statistics',
+            message: 'Error fetching dashboard stats',
             error: error.message
         });
     }
-};
-
-module.exports = {
-    getDashboardStats
 };
