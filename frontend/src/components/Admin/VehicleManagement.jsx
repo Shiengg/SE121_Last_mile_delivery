@@ -426,9 +426,13 @@ const VehicleManagement = () => {
                     type="text"
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     value={formData.code}
-                    onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      code: e.target.value.toUpperCase()
+                    })}
                     required
                     placeholder="e.g., BIKE, CAR, TRUCK"
+                    style={{ textTransform: 'uppercase' }}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <span className="text-gray-400">
@@ -437,7 +441,7 @@ const VehicleManagement = () => {
                   </div>
                 </div>
                 <p className="mt-1 text-xs text-gray-500">
-                  A unique identifier for the vehicle type
+                  A unique identifier for the vehicle type (automatically uppercase)
                 </p>
               </div>
 
