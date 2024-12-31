@@ -173,13 +173,15 @@ const AdminDashboard = () => {
     }
   };
 
+  const isDashboardHome = location.pathname === '/admin-dashboard';
+
   return (
     <AdminContext.Provider value={contextValue}>
       <div className="min-h-screen bg-gray-100 flex flex-col">
         <Header title="Admin Dashboard" />
         
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          {/* Statistics Cards */}
+          {/* Statistics Cards - Always show */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
             {/* Shops Stats */}
             <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
@@ -251,7 +253,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons - Always show */}
           <div className="bg-white shadow-md rounded-lg mb-6 overflow-x-auto">
             <div className="flex space-x-4 sm:space-x-8 px-4 py-2">
               <button 
@@ -307,121 +309,125 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* Content Area - Thêm vào sau phần Navigation Buttons */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-            {/* Recent Activities Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activities</h3>
-              <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 
-                scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 
-                hover:scrollbar-thumb-gray-400 transition-colors duration-200">
-                {loadingActivities ? (
-                  <div className="animate-pulse space-y-4">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-gray-200 rounded-full" />
-                        <div className="flex-1">
-                          <div className="h-4 bg-gray-200 rounded w-3/4" />
-                          <div className="h-3 bg-gray-200 rounded w-1/2 mt-2" />
+          {/* Dashboard Overview - Only show on dashboard home */}
+          {isDashboardHome && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              {/* Recent Activities Card */}
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activities</h3>
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 
+                  scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 
+                  hover:scrollbar-thumb-gray-400 transition-colors duration-200">
+                  {loadingActivities ? (
+                    <div className="animate-pulse space-y-4">
+                      {[1, 2, 3].map(i => (
+                        <div key={i} className="flex items-start space-x-3">
+                          <div className="w-8 h-8 bg-gray-200 rounded-full" />
+                          <div className="flex-1">
+                            <div className="h-4 bg-gray-200 rounded w-3/4" />
+                            <div className="h-3 bg-gray-200 rounded w-1/2 mt-2" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : notifications.length === 0 ? (
+                    <p className="text-gray-500 text-center py-4">No recent activities</p>
+                  ) : (
+                    notifications.map(activity => (
+                      <div key={activity.id} className="flex items-start space-x-3">
+                        <div className="flex-shrink-0">
+                          <span className={`w-8 h-8 rounded-full flex items-center justify-center
+                            ${getActivityIconStyle(activity.type)}`}>
+                            {getActivityIcon(activity.type)}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900">
+                            {activity.description}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            by {activity.performedBy}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">
+                            {activity.timeAgo}
+                          </p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : notifications.length === 0 ? (
-                  <p className="text-gray-500 text-center py-4">No recent activities</p>
-                ) : (
-                  notifications.map(activity => (
-                    <div key={activity.id} className="flex items-start space-x-3">
-                      <div className="flex-shrink-0">
-                        <span className={`w-8 h-8 rounded-full flex items-center justify-center
-                          ${getActivityIconStyle(activity.type)}`}>
-                          {getActivityIcon(activity.type)}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">
-                          {activity.description}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          by {activity.performedBy}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          {activity.timeAgo}
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                )}
+                    ))
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Quick Stats Card */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">System Overview</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-blue-600 font-medium">Active Routes</p>
-                      <p className="text-2xl font-bold text-blue-700">24</p>
-                    </div>
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                      </svg>
+              {/* Quick Stats Card */}
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">System Overview</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Active Routes</p>
+                        <p className="text-2xl font-bold text-blue-700">24</p>
+                      </div>
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="p-4 bg-green-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-green-600 font-medium">Deliveries Today</p>
-                      <p className="text-2xl font-bold text-green-700">156</p>
-                    </div>
-                    <div className="p-2 bg-green-100 rounded-lg">
-                      <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                      </svg>
+                  <div className="p-4 bg-green-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-green-600 font-medium">Deliveries Today</p>
+                        <p className="text-2xl font-bold text-green-700">156</p>
+                      </div>
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="p-4 bg-purple-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-purple-600 font-medium">Active Staff</p>
-                      <p className="text-2xl font-bold text-purple-700">12</p>
-                    </div>
-                    <div className="p-2 bg-purple-100 rounded-lg">
-                      <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
+                  <div className="p-4 bg-purple-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-purple-600 font-medium">Active Staff</p>
+                        <p className="text-2xl font-bold text-purple-700">12</p>
+                      </div>
+                      <div className="p-2 bg-purple-100 rounded-lg">
+                        <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="p-4 bg-yellow-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-yellow-600 font-medium">Pending Orders</p>
-                      <p className="text-2xl font-bold text-yellow-700">38</p>
-                    </div>
-                    <div className="p-2 bg-yellow-100 rounded-lg">
-                      <svg className="w-6 h-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                  <div className="p-4 bg-yellow-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-yellow-600 font-medium">Pending Orders</p>
+                        <p className="text-2xl font-bold text-yellow-700">38</p>
+                      </div>
+                      <div className="p-2 bg-yellow-100 rounded-lg">
+                        <svg className="w-6 h-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Content Area */}
-          <div className="bg-white shadow-md rounded-lg">
-            <Outlet />
-          </div>
+          {/* Content Area - Show when not on dashboard home */}
+          {!isDashboardHome && (
+            <div className="bg-white shadow-md rounded-lg">
+              <Outlet />
+            </div>
+          )}
         </main>
 
         <Footer />
