@@ -14,14 +14,4 @@ router.get('/test', (req, res) => {
 // Dashboard stats
 router.get('/dashboard-stats', protect, authorize('Admin'), adminController.getDashboardStats);
 
-// Log all registered routes
-console.log('Registered admin routes:', 
-    router.stack
-        .filter(r => r.route)
-        .map(r => ({
-            path: r.route.path,
-            methods: Object.keys(r.route.methods)
-        }))
-);
-
 module.exports = router;

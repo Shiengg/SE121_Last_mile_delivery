@@ -5,21 +5,34 @@ const mongoose = require('mongoose');
 
 exports.getDashboardStats = async (req, res) => {
     try {
-        // Thêm logic để lấy thống kê dashboard ở đây
-        const stats = {
-            totalUsers: 0,
-            totalOrders: 0,
-            // ... thêm các thống kê khác
-        };
+        console.log('Fetching dashboard stats...');
 
-        res.json({
+        // Sử dụng Promise.all để thực hiện các truy vấn đồng thời
+        const [shopCount, routeCount, vehicleCount] = await Promise.all([
+            Shop.countDocuments(),
+            Route.countDocuments(),
+            VehicleType.countDocuments()
+        ]);
+
+        console.log('Collection counts:', {
+            shops: shopCount,
+            routes: routeCount,
+            vehicles: vehicleCount
+        });
+
+        res.status(200).json({
             success: true,
-            data: stats
+            data: {
+                shops: shopCount,
+                routes: routeCount,
+                vehicles: vehicleCount
+            }
         });
     } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
         res.status(500).json({
             success: false,
-            message: 'Error fetching dashboard stats',
+            message: 'Error fetching dashboard statistics',
             error: error.message
         });
     }

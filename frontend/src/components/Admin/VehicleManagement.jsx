@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiPlus, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX, FiCheck } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 const VehicleManagement = () => {
@@ -61,125 +61,270 @@ const VehicleManagement = () => {
     }
   };
 
-  if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    </div>
-  );
-
-  if (error) return (
-    <div className="p-6 text-red-500 flex items-center justify-center">
-      <div className="text-center">
-        <p className="text-xl font-semibold mb-2">Error Loading Data</p>
-        <p>{error}</p>
-        <button 
-          onClick={fetchVehicleTypes}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Retry
-        </button>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 md:p-6 max-w-7xl mx-auto">
+      {/* Header Section */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Vehicle Type Management</h2>
-        <p className="text-gray-600">Manage all vehicle types in the system</p>
-      </div>
-
-      {/* Search and Add Section */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="relative w-64">
-          <input
-            type="text"
-            placeholder="Search vehicles..."
-            className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <FiSearch className="absolute left-3 top-3 text-gray-400" />
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Vehicle Type Management</h2>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <p className="text-gray-600">Total vehicles: {vehicleTypes.length}</p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search vehicles..."
+                className="w-full sm:w-64 pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+            
+            {/* Add Button */}
+            <button
+              onClick={() => {
+                setSelectedVehicle(null);
+                setShowAddModal(true);
+              }}
+              className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+            >
+              <FiPlus className="mr-2" />
+              <span>Add Vehicle</span>
+            </button>
+          </div>
         </div>
-        
-        <button
-          onClick={() => {
-            setSelectedVehicle(null);
-            setShowAddModal(true);
-          }}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          <FiPlus className="mr-2" />
-          Add New Vehicle Type
-        </button>
       </div>
 
-      {/* Vehicle Types Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredVehicles.map((vehicle) => (
-                <tr key={vehicle._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{vehicle.code}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{vehicle.name}</td>
-                  <td className="px-6 py-4">{vehicle.description}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      vehicle.status === 'active' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {vehicle.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button
-                      onClick={() => handleEdit(vehicle)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-4"
-                    >
-                      <FiEdit2 className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(vehicle._id)}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      <FiTrash2 className="h-5 w-5" />
-                    </button>
-                  </td>
+      {/* Loading State */}
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p className="text-gray-600">Loading vehicles...</p>
+          </div>
+        </div>
+      ) : error ? (
+        <div className="min-h-[400px] flex items-center justify-center">
+          <div className="text-center p-6 bg-red-50 rounded-lg max-w-md">
+            <div className="text-red-500 text-5xl mb-4">⚠️</div>
+            <h3 className="text-xl font-semibold text-red-700 mb-2">Error Loading Data</h3>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button 
+              onClick={fetchVehicleTypes}
+              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* Vehicle Types Table */
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
+                  <th scope="col" className="px-6 py-4 text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Code</span>
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</span>
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                      </svg>
+                    </div>
+                  </th>
+                  <th scope="col" className="hidden md:table-cell px-6 py-4 text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Description</span>
+                    </div>
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</span>
+                    </div>
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-right">
+                    <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {filteredVehicles.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-16 text-center">
+                      <div className="flex flex-col items-center">
+                        <div className="rounded-full bg-gray-100 p-3 mb-4">
+                          <FiSearch className="w-6 h-6 text-gray-400" />
+                        </div>
+                        <p className="text-lg font-medium text-gray-600 mb-1">No vehicles found</p>
+                        <p className="text-sm text-gray-400">Try adjusting your search criteria</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredVehicles.map((vehicle, index) => (
+                    <tr 
+                      key={vehicle._id}
+                      className={`hover:bg-gray-50 transition-colors duration-150 ${
+                        index % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'
+                      }`}
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <span className="text-sm font-medium text-gray-900 px-2 py-1 bg-blue-50 rounded">{vehicle.code}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-sm text-gray-900">{vehicle.name}</span>
+                          <span className="text-xs text-gray-500 md:hidden">{vehicle.description}</span>
+                        </div>
+                      </td>
+                      <td className="hidden md:table-cell px-6 py-4">
+                        <p className="text-sm text-gray-600 line-clamp-2">
+                          {vehicle.description || 'No description available'}
+                        </p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize
+                          ${vehicle.status === 'active' 
+                            ? 'bg-green-100 text-green-800 border border-green-200' 
+                            : 'bg-red-100 text-red-800 border border-red-200'
+                          }`}
+                        >
+                          <span className={`w-1.5 h-1.5 rounded-full mr-1.5 
+                            ${vehicle.status === 'active' ? 'bg-green-600' : 'bg-red-600'}`
+                          }></span>
+                          {vehicle.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end space-x-3">
+                          <button
+                            onClick={() => handleEdit(vehicle)}
+                            className="group relative p-1.5 rounded-lg hover:bg-indigo-50 transition-all duration-200"
+                            title="Edit"
+                          >
+                            <FiEdit2 className="h-4 w-4 text-indigo-600" />
+                            <span className="absolute hidden group-hover:block -top-8 -left-2 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded-md">
+                              Edit
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(vehicle._id)}
+                            className="group relative p-1.5 rounded-lg hover:bg-red-50 transition-all duration-200"
+                            title="Delete"
+                          >
+                            <FiTrash2 className="h-4 w-4 text-red-600" />
+                            <span className="absolute hidden group-hover:block -top-8 -left-3 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded-md">
+                              Delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+          {/* Pagination Section */}
+          <div className="bg-white px-6 py-4 border-t border-gray-200">
+            <div className="flex justify-between items-center">
+              <p className="text-sm text-gray-600">
+                Showing <span className="font-medium text-gray-900">{vehicleTypes.length}</span> entries
+              </p>
+              
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    text-gray-500 bg-white border border-gray-300
+                    hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                    transition-all duration-200"
+                >
+                  Previous
+                </button>
+                
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                      text-white bg-blue-600 border border-transparent
+                      hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                      transition-all duration-200"
+                  >
+                    1
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                      text-gray-700 bg-white border border-gray-300
+                      hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                      transition-all duration-200"
+                  >
+                    2
+                  </button>
+                </div>
 
-      {/* Add/Edit Modal */}
+                <button
+                  type="button"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg
+                    text-gray-700 bg-white border border-gray-300
+                    hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                    transition-all duration-200"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Component */}
       {showAddModal && (
-        <VehicleTypeModal
-          vehicle={selectedVehicle}
-          onClose={() => setShowAddModal(false)}
-          onSave={() => {
-            setShowAddModal(false);
-            fetchVehicleTypes();
-          }}
-        />
+        <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-2xl bg-white">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900">
+                {selectedVehicle ? 'Edit Vehicle Type' : 'Add New Vehicle Type'}
+              </h3>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+              >
+                <FiX className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <VehicleTypeForm
+              vehicle={selectedVehicle}
+              onClose={() => setShowAddModal(false)}
+              onSave={() => {
+                setShowAddModal(false);
+                fetchVehicleTypes();
+              }}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
-// Modal Component
-const VehicleTypeModal = ({ vehicle, onClose, onSave }) => {
+// Form Component (extracted from Modal for better organization)
+const VehicleTypeForm = ({ vehicle, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     code: vehicle?.code || '',
     name: vehicle?.name || '',
@@ -210,72 +355,70 @@ const VehicleTypeModal = ({ vehicle, onClose, onSave }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div className="mt-3">
-          <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-            {vehicle ? 'Edit Vehicle Type' : 'Add New Vehicle Type'}
-          </h3>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Code</label>
-              <input
-                type="text"
-                className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={formData.code}
-                onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Name</label>
-              <input
-                type="text"
-                className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Description</label>
-              <textarea
-                className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                rows="3"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Status</label>
-              <select
-                className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              >
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-            <div className="flex justify-end gap-4">
-              <button
-                type="button"
-                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                onClick={onClose}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                {vehicle ? 'Update' : 'Add'}
-              </button>
-            </div>
-          </form>
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Code</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          value={formData.code}
+          onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+          required
+          placeholder="Enter vehicle code"
+        />
       </div>
-    </div>
+      
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+          placeholder="Enter vehicle name"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          value={formData.description}
+          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          rows="3"
+          placeholder="Enter vehicle description"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+        <select
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          value={formData.status}
+          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      
+      <div className="flex justify-end gap-3 mt-6">
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+        >
+          {vehicle ? 'Update Vehicle' : 'Add Vehicle'}
+        </button>
+      </div>
+    </form>
   );
 };
 

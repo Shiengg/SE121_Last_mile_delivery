@@ -1,30 +1,11 @@
 const mongoose = require('mongoose');
 
 const routeSchema = new mongoose.Schema({
-    route_code: {
+    name: {
         type: String,
-        required: true,
-        unique: true
-    },
-    shop1_id: {
-        type: String,
-        ref: 'Shop',
         required: true
     },
-    shop2_id: {
-        type: String,
-        ref: 'Shop',
-        required: true
-    },
-    vehicle_type_id: {
-        type: String,
-        ref: 'VehicleType',
-        required: true
-    },
-    distance: {
-        type: Number,
-        required: true
-    },
+    description: String,
     status: {
         type: String,
         enum: ['active', 'inactive'],
@@ -38,13 +19,6 @@ const routeSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-}, {
-    collection: 'Route'
-});
-
-routeSchema.pre('save', function(next) {
-    this.updated_at = new Date();
-    next();
 });
 
 module.exports = mongoose.model('Route', routeSchema);
