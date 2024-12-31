@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const vehicleRoutes = require('./routes/vehicleRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 const createTestActivity = require('./utils/testActivity');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -45,6 +46,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/activities', activityRoutes);
+app.use('/api/users', userRoutes);
 
 // Route mẫu
 app.get('/', (req, res) => {
@@ -64,12 +66,26 @@ mongoose.connect(process.env.MONGODB_URI)
         app._router.stack
             .filter(r => r.route)
             .forEach(r => {
-                console.log(`${Object.keys(r.route.methods)} ${r.route.path}`);
+                const methods = Object.keys(r.route.methods)
+                    .map(method => method.toUpperCase())
+                    .join(', ');
+                console.log(`${methods} ${r.route.path}`);
             });
             
         // Khởi động server
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
+            
+            // Log all routes for debugging
+            console.log('\nAvailable routes:');
+            app._router.stack
+                .filter(r => r.route)
+                .forEach(r => {
+                    const methods = Object.keys(r.route.methods)
+                        .map(method => method.toUpperCase())
+                        .join(', ');
+                    console.log(`${methods} ${r.route.path}`);
+                });
         });
     })
     .catch((err) => {

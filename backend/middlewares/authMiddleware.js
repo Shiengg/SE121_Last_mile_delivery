@@ -3,11 +3,9 @@ const User = require('../models/User');
 
 exports.protect = async (req, res, next) => {
     try {
-        let token;
-        
-        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-            token = req.headers.authorization.split(' ')[1];
-        }
+        // Get token from header
+        const token = req.headers.authorization?.split(' ')[1];
+        console.log('Received token:', token); // Debug log
 
         if (!token) {
             return res.status(401).json({
@@ -17,19 +15,37 @@ exports.protect = async (req, res, next) => {
         }
 
         try {
+            // Verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await User.findById(decoded.id);
+            console.log('Decoded token:', decoded); // Debug log
+
+            // Get user from token
+            const user = await User.findById(decoded.id);
+            console.log('Found user:', user); // Debug log
+
+            if (!user) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'User not found'
+                });
+            }
+
+            // Add user to request
+            req.user = user;
             next();
-        } catch (err) {
+        } catch (error) {
+            console.error('Token verification error:', error);
             return res.status(401).json({
                 success: false,
-                message: 'Not authorized to access this route'
+                message: 'Invalid token'
             });
         }
     } catch (error) {
-        res.status(500).json({
+        console.error('Auth middleware error:', error);
+        res.status(401).json({
             success: false,
-            message: 'Server Error'
+            message: 'Not authorized to access this route',
+            error: error.message
         });
     }
 };

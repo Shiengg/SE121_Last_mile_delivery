@@ -1,9 +1,16 @@
-const login = async (req, res) => {
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
+
+exports.login = async (req, res) => {
     try {
+        console.log('Login attempt:', req.body); // Debug log
         const { username, password } = req.body;
-        
-        // Tìm user
+
+        // Find user
         const user = await User.findOne({ username });
+        console.log('Found user:', user ? 'Yes' : 'No'); // Debug log
+
         if (!user) {
             return res.status(401).json({
                 success: false,
@@ -11,7 +18,7 @@ const login = async (req, res) => {
             });
         }
 
-        // Kiểm tra password
+        // Check password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({
@@ -20,24 +27,20 @@ const login = async (req, res) => {
             });
         }
 
-        // Tạo token với id và role
+        // Create token
+        const payload = {
+            id: user._id.toString(), // Ensure ID is a string
+            role: user.role
+        };
+        console.log('Token payload:', payload); // Debug log
+
         const token = jwt.sign(
-            { 
-                id: user._id,
-                role: user.role 
-            },
+            payload,
             process.env.JWT_SECRET,
-            { 
-                expiresIn: '24h' 
-            }
+            { expiresIn: '1d' }
         );
 
-        // Log để debug
-        console.log('Generated token:', token);
-        console.log('User data:', {
-            id: user._id,
-            role: user.role
-        });
+        console.log('Generated token:', token); // Debug log
 
         res.json({
             success: true,
@@ -52,7 +55,7 @@ const login = async (req, res) => {
         console.error('Login error:', error);
         res.status(500).json({
             success: false,
-            message: 'Error during login',
+            message: 'Error logging in',
             error: error.message
         });
     }
