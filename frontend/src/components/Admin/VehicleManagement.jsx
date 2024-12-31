@@ -66,6 +66,12 @@ const VehicleManagement = () => {
 
   const handleEdit = (vehicle) => {
     setSelectedVehicle(vehicle);
+    setFormData({
+      code: vehicle.code,
+      name: vehicle.name,
+      description: vehicle.description || '',
+      status: vehicle.status
+    });
     setShowAddModal(true);
   };
 
@@ -94,30 +100,56 @@ const VehicleManagement = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+      
       if (selectedVehicle) {
-        await axios.put(`http://localhost:5000/api/vehicles/${selectedVehicle._id}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Update existing vehicle
+        await axios.put(
+          `http://localhost:5000/api/vehicles/${selectedVehicle._id}`,
+          formData,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
         toast.success('Vehicle type updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/vehicles', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Create new vehicle
+        await axios.post(
+          'http://localhost:5000/api/vehicles',
+          formData,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
         toast.success('Vehicle type added successfully');
       }
+
+      // Reset form and refresh data
       setShowAddModal(false);
+      setSelectedVehicle(null);
+      setFormData({
+        code: '',
+        name: '',
+        description: '',
+        status: 'active'
+      });
+      
+      // Refresh data
       await Promise.all([
         fetchVehicleTypes(),
         fetchStats()
       ]);
     } catch (error) {
-      toast.error(selectedVehicle ? 'Failed to update vehicle type' : 'Failed to add vehicle type');
+      const errorMessage = selectedVehicle 
+        ? 'Failed to update vehicle type' 
+        : 'Failed to add vehicle type';
+      toast.error(errorMessage);
       console.error('Submit error:', error);
     }
   };
 
   const handleClose = () => {
     setShowAddModal(false);
+    setSelectedVehicle(null);
     setFormData({
       code: '',
       name: '',
