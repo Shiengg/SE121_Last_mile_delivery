@@ -46,9 +46,58 @@ exports.getAllShops = async (req, res) => {
     }
 };
 
+const getNextShopId = async (ward_code) => {
+    try {
+        // Tìm shop cuối cùng có ward_code tương ứng
+        const lastShop = await Shop.findOne({
+            shop_id: new RegExp(`^${ward_code}`, 'i')
+        }).sort({ shop_id: -1 });
+
+        if (!lastShop) {
+            // Nếu chưa có shop nào với ward_code này
+            return `${ward_code}001`;
+        }
+
+        // Lấy 3 số cuối của shop_id cuối cùng
+        const lastNumber = parseInt(lastShop.shop_id.slice(-3));
+        
+        // Kiểm tra xem có shop nào với ID mới không
+        let nextNumber = lastNumber + 1;
+        let newShopId;
+        let existingShop;
+        
+        do {
+            newShopId = `${ward_code}${nextNumber.toString().padStart(3, '0')}`;
+            existingShop = await Shop.findOne({ shop_id: newShopId });
+            nextNumber++;
+        } while (existingShop);
+
+        return newShopId;
+    } catch (error) {
+        console.error('Error generating next shop ID:', error);
+        throw error;
+    }
+};
+
 exports.createShop = async (req, res) => {
     try {
-        const newShop = new Shop(req.body);
+        const shopData = req.body;
+        
+        // Kiểm tra xem shop_id đã tồn tại chưa
+        if (shopData.shop_id) {
+            const existingShop = await Shop.findOne({ shop_id: shopData.shop_id });
+            if (existingShop) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Shop with ID ${shopData.shop_id} already exists`
+                });
+            }
+        }
+        
+        // Tự động tạo shop_id
+        shopData.shop_id = await getNextShopId(shopData.ward_code);
+        
+        const newShop = new Shop(shopData);
         await newShop.save();
 
         // Log activity
@@ -68,9 +117,10 @@ exports.createShop = async (req, res) => {
             data: newShop
         });
     } catch (error) {
+        console.error('Error creating shop:', error);
         res.status(400).json({
             success: false,
-            message: 'Error creating shop',
+            message: error.message || 'Error creating shop',
             error: error.message
         });
     }

@@ -6,6 +6,18 @@ const routeSchema = new mongoose.Schema({
         required: true
     },
     description: String,
+    shops: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shop'
+    }],
+    vehicle_type: {
+        type: String,
+        ref: 'VehicleType'
+    },
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     status: {
         type: String,
         enum: ['active', 'inactive'],
