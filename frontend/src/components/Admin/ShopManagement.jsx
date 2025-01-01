@@ -36,6 +36,9 @@ const ShopManagement = () => {
   const [isSearching, setIsSearching] = useState(false);
   const searchTimeout = useRef(null);
   const [visibleShops, setVisibleShops] = useState([]);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +62,92 @@ const ShopManagement = () => {
   useEffect(() => {
     setVisibleShops(shops);
   }, [shops]);
+
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Fetching provinces with token:', token);
+        
+        const response = await axios.get('http://localhost:5000/api/provinces', {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        console.log('Provinces response:', response.data);
+        
+        if (response.data.success) {
+          setProvinces(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching provinces:', error);
+        console.error('Error details:', error.response?.data);
+        toast.error('Failed to load provinces');
+      }
+    };
+
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      if (!formData.province_id) {
+        setDistricts([]);
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/districts', {
+          params: { province_id: formData.province_id },
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data.success) {
+          setDistricts(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching districts:', error);
+        toast.error('Failed to load districts');
+      }
+    };
+
+    fetchDistricts();
+  }, [formData.province_id]);
+
+  useEffect(() => {
+    const fetchWards = async () => {
+      if (!formData.district_id) {
+        setWards([]);
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/wards', {
+          params: { district_id: formData.district_id },
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data.success) {
+          setWards(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching wards:', error);
+        toast.error('Failed to load wards');
+      }
+    };
+
+    fetchWards();
+  }, [formData.district_id]);
 
   const fetchShops = async (page, search = '') => {
     try {
@@ -101,86 +190,103 @@ const ShopManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      
-      Swal.fire({
-        title: 'Processing...',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-      
-      if (selectedShop) {
-        await axios.put(
-          `http://localhost:5000/api/shops/${selectedShop._id}`,
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
+        const token = localStorage.getItem('token');
         
-        await Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Shop updated successfully',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      } else {
-        await axios.post(
-          'http://localhost:5000/api/shops',
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-        
-        await Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Shop added successfully',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
+        // Format data trước khi gửi
+        const formattedData = {
+            ...formData,
+            province_id: formData.province_id.toString().padStart(2, '0'),
+            district_id: formData.district_id.toString().padStart(3, '0'),
+            latitude: parseFloat(formData.latitude),
+            longitude: parseFloat(formData.longitude)
+        };
 
-      setShowAddModal(false);
-      setSelectedShop(null);
-      setFormData({
-        shop_id: '',
-        shop_name: '',
-        country_id: 'VN',
-        province_id: '',
-        district_id: '',
-        ward_code: '',
-        house_number: '',
-        street: '',
-        latitude: '',
-        longitude: '',
-        shop_type: 'retail',
-        categories: [],
-        status: 'active'
-      });
-      
-      await fetchShops(currentPage, searchTerm);
-      await fetchStats();
-      
-      const activitiesResponse = await axios.get('http://localhost:5000/api/activities/recent', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if (activitiesResponse.data.success) {
-        updateNotifications(activitiesResponse.data.data);
-      }
+        console.log('Submitting data:', formattedData);
+        
+        Swal.fire({
+            title: 'Processing...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        if (selectedShop) {
+            const response = await axios.put(
+                `http://localhost:5000/api/shops/${selectedShop._id}`,
+                formattedData,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            
+            console.log('Update response:', response.data);
+            
+            if (response.data.success) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Shop updated successfully',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        } else {
+            await axios.post(
+                'http://localhost:5000/api/shops',
+                formattedData,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            
+            await Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Shop added successfully',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+
+        setShowAddModal(false);
+        setSelectedShop(null);
+        setFormData({
+            shop_id: '',
+            shop_name: '',
+            country_id: 'VN',
+            province_id: '',
+            district_id: '',
+            ward_code: '',
+            house_number: '',
+            street: '',
+            latitude: '',
+            longitude: '',
+            shop_type: 'retail',
+            categories: [],
+            status: 'active'
+        });
+        
+        await fetchShops(currentPage, searchTerm);
+        await fetchStats();
+        
+        const activitiesResponse = await axios.get('http://localhost:5000/api/activities/recent', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (activitiesResponse.data.success) {
+            updateNotifications(activitiesResponse.data.data);
+        }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: selectedShop ? 'Failed to update shop' : 'Failed to add shop',
-        confirmButtonText: 'OK'
-      });
-      console.error('Submit error:', error);
+        console.error('Submit error:', error);
+        console.error('Error response:', error.response?.data);
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: error.response?.data?.message || 'Failed to update shop',
+            confirmButtonText: 'OK'
+        });
     }
   };
 
@@ -574,36 +680,54 @@ const ShopManagement = () => {
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">Province ID</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">Province</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.province_id}
                   onChange={(e) => setFormData({ ...formData, province_id: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select Province</option>
+                  {provinces.map((province) => (
+                    <option key={province.province_id} value={province.province_id}>
+                      {province.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">District ID</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">District</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.district_id}
                   onChange={(e) => setFormData({ ...formData, district_id: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select District</option>
+                  {districts.map((district) => (
+                    <option key={district.district_id} value={district.district_id}>
+                      {district.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">Ward Code</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">Ward</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.ward_code}
                   onChange={(e) => setFormData({ ...formData, ward_code: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select Ward</option>
+                  {wards.map((ward) => (
+                    <option key={ward.ward_code} value={ward.ward_code}>
+                      {ward.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">

@@ -4,27 +4,22 @@ const provinceSchema = new mongoose.Schema({
     code: {
         type: Number,
         required: true,
-        unique: true
+        unique: true,
+        index: true
     },
     name: {
         type: String,
         required: true,
-        trim: true
+        index: true
     },
     nation_code: {
         type: String,
         required: true,
-        trim: true,
-        uppercase: true,
-        ref: 'Nation'
+        default: 'VN'
     }
 }, {
     collection: 'Province',
     timestamps: true
 });
-
-// Index để tối ưu tìm kiếm
-provinceSchema.index({ nation_code: 1 });
-provinceSchema.index({ code: 1 }, { unique: true });
 
 module.exports = mongoose.model('Province', provinceSchema); 
