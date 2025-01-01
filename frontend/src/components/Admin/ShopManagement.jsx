@@ -394,7 +394,7 @@ const ShopManagement = () => {
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         shop.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                       }`}>
-                        {shop.status}
+                        {shop.status.charAt(0).toUpperCase() + shop.status.slice(1)}
                       </span>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
