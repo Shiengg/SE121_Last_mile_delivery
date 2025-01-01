@@ -77,19 +77,26 @@ const shopSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Xóa các index cũ
-await mongoose.connection.collections['Shop'].dropIndexes();
+// Tạo function để khởi tạo indexes
+async function createIndexes() {
+    try {
+        // Xóa indexes cũ
+        await mongoose.connection.collections['Shop']?.dropIndexes();
+        
+        // Tạo lại các indexes
+        shopSchema.index({ shop_id: 1 }, { 
+            unique: true,
+            background: true,
+            name: 'unique_shop_id'
+        });
 
-// Tạo lại các index
-shopSchema.index({ shop_id: 1 }, { 
-    unique: true,
-    background: true,
-    name: 'unique_shop_id'
-});
-
-shopSchema.index({ shop_name: 1 });
-shopSchema.index({ street: 1 });
-shopSchema.index({ status: 1 });
+        shopSchema.index({ shop_name: 1 });
+        shopSchema.index({ street: 1 });
+        shopSchema.index({ status: 1 });
+    } catch (error) {
+        console.error('Error creating indexes:', error);
+    }
+}
 
 // Pre-save middleware
 shopSchema.pre('save', async function(next) {
@@ -126,4 +133,12 @@ shopSchema.pre('save', async function(next) {
     }
 });
 
-module.exports = mongoose.model('Shop', shopSchema); 
+// Tạo model
+const Shop = mongoose.model('Shop', shopSchema);
+
+// Khởi tạo indexes khi kết nối database thành công
+mongoose.connection.once('connected', () => {
+    createIndexes();
+});
+
+module.exports = Shop; 

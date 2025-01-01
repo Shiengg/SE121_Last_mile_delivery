@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const adminRoutes = require('./routes/adminRoutes');
+const provinceRoutes = require('./routes/provinceRoutes');
 // ... other imports
 
 const app = express();

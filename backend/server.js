@@ -2,113 +2,86 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./utils/dbConnect');
+const mongoose = require('mongoose');
+
+// Import routes
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const mongoose = require('mongoose');
 const vehicleRoutes = require('./routes/vehicleRoutes');
 const activityRoutes = require('./routes/activityRoutes');
-const createTestActivity = require('./utils/testActivity');
 const userRoutes = require('./routes/userRoutes');
 const shopRoutes = require('./routes/shopRoutes');
+const provinceRoutes = require('./routes/provinceRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Thêm middleware CORS
-app.use(cors());
-
 // Middleware
+app.use(cors());
 app.use(express.json());
 
-// Kết nối tới MongoDB
-connectDB();
-
-// Thêm đoạn này sau connectDB();
-mongoose.connection.on('connected', async () => {
-    try {
-        const collections = await mongoose.connection.db.listCollections().toArray();
-        console.log('Available collections:', collections.map(c => c.name));
-        
-        // Tạo collection Activities nếu chưa tồn tại
-        if (!collections.find(c => c.name === 'activities')) {
-            await mongoose.connection.db.createCollection('activities');
-            console.log('Activities collection created');
-        }
-        
-        // Kiểm tra collection Shop
-        if (!collections.find(c => c.name === 'Shop')) {
-            console.log('Warning: Shop collection not found');
-        }
-        
-        // Uncomment để test
-        // await createTestActivity();
-    } catch (error) {
-        console.error('Error:', error);
-    }
+// Debug middleware - log all requests
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
 });
 
-// Kết nối routes
+// Connect to MongoDB
+connectDB();
+
+// Register routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/shops', shopRoutes);
+app.use('/api/provinces', provinceRoutes);
 
-// Route mẫu
+// Test route
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.json({ message: 'API is running...' });
 });
 
-// Kiểm tra biến môi trường
-console.log('MongoDB URI:', process.env.MONGODB_URI);
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Global error:', err);
+    res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: err.message
+    });
+});
 
-// Kết nối MongoDB
+// Start server only after MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log('Connected to MongoDB');
         
-        // Log all registered routes
-        console.log('Available routes:');
+        // Log all available routes
+        console.log('\nRegistered routes:');
         app._router.stack
-            .filter(r => r.route)
+            .filter(r => r.route || (r.name === 'router'))
             .forEach(r => {
-                const methods = Object.keys(r.route.methods)
-                    .map(method => method.toUpperCase())
-                    .join(', ');
-                console.log(`${methods} ${r.route.path}`);
-            });
-            
-        // Khởi động server
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-            
-            // Log all routes for debugging
-            console.log('\nAvailable routes:');
-            app._router.stack
-                .filter(r => r.route)
-                .forEach(r => {
+                if (r.route) {
                     const methods = Object.keys(r.route.methods)
                         .map(method => method.toUpperCase())
                         .join(', ');
                     console.log(`${methods} ${r.route.path}`);
-                });
+                } else {
+                    console.log(`Router middleware: ${r.regexp}`);
+                }
+            });
+            
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
     })
     .catch((err) => {
         console.error('MongoDB connection error:', err);
     });
 
-// Xử lý lỗi không bắt được
+// Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-    console.log('Unhandled Rejection:', err);
+    console.error('Unhandled Rejection:', err);
 });
-
-// Thêm log để debug
-console.log('Available routes:', app._router.stack
-  .filter(r => r.route)
-  .map(r => ({
-    path: r.route.path,
-    methods: Object.keys(r.route.methods)
-  }))
-);

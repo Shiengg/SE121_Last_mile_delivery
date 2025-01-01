@@ -36,6 +36,7 @@ const ShopManagement = () => {
   const [isSearching, setIsSearching] = useState(false);
   const searchTimeout = useRef(null);
   const [visibleShops, setVisibleShops] = useState([]);
+  const [provinces, setProvinces] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +60,34 @@ const ShopManagement = () => {
   useEffect(() => {
     setVisibleShops(shops);
   }, [shops]);
+
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Fetching provinces with token:', token);
+        
+        const response = await axios.get('http://localhost:5000/api/provinces', {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        console.log('Provinces response:', response.data);
+        
+        if (response.data.success) {
+          setProvinces(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching provinces:', error);
+        console.error('Error details:', error.response?.data);
+        toast.error('Failed to load provinces');
+      }
+    };
+
+    fetchProvinces();
+  }, []);
 
   const fetchShops = async (page, search = '') => {
     try {
@@ -574,14 +603,20 @@ const ShopManagement = () => {
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">Province ID</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">Province</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.province_id}
                   onChange={(e) => setFormData({ ...formData, province_id: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select Province</option>
+                  {provinces.map((province) => (
+                    <option key={province.province_id} value={province.province_id}>
+                      {province.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">
