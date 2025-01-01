@@ -15,34 +15,53 @@ const Header = ({ title }) => {
   const [userInfo, setUserInfo] = useState({
     name: '',
     role: '',
-    displayRole: ''
+    displayRole: '',
+    avatar: 'https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff'
   });
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const notificationRef = useRef(null);
 
   useEffect(() => {
-    const role = authService.getCurrentUserRole();
-    // Định dạng tên hiển thị và role dựa theo role của user
-    const userDisplayInfo = {
-      Admin: {
-        name: 'Admin User',
-        displayRole: 'System Administrator'
-      },
-      DeliveryStaff: {
-        name: 'Delivery Staff',
-        displayRole: 'Delivery staff'
-      },
-      Customer: {
-        name: 'Customer',
-        displayRole: 'Customer'
+    const fetchUserInfo = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/users/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.data.success) {
+          const userData = response.data.data;
+          const role = userData.role;
+          
+          // Định dạng tên hiển thị và role dựa theo role của user
+          const userDisplayInfo = {
+            Admin: {
+              name: userData.fullName || 'Admin User',
+              displayRole: 'System Administrator'
+            },
+            DeliveryStaff: {
+              name: userData.fullName || 'Delivery Staff',
+              displayRole: 'Delivery staff'
+            },
+            Customer: {
+              name: userData.fullName || 'Customer',
+              displayRole: 'Customer'
+            }
+          };
+
+          setUserInfo({
+            name: userDisplayInfo[role]?.name || 'User',
+            role: role,
+            displayRole: userDisplayInfo[role]?.displayRole || 'User',
+            avatar: userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || 'User')}&background=0D8ABC&color=fff`
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching user info:', error);
       }
     };
 
-    setUserInfo({
-      name: userDisplayInfo[role]?.name || 'User',
-      role: role,
-      displayRole: userDisplayInfo[role]?.displayRole || 'User'
-    });
+    fetchUserInfo();
   }, []);
 
   // Fetch notifications khi component mount
@@ -298,8 +317,8 @@ const Header = ({ title }) => {
               >
                 <img
                   className="h-9 w-9 rounded-full ring-2 ring-blue-500 p-0.5"
-                  src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
-                  alt="User avatar"
+                  src={userInfo.avatar}
+                  alt={userInfo.name}
                 />
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-gray-900">{userInfo.name}</p>

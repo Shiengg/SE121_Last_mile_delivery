@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./utils/dbConnect');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
@@ -20,7 +21,8 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Debug middleware - log all requests
 app.use((req, res, next) => {

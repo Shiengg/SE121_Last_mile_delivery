@@ -28,6 +28,13 @@ module.exports = {
           '100%': { transform: 'translateY(0)', opacity: 1 },
         }
       },
+      scale: {
+        '105': '1.05',
+      },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+      }
     },
   },
   plugins: [],
