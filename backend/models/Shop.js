@@ -3,9 +3,23 @@ const mongoose = require('mongoose');
 const shopSchema = new mongoose.Schema({
     shop_id: {
         type: String,
-        required: true,
+        required: [true, 'Shop ID is required'],
         unique: true,
-        index: true
+        trim: true,
+        validate: {
+            validator: async function(value) {
+                if (this.isNew) {
+                    const existingShop = await this.constructor.findOne({ shop_id: value });
+                    return !existingShop;
+                }
+                const existingShop = await this.constructor.findOne({ 
+                    shop_id: value,
+                    _id: { $ne: this._id }
+                });
+                return !existingShop;
+            },
+            message: props => `Shop with ID ${props.value} already exists`
+        }
     },
     shop_name: {
         type: String,
@@ -64,25 +78,37 @@ const shopSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Thêm compound index cho shop_id và ward_code
-shopSchema.index({ shop_id: 1, ward_code: 1 }, { unique: true });
+// Xóa các index cũ
+await mongoose.connection.collections['Shop'].dropIndexes();
 
-// Middleware để kiểm tra trùng lặp shop_id trước khi lưu
+// Tạo lại các index
+shopSchema.index({ shop_id: 1 }, { 
+    unique: true,
+    background: true,
+    name: 'unique_shop_id'
+});
+
+shopSchema.index({ shop_name: 1 });
+shopSchema.index({ street: 1 });
+shopSchema.index({ status: 1 });
+
+// Pre-save middleware
 shopSchema.pre('save', async function(next) {
     try {
-        const existingShop = await this.constructor.findOne({ shop_id: this.shop_id });
-        if (existingShop && existingShop._id.toString() !== this._id.toString()) {
-            throw new Error(`Shop with ID ${this.shop_id} already exists`);
+        if (this.isNew || this.isModified('shop_id')) {
+            const existingShop = await this.constructor.findOne({ 
+                shop_id: this.shop_id,
+                _id: { $ne: this._id }
+            });
+            
+            if (existingShop) {
+                throw new Error(`Shop with ID ${this.shop_id} already exists`);
+            }
         }
         next();
     } catch (error) {
         next(error);
     }
 });
-
-// Các index khác
-shopSchema.index({ shop_name: 1 });
-shopSchema.index({ street: 1 });
-shopSchema.index({ status: 1 });
 
 module.exports = mongoose.model('Shop', shopSchema); 

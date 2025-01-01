@@ -82,33 +82,46 @@ const getNextShopId = async (ward_code) => {
 exports.createShop = async (req, res) => {
     try {
         const shopData = req.body;
-        
-        // Kiểm tra xem shop_id đã tồn tại chưa
-        if (shopData.shop_id) {
-            const existingShop = await Shop.findOne({ shop_id: shopData.shop_id });
-            if (existingShop) {
-                return res.status(400).json({
-                    success: false,
-                    message: `Shop with ID ${shopData.shop_id} already exists`
-                });
-            }
+
+        // Kiểm tra ward_code
+        if (!shopData.ward_code || shopData.ward_code.length !== 5) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid ward code format'
+            });
         }
-        
+
         // Tự động tạo shop_id
         shopData.shop_id = await getNextShopId(shopData.ward_code);
-        
+
+        // Kiểm tra trùng lặp một lần nữa trước khi tạo
+        const existingShop = await Shop.findOne({ shop_id: shopData.shop_id });
+        if (existingShop) {
+            return res.status(400).json({
+                success: false,
+                message: `Shop with ID ${shopData.shop_id} already exists`
+            });
+        }
+
+        // Tạo shop mới
         const newShop = new Shop(shopData);
-        await newShop.save();
+        
+        // Lưu với validation đầy đủ
+        await newShop.save({ validateBeforeSave: true });
 
         // Log activity
         await logActivity(
             'CREATE',
             'SHOP',
-            `New shop ${newShop.name} was added`,
+            `New shop ${newShop.shop_name} was added`,
             req.user._id,
             {
                 entityId: newShop._id,
-                entityName: newShop.name
+                entityName: newShop.shop_name,
+                details: {
+                    shop_id: newShop.shop_id,
+                    location: `${newShop.street}, ${newShop.ward_code}`
+                }
             }
         );
 
@@ -121,7 +134,8 @@ exports.createShop = async (req, res) => {
         res.status(400).json({
             success: false,
             message: error.message || 'Error creating shop',
-            error: error.message
+            error: error.message,
+            details: error.errors
         });
     }
 };
