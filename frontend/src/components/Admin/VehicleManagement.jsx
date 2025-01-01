@@ -554,14 +554,14 @@ const VehicleManagement = () => {
       {/* Modal Component */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full z-50">
-          <div className="animate-modal-slide-down relative top-10 mx-auto p-8 border w-full max-w-md shadow-xl rounded-2xl bg-white">
+          <div className="animate-modal-slide-down relative top-10 mx-auto p-6 w-full max-w-md shadow-2xl rounded-2xl bg-white border border-gray-100">
             {/* Modal Header */}
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-8">
               <div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-1">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   {selectedVehicle ? 'Edit Vehicle Type' : 'Add New Vehicle Type'}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-600">
                   {selectedVehicle 
                     ? 'Update the information of existing vehicle type' 
                     : 'Fill in the information to create a new vehicle type'}
@@ -569,7 +569,7 @@ const VehicleManagement = () => {
               </div>
               <button
                 onClick={handleClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+                className="p-2 hover:bg-gray-100 rounded-full transition-all duration-200 hover:rotate-90"
               >
                 <FiX className="h-6 w-6 text-gray-500 hover:text-gray-700" />
               </button>
@@ -579,9 +579,9 @@ const VehicleManagement = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Code Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Vehicle Code
-                  <span className="text-red-500 ml-1">*</span>
+                  <span className="text-red-500 ml-1 text-lg">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -589,7 +589,7 @@ const VehicleManagement = () => {
                     className={`w-full px-4 py-2.5 border border-gray-300 rounded-lg transition-all duration-200 
                       ${selectedVehicle 
                         ? 'bg-gray-50 cursor-not-allowed' 
-                        : 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                        : 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-blue-400'
                       }`}
                     value={formData.code}
                     onChange={(e) => setFormData({ 
@@ -607,7 +607,7 @@ const VehicleManagement = () => {
                     </span>
                   </div>
                 </div>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 italic">
                   {selectedVehicle 
                     ? "Vehicle code cannot be modified after creation"
                     : "A unique identifier for the vehicle type (automatically uppercase)"}
@@ -616,53 +616,54 @@ const VehicleManagement = () => {
 
               {/* Name Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Vehicle Name
-                  <span className="text-red-500 ml-1">*</span>
+                  <span className="text-red-500 ml-1 text-lg">*</span>
                 </label>
                 <input
                   type="text"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-blue-400 transition-all duration-200"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   placeholder="e.g., Motorcycle, Delivery Van"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 italic">
                   The display name for this vehicle type
                 </p>
               </div>
 
               {/* Description Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2 flex justify-between">
                   Description
+                  <span className="text-xs text-gray-500">(Optional)</span>
                 </label>
                 <textarea
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-blue-400 transition-all duration-200 resize-none"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows="3"
                   placeholder="Enter a detailed description of the vehicle type..."
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 italic">
                   Optional: Provide additional details about this vehicle type
                 </p>
               </div>
 
               {/* Status Field */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Status
                 </label>
                 <div className="relative">
                   <select
-                    className="appearance-none w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white"
+                    className="appearance-none w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-blue-400 transition-all duration-200 bg-white cursor-pointer"
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                   >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="active">🟢 Active</option>
+                    <option value="inactive">🔴 Inactive</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -670,23 +671,23 @@ const VehicleManagement = () => {
                     </svg>
                   </div>
                 </div>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 italic">
                   Set whether this vehicle type is currently active
                 </p>
               </div>
 
               {/* Form Actions */}
-              <div className="flex justify-end items-center gap-3 mt-8 pt-4 border-t">
+              <div className="flex justify-end items-center gap-3 mt-8 pt-6 border-t">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-6 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200"
+                  className="px-6 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 flex items-center"
+                  className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 flex items-center"
                 >
                   {selectedVehicle ? (
                     <>
