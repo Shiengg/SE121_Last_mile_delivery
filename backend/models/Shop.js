@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const shopSchema = new mongoose.Schema({
     shop_id: {
         type: String,
-        required: [true, 'Shop ID is required'],
         unique: true,
         trim: true,
         validate: {
@@ -95,6 +94,22 @@ shopSchema.index({ status: 1 });
 // Pre-save middleware
 shopSchema.pre('save', async function(next) {
     try {
+        // Chỉ tạo shop_id cho document mới
+        if (this.isNew && !this.shop_id) {
+            const lastShop = await this.constructor.findOne({
+                shop_id: new RegExp(`^${this.ward_code}`, 'i')
+            }).sort({ shop_id: -1 });
+
+            if (!lastShop) {
+                this.shop_id = `${this.ward_code}001`;
+            } else {
+                const lastNumber = parseInt(lastShop.shop_id.slice(-3));
+                const nextNumber = (lastNumber + 1).toString().padStart(3, '0');
+                this.shop_id = `${this.ward_code}${nextNumber}`;
+            }
+        }
+
+        // Kiểm tra trùng lặp
         if (this.isNew || this.isModified('shop_id')) {
             const existingShop = await this.constructor.findOne({ 
                 shop_id: this.shop_id,

@@ -91,23 +91,9 @@ exports.createShop = async (req, res) => {
             });
         }
 
-        // Tự động tạo shop_id
-        shopData.shop_id = await getNextShopId(shopData.ward_code);
-
-        // Kiểm tra trùng lặp một lần nữa trước khi tạo
-        const existingShop = await Shop.findOne({ shop_id: shopData.shop_id });
-        if (existingShop) {
-            return res.status(400).json({
-                success: false,
-                message: `Shop with ID ${shopData.shop_id} already exists`
-            });
-        }
-
-        // Tạo shop mới
+        // Tạo shop mới (shop_id sẽ được tạo tự động trong pre-save middleware)
         const newShop = new Shop(shopData);
-        
-        // Lưu với validation đầy đủ
-        await newShop.save({ validateBeforeSave: true });
+        await newShop.save();
 
         // Log activity
         await logActivity(
