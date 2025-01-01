@@ -312,96 +312,96 @@ const ShopManagement = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          <div className="overflow-x-auto">
-            <div className="max-h-[calc(100vh-300px)] overflow-y-auto">
-              <table className="min-w-full table-fixed">
-                <thead className="bg-gray-50 sticky top-0 z-[1]">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Shop ID
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Location
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Type
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+          <div className="max-h-[calc(100vh-300px)] overflow-y-auto">
+            <table className="min-w-full table-fixed">
+              <thead className="bg-gray-50 sticky top-0 z-[1]">
+                <tr>
+                  <th className="w-32 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Shop ID
+                  </th>
+                  <th className="w-44 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="w-72 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Location
+                  </th>
+                  <th className="w-28 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="w-28 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="w-24 px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {visibleShops.map((shop) => (
+                  <tr key={shop._id} className="hover:bg-gray-50">
+                    <td className="px-4 py-4 whitespace-nowrap truncate">
+                      <div className="text-sm font-medium text-gray-900">{shop.shop_id}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="text-sm text-gray-900 truncate max-w-[160px]" title={shop.shop_name}>
+                        {shop.shop_name}
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="text-sm text-gray-500 truncate" title={`${shop.street}, ${shop.ward_code}, ${shop.district_id}, ${shop.province_id}`}>
+                        {`${shop.street}, ${shop.ward_code}, ${shop.district_id}, ${shop.province_id}`}
+                      </div>
+                      <div className="text-xs text-gray-400 truncate" title={`${shop.latitude}, ${shop.longitude}`}>
+                        {`${shop.latitude}, ${shop.longitude}`}
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap truncate">
+                      <div className="text-sm text-gray-900 capitalize">{shop.shop_type}</div>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        shop.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      }`}>
+                        {shop.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button
+                        onClick={() => {
+                          setSelectedShop(shop);
+                          setFormData({
+                            shop_id: shop.shop_id,
+                            shop_name: shop.shop_name,
+                            country_id: shop.country_id,
+                            province_id: shop.province_id,
+                            district_id: shop.district_id,
+                            ward_code: shop.ward_code,
+                            house_number: shop.house_number,
+                            street: shop.street,
+                            latitude: shop.latitude,
+                            longitude: shop.longitude,
+                            shop_type: shop.shop_type,
+                            categories: shop.categories,
+                            status: shop.status
+                          });
+                          setShowAddModal(true);
+                        }}
+                        className="text-indigo-600 hover:text-indigo-900 mr-4"
+                      >
+                        <FiEdit2 className="inline" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(shop._id)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <FiTrash2 className="inline" />
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {visibleShops.map((shop) => (
-                    <tr key={shop._id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{shop.shop_id}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{shop.shop_name}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-gray-500">
-                          {`${shop.street}, ${shop.ward_code}, ${shop.district_id}, ${shop.province_id}`}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          {`${shop.latitude}, ${shop.longitude}`}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 capitalize">{shop.shop_type}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          shop.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}>
-                          {shop.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button
-                          onClick={() => {
-                            setSelectedShop(shop);
-                            setFormData({
-                              shop_id: shop.shop_id,
-                              shop_name: shop.shop_name,
-                              country_id: shop.country_id,
-                              province_id: shop.province_id,
-                              district_id: shop.district_id,
-                              ward_code: shop.ward_code,
-                              house_number: shop.house_number,
-                              street: shop.street,
-                              latitude: shop.latitude,
-                              longitude: shop.longitude,
-                              shop_type: shop.shop_type,
-                              categories: shop.categories,
-                              status: shop.status
-                            });
-                            setShowAddModal(true);
-                          }}
-                          className="text-indigo-600 hover:text-indigo-900 mr-4"
-                        >
-                          <FiEdit2 className="inline" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(shop._id)}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          <FiTrash2 className="inline" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
