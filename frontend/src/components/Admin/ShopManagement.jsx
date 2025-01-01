@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
-import { FiPlus, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX, FiCheck } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import { AdminContext } from '../../contexts/AdminContext';
 import { useNotifications } from '../../contexts/NotificationContext';
+import Swal from 'sweetalert2';
 
 const ShopManagement = () => {
   const [shops, setShops] = useState([]);
@@ -102,6 +103,14 @@ const ShopManagement = () => {
     try {
       const token = localStorage.getItem('token');
       
+      Swal.fire({
+        title: 'Processing...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      
       if (selectedShop) {
         await axios.put(
           `http://localhost:5000/api/shops/${selectedShop._id}`,
@@ -110,7 +119,14 @@ const ShopManagement = () => {
             headers: { Authorization: `Bearer ${token}` }
           }
         );
-        toast.success('Shop updated successfully');
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Shop updated successfully',
+          timer: 1500,
+          showConfirmButton: false
+        });
       } else {
         await axios.post(
           'http://localhost:5000/api/shops',
@@ -119,7 +135,14 @@ const ShopManagement = () => {
             headers: { Authorization: `Bearer ${token}` }
           }
         );
-        toast.success('Shop added successfully');
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Shop added successfully',
+          timer: 1500,
+          showConfirmButton: false
+        });
       }
 
       setShowAddModal(false);
@@ -151,13 +174,29 @@ const ShopManagement = () => {
         updateNotifications(activitiesResponse.data.data);
       }
     } catch (error) {
-      toast.error(selectedShop ? 'Failed to update shop' : 'Failed to add shop');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: selectedShop ? 'Failed to update shop' : 'Failed to add shop',
+        confirmButtonText: 'OK'
+      });
       console.error('Submit error:', error);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this shop?')) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
       try {
         const token = localStorage.getItem('token');
         await axios.delete(`http://localhost:5000/api/shops/${id}`, {
@@ -165,7 +204,14 @@ const ShopManagement = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        toast.success('Shop deleted successfully');
+        
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Shop has been deleted.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
         
         await fetchShops(currentPage, searchTerm);
         await fetchStats();
@@ -178,7 +224,12 @@ const ShopManagement = () => {
           updateNotifications(activitiesResponse.data.data);
         }
       } catch (error) {
-        toast.error('Failed to delete shop');
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to delete shop',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
         console.error('Delete error:', error);
       }
     }
@@ -195,59 +246,93 @@ const ShopManagement = () => {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Shop Management</h2>
-        <button
-          onClick={() => {
-            setSelectedShop(null);
-            setFormData({ shop_id: '', shop_name: '', country_id: 'VN', province_id: '', district_id: '', ward_code: '', house_number: '', street: '', latitude: '', longitude: '', shop_type: 'retail', categories: [], status: 'active' });
-            setShowAddModal(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-        >
-          <FiPlus className="inline mr-2" />
-          Add New Shop
-        </button>
-      </div>
+    <div className="p-4 md:p-6 max-w-7xl mx-auto">
+      <div className="mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Shop Management</h2>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+                <span className="text-sm text-gray-600">
+                  Active: <span className="font-semibold text-green-600">
+                    {shops.filter(shop => shop.status === 'active').length}
+                  </span>
+                </span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+                <span className="text-sm text-gray-600">
+                  Inactive: <span className="font-semibold text-red-600">
+                    {shops.filter(shop => shop.status === 'inactive').length}
+                  </span>
+                </span>
+              </div>
+              <div className="w-px h-4 bg-gray-300"></div>
+              <div className="flex items-center">
+                <span className="text-sm text-gray-600">
+                  Total: <span className="font-semibold text-gray-900">{totalItems}</span>
+                </span>
+              </div>
+            </div>
+          </div>
 
-      {/* Search Bar */}
-      <div className="mb-4">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search shops..."
-            className="w-full px-4 py-2 border rounded-lg"
-            value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
-          />
-          <FiSearch className="absolute right-3 top-3 text-gray-400" />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Search shops..."
+                className="w-full sm:max-w-xs pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={searchTerm}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+
+            <button
+              onClick={() => {
+                setSelectedShop(null);
+                setShowAddModal(true);
+              }}
+              className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+            >
+              <FiPlus className="mr-2" />
+              <span>Add Shop</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Shop List with fixed height */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p className="text-gray-600">Loading shops...</p>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200">
           <div className="max-h-[calc(100vh-300px)] overflow-y-auto">
             <table className="min-w-full table-fixed">
-              <thead className="bg-gray-50 sticky top-0 z-10">
+              <thead className="bg-gray-50 sticky top-0 z-[1]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-32 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Shop ID
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-44 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-72 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Location
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-28 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-28 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-24 px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -255,31 +340,33 @@ const ShopManagement = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {visibleShops.map((shop) => (
                   <tr key={shop._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap truncate">
                       <div className="text-sm font-medium text-gray-900">{shop.shop_id}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{shop.shop_name}</div>
+                    <td className="px-4 py-4">
+                      <div className="text-sm text-gray-900 truncate max-w-[160px]" title={shop.shop_name}>
+                        {shop.shop_name}
+                      </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-500">
+                    <td className="px-4 py-4">
+                      <div className="text-sm text-gray-500 truncate" title={`${shop.street}, ${shop.ward_code}, ${shop.district_id}, ${shop.province_id}`}>
                         {`${shop.street}, ${shop.ward_code}, ${shop.district_id}, ${shop.province_id}`}
                       </div>
-                      <div className="text-xs text-gray-400">
+                      <div className="text-xs text-gray-400 truncate" title={`${shop.latitude}, ${shop.longitude}`}>
                         {`${shop.latitude}, ${shop.longitude}`}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap truncate">
                       <div className="text-sm text-gray-900 capitalize">{shop.shop_type}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         shop.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                       }`}>
                         {shop.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => {
                           setSelectedShop(shop);
@@ -317,9 +404,8 @@ const ShopManagement = () => {
             </table>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Simplified Pagination */}
       <div className="mt-4 flex items-center justify-between">
         <div className="text-sm text-gray-700">
           Showing{' '}
@@ -346,10 +432,8 @@ const ShopManagement = () => {
             Previous
           </button>
 
-          {/* Simplified Page Numbers */}
           <div className="flex space-x-1">
             {totalPages <= 7 ? (
-              // Hiển thị tất cả các trang nếu tổng số trang <= 7
               [...Array(totalPages)].map((_, index) => (
                 <button
                   key={index + 1}
@@ -364,7 +448,6 @@ const ShopManagement = () => {
                 </button>
               ))
             ) : (
-              // Hiển thị trang đầu, trang cuối và các trang xung quanh trang hiện tại
               <>
                 <PageButton
                   page={1}
@@ -417,147 +500,152 @@ const ShopManagement = () => {
         </div>
       </div>
 
-      {/* Updated Add/Edit Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-          <div className="relative top-20 mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full z-[100]">
+          <div className="relative top-20 mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white animate-modal-slide-down">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
                 {selectedShop ? 'Edit Shop' : 'Add New Shop'}
               </h3>
-              <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Shop ID</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.shop_id}
-                    onChange={(e) => setFormData({ ...formData, shop_id: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">Shop Name</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.shop_name}
-                    onChange={(e) => setFormData({ ...formData, shop_name: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Province ID</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.province_id}
-                    onChange={(e) => setFormData({ ...formData, province_id: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">District ID</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.district_id}
-                    onChange={(e) => setFormData({ ...formData, district_id: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Ward Code</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.ward_code}
-                    onChange={(e) => setFormData({ ...formData, ward_code: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Street</label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.street}
-                    onChange={(e) => setFormData({ ...formData, street: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Latitude</label>
-                  <input
-                    type="number"
-                    step="any"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.latitude}
-                    onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Longitude</label>
-                  <input
-                    type="number"
-                    step="any"
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.longitude}
-                    onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
-                    required
-                  />
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Shop Type</label>
-                  <select
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.shop_type}
-                    onChange={(e) => setFormData({ ...formData, shop_type: e.target.value })}
-                  >
-                    <option value="retail">Retail</option>
-                    <option value="wholesale">Wholesale</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div className="col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Status</label>
-                  <select
-                    className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                    value={formData.status}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
-
-                <div className="col-span-2 flex justify-end space-x-3 mt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowAddModal(false)}
-                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                  >
-                    {selectedShop ? 'Update' : 'Add'}
-                  </button>
-                </div>
-              </form>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+              >
+                <FiX className="h-5 w-5 text-gray-500" />
+              </button>
             </div>
+            <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Shop ID</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.shop_id}
+                  onChange={(e) => setFormData({ ...formData, shop_id: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-2">
+                <label className="block text-sm font-medium text-gray-700">Shop Name</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.shop_name}
+                  onChange={(e) => setFormData({ ...formData, shop_name: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Province ID</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.province_id}
+                  onChange={(e) => setFormData({ ...formData, province_id: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">District ID</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.district_id}
+                  onChange={(e) => setFormData({ ...formData, district_id: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Ward Code</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.ward_code}
+                  onChange={(e) => setFormData({ ...formData, ward_code: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Street</label>
+                <input
+                  type="text"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.street}
+                  onChange={(e) => setFormData({ ...formData, street: e.target.value })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Latitude</label>
+                <input
+                  type="number"
+                  step="any"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.latitude}
+                  onChange={(e) => setFormData({ ...formData, latitude: parseFloat(e.target.value) })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Longitude</label>
+                <input
+                  type="number"
+                  step="any"
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.longitude}
+                  onChange={(e) => setFormData({ ...formData, longitude: parseFloat(e.target.value) })}
+                  required
+                />
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Shop Type</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.shop_type}
+                  onChange={(e) => setFormData({ ...formData, shop_type: e.target.value })}
+                >
+                  <option value="retail">Retail</option>
+                  <option value="wholesale">Wholesale</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div className="col-span-1">
+                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                  value={formData.status}
+                  onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+
+              <div className="col-span-2 flex justify-end space-x-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                >
+                  {selectedShop ? 'Update' : 'Add'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

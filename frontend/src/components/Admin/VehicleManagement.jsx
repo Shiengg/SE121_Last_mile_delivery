@@ -4,6 +4,7 @@ import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX, FiCheck, FiHash } from 'react
 import { toast } from 'react-toastify';
 import { AdminContext } from '../../contexts/AdminContext';
 import { useNotifications } from '../../contexts/NotificationContext';
+import Swal from 'sweetalert2';
 
 const VehicleManagement = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
@@ -102,7 +103,18 @@ const VehicleManagement = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this vehicle type?')) {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
       try {
         const token = localStorage.getItem('token');
         await axios.delete(`http://localhost:5000/api/vehicles/${id}`, {
@@ -110,14 +122,27 @@ const VehicleManagement = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        toast.success('Vehicle type deleted successfully');
+        
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Vehicle type has been deleted.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+
         await Promise.all([
           fetchVehicleTypes(),
           fetchStats(),
           fetchActivities()
         ]);
       } catch (error) {
-        toast.error('Failed to delete vehicle type');
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to delete vehicle type',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
         console.error('Delete error:', error);
       }
     }
@@ -128,6 +153,15 @@ const VehicleManagement = () => {
     try {
       const token = localStorage.getItem('token');
       
+      // Show loading
+      Swal.fire({
+        title: 'Processing...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+      
       if (selectedVehicle) {
         // Update existing vehicle
         await axios.put(
@@ -137,7 +171,14 @@ const VehicleManagement = () => {
             headers: { Authorization: `Bearer ${token}` }
           }
         );
-        toast.success('Vehicle type updated successfully');
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Vehicle type updated successfully',
+          timer: 1500,
+          showConfirmButton: false
+        });
       } else {
         // Create new vehicle
         await axios.post(
@@ -147,7 +188,14 @@ const VehicleManagement = () => {
             headers: { Authorization: `Bearer ${token}` }
           }
         );
-        toast.success('Vehicle type added successfully');
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Vehicle type added successfully',
+          timer: 1500,
+          showConfirmButton: false
+        });
       }
 
       // Reset form and refresh data
@@ -170,7 +218,13 @@ const VehicleManagement = () => {
       const errorMessage = selectedVehicle 
         ? 'Failed to update vehicle type' 
         : 'Failed to add vehicle type';
-      toast.error(errorMessage);
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: errorMessage,
+        confirmButtonText: 'OK'
+      });
       console.error('Submit error:', error);
     }
   };
