@@ -4,21 +4,7 @@ const shopSchema = new mongoose.Schema({
     shop_id: {
         type: String,
         unique: true,
-        trim: true,
-        validate: {
-            validator: async function(value) {
-                if (this.isNew) {
-                    const existingShop = await this.constructor.findOne({ shop_id: value });
-                    return !existingShop;
-                }
-                const existingShop = await this.constructor.findOne({ 
-                    shop_id: value,
-                    _id: { $ne: this._id }
-                });
-                return !existingShop;
-            },
-            message: props => `Shop with ID ${props.value} already exists`
-        }
+        trim: true
     },
     shop_name: {
         type: String,
@@ -31,17 +17,17 @@ const shopSchema = new mongoose.Schema({
     province_id: {
         type: String,
         required: true,
-        ref: 'Province'
+        trim: true
     },
     district_id: {
         type: String,
         required: true,
-        ref: 'District'
+        trim: true
     },
     ward_code: {
         type: String,
         required: true,
-        ref: 'Ward'
+        trim: true
     },
     house_number: {
         type: String,
@@ -77,33 +63,14 @@ const shopSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Tạo function để khởi tạo indexes
-async function createIndexes() {
-    try {
-        // Xóa indexes cũ
-        await mongoose.connection.collections['Shop']?.dropIndexes();
-        
-        // Tạo lại các indexes
-        shopSchema.index({ shop_id: 1 }, { 
-            unique: true,
-            background: true,
-            name: 'unique_shop_id'
-        });
-
-        shopSchema.index({ shop_name: 1 });
-        shopSchema.index({ street: 1 });
-        shopSchema.index({ status: 1 });
-    } catch (error) {
-        console.error('Error creating indexes:', error);
-    }
-}
-
 // Pre-save middleware
 shopSchema.pre('save', async function(next) {
     try {
+        const Shop = mongoose.model('Shop');
+
         // Chỉ tạo shop_id cho document mới
         if (this.isNew && !this.shop_id) {
-            const lastShop = await this.constructor.findOne({
+            const lastShop = await Shop.findOne({
                 shop_id: new RegExp(`^${this.ward_code}`, 'i')
             }).sort({ shop_id: -1 });
 
@@ -116,29 +83,39 @@ shopSchema.pre('save', async function(next) {
             }
         }
 
-        // Kiểm tra trùng lặp
-        if (this.isNew || this.isModified('shop_id')) {
-            const existingShop = await this.constructor.findOne({ 
+        // Kiểm tra unique shop_id
+        if (this.isModified('shop_id')) {
+            const existingShop = await Shop.findOne({
                 shop_id: this.shop_id,
                 _id: { $ne: this._id }
             });
             
             if (existingShop) {
-                throw new Error(`Shop with ID ${this.shop_id} already exists`);
+                throw new Error('Shop ID must be unique');
             }
         }
+
+        // Format IDs
+        if (this.isModified('province_id')) {
+            this.province_id = this.province_id.toString().padStart(2, '0');
+        }
+        if (this.isModified('district_id')) {
+            this.district_id = this.district_id.toString().padStart(3, '0');
+        }
+
         next();
     } catch (error) {
         next(error);
     }
 });
 
+// Indexes
+shopSchema.index({ shop_id: 1 }, { unique: true });
+shopSchema.index({ shop_name: 1 });
+shopSchema.index({ street: 1 });
+shopSchema.index({ status: 1 });
+
 // Tạo model
 const Shop = mongoose.model('Shop', shopSchema);
-
-// Khởi tạo indexes khi kết nối database thành công
-mongoose.connection.once('connected', () => {
-    createIndexes();
-});
 
 module.exports = Shop; 

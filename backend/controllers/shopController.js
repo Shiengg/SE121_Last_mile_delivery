@@ -128,13 +128,41 @@ exports.createShop = async (req, res) => {
 
 exports.updateShop = async (req, res) => {
     try {
-        const { id } = req.params;
-        const updateData = req.body;
+        console.log('Update shop request:', {
+            shopId: req.params.id,
+            updateData: req.body
+        });
 
+        const shopData = req.body;
+
+        // Validate required fields
+        const requiredFields = ['shop_name', 'province_id', 'district_id', 'ward_code', 'street', 'latitude', 'longitude'];
+        for (const field of requiredFields) {
+            if (!shopData[field]) {
+                return res.status(400).json({
+                    success: false,
+                    message: `${field} is required`
+                });
+            }
+        }
+
+        // Format data
+        const formattedData = {
+            ...shopData,
+            province_id: shopData.province_id.toString().padStart(2, '0'),
+            district_id: shopData.district_id.toString().padStart(3, '0'),
+            latitude: parseFloat(shopData.latitude),
+            longitude: parseFloat(shopData.longitude)
+        };
+
+        // Find and update shop
         const updatedShop = await Shop.findByIdAndUpdate(
-            id,
-            updateData,
-            { new: true, runValidators: true }
+            req.params.id,
+            formattedData,
+            { 
+                new: true,
+                runValidators: true
+            }
         );
 
         if (!updatedShop) {
@@ -144,28 +172,29 @@ exports.updateShop = async (req, res) => {
             });
         }
 
+        console.log('Shop updated successfully:', updatedShop);
+
         // Log activity
-        await logActivity(
-            'UPDATE',
-            'SHOP',
-            `Shop ${updatedShop.name} was updated`,
-            req.user._id,
-            {
-                entityId: updatedShop._id,
-                entityName: updatedShop.name,
-                changes: updateData
-            }
-        );
+        await logActivity({
+            user_id: req.user._id,
+            action: 'update',
+            target_type: 'shop',
+            target_id: updatedShop._id,
+            details: `Updated shop ${updatedShop.shop_name}`
+        });
 
         res.json({
             success: true,
+            message: 'Shop updated successfully',
             data: updatedShop
         });
     } catch (error) {
+        console.error('Error updating shop:', error);
         res.status(400).json({
             success: false,
             message: 'Error updating shop',
-            error: error.message
+            error: error.message,
+            details: error.errors
         });
     }
 };

@@ -190,86 +190,103 @@ const ShopManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      
-      Swal.fire({
-        title: 'Processing...',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-      
-      if (selectedShop) {
-        await axios.put(
-          `http://localhost:5000/api/shops/${selectedShop._id}`,
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
+        const token = localStorage.getItem('token');
         
-        await Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Shop updated successfully',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      } else {
-        await axios.post(
-          'http://localhost:5000/api/shops',
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-        
-        await Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Shop added successfully',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
+        // Format data trước khi gửi
+        const formattedData = {
+            ...formData,
+            province_id: formData.province_id.toString().padStart(2, '0'),
+            district_id: formData.district_id.toString().padStart(3, '0'),
+            latitude: parseFloat(formData.latitude),
+            longitude: parseFloat(formData.longitude)
+        };
 
-      setShowAddModal(false);
-      setSelectedShop(null);
-      setFormData({
-        shop_id: '',
-        shop_name: '',
-        country_id: 'VN',
-        province_id: '',
-        district_id: '',
-        ward_code: '',
-        house_number: '',
-        street: '',
-        latitude: '',
-        longitude: '',
-        shop_type: 'retail',
-        categories: [],
-        status: 'active'
-      });
-      
-      await fetchShops(currentPage, searchTerm);
-      await fetchStats();
-      
-      const activitiesResponse = await axios.get('http://localhost:5000/api/activities/recent', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      if (activitiesResponse.data.success) {
-        updateNotifications(activitiesResponse.data.data);
-      }
+        console.log('Submitting data:', formattedData);
+        
+        Swal.fire({
+            title: 'Processing...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        if (selectedShop) {
+            const response = await axios.put(
+                `http://localhost:5000/api/shops/${selectedShop._id}`,
+                formattedData,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            
+            console.log('Update response:', response.data);
+            
+            if (response.data.success) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Shop updated successfully',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        } else {
+            await axios.post(
+                'http://localhost:5000/api/shops',
+                formattedData,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            
+            await Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Shop added successfully',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+
+        setShowAddModal(false);
+        setSelectedShop(null);
+        setFormData({
+            shop_id: '',
+            shop_name: '',
+            country_id: 'VN',
+            province_id: '',
+            district_id: '',
+            ward_code: '',
+            house_number: '',
+            street: '',
+            latitude: '',
+            longitude: '',
+            shop_type: 'retail',
+            categories: [],
+            status: 'active'
+        });
+        
+        await fetchShops(currentPage, searchTerm);
+        await fetchStats();
+        
+        const activitiesResponse = await axios.get('http://localhost:5000/api/activities/recent', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (activitiesResponse.data.success) {
+            updateNotifications(activitiesResponse.data.data);
+        }
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: selectedShop ? 'Failed to update shop' : 'Failed to add shop',
-        confirmButtonText: 'OK'
-      });
-      console.error('Submit error:', error);
+        console.error('Submit error:', error);
+        console.error('Error response:', error.response?.data);
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: error.response?.data?.message || 'Failed to update shop',
+            confirmButtonText: 'OK'
+        });
     }
   };
 
