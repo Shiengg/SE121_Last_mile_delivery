@@ -9,6 +9,7 @@ const vehicleRoutes = require('./routes/vehicleRoutes');
 const activityRoutes = require('./routes/activityRoutes');
 const createTestActivity = require('./utils/testActivity');
 const userRoutes = require('./routes/userRoutes');
+const shopRoutes = require('./routes/shopRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +35,11 @@ mongoose.connection.on('connected', async () => {
             console.log('Activities collection created');
         }
         
+        // Kiểm tra collection Shop
+        if (!collections.find(c => c.name === 'Shop')) {
+            console.log('Warning: Shop collection not found');
+        }
+        
         // Uncomment để test
         // await createTestActivity();
     } catch (error) {
@@ -47,6 +53,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/activities', activityRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/shops', shopRoutes);
 
 // Route mẫu
 app.get('/', (req, res) => {
@@ -96,3 +103,12 @@ mongoose.connect(process.env.MONGODB_URI)
 process.on('unhandledRejection', (err) => {
     console.log('Unhandled Rejection:', err);
 });
+
+// Thêm log để debug
+console.log('Available routes:', app._router.stack
+  .filter(r => r.route)
+  .map(r => ({
+    path: r.route.path,
+    methods: Object.keys(r.route.methods)
+  }))
+);
