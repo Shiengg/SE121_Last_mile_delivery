@@ -21,7 +21,10 @@ const activitySchema = new mongoose.Schema({
     required: true
   },
   metadata: {
-    entityId: mongoose.Schema.Types.ObjectId,
+    entityId: {
+      type: mongoose.Schema.Types.ObjectId,
+      refPath: 'module'
+    },
     entityName: String,
     changes: Object
   },

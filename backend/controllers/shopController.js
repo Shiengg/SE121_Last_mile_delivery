@@ -46,20 +46,68 @@ exports.getAllShops = async (req, res) => {
     }
 };
 
+const getNextShopId = async (ward_code) => {
+    try {
+        // Tìm shop cuối cùng có ward_code tương ứng
+        const lastShop = await Shop.findOne({
+            shop_id: new RegExp(`^${ward_code}`, 'i')
+        }).sort({ shop_id: -1 });
+
+        if (!lastShop) {
+            // Nếu chưa có shop nào với ward_code này
+            return `${ward_code}001`;
+        }
+
+        // Lấy 3 số cuối của shop_id cuối cùng
+        const lastNumber = parseInt(lastShop.shop_id.slice(-3));
+        
+        // Kiểm tra xem có shop nào với ID mới không
+        let nextNumber = lastNumber + 1;
+        let newShopId;
+        let existingShop;
+        
+        do {
+            newShopId = `${ward_code}${nextNumber.toString().padStart(3, '0')}`;
+            existingShop = await Shop.findOne({ shop_id: newShopId });
+            nextNumber++;
+        } while (existingShop);
+
+        return newShopId;
+    } catch (error) {
+        console.error('Error generating next shop ID:', error);
+        throw error;
+    }
+};
+
 exports.createShop = async (req, res) => {
     try {
-        const newShop = new Shop(req.body);
+        const shopData = req.body;
+
+        // Kiểm tra ward_code
+        if (!shopData.ward_code || shopData.ward_code.length !== 5) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid ward code format'
+            });
+        }
+
+        // Tạo shop mới (shop_id sẽ được tạo tự động trong pre-save middleware)
+        const newShop = new Shop(shopData);
         await newShop.save();
 
         // Log activity
         await logActivity(
             'CREATE',
             'SHOP',
-            `New shop ${newShop.name} was added`,
+            `New shop ${newShop.shop_name} was added`,
             req.user._id,
             {
                 entityId: newShop._id,
-                entityName: newShop.name
+                entityName: newShop.shop_name,
+                details: {
+                    shop_id: newShop.shop_id,
+                    location: `${newShop.street}, ${newShop.ward_code}`
+                }
             }
         );
 
@@ -68,10 +116,12 @@ exports.createShop = async (req, res) => {
             data: newShop
         });
     } catch (error) {
+        console.error('Error creating shop:', error);
         res.status(400).json({
             success: false,
-            message: 'Error creating shop',
-            error: error.message
+            message: error.message || 'Error creating shop',
+            error: error.message,
+            details: error.errors
         });
     }
 };

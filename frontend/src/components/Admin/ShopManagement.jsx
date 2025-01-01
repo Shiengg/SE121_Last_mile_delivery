@@ -394,7 +394,7 @@ const ShopManagement = () => {
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         shop.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                       }`}>
-                        {shop.status}
+                        {shop.status.charAt(0).toUpperCase() + shop.status.slice(1)}
                       </span>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -550,11 +550,16 @@ const ShopManagement = () => {
                 <label className="block text-sm font-medium text-gray-700">Shop ID</label>
                 <input
                   type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
-                  value={formData.shop_id}
-                  onChange={(e) => setFormData({ ...formData, shop_id: e.target.value })}
-                  required
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 bg-gray-100 cursor-not-allowed"
+                  value={selectedShop ? formData.shop_id : 'Will be generated automatically'}
+                  disabled
+                  readOnly
                 />
+                {!selectedShop && (
+                  <p className="mt-1 text-xs text-gray-500">
+                    Will be generated automatically based on ward code
+                  </p>
+                )}
               </div>
 
               <div className="col-span-2">
