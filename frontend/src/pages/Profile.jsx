@@ -133,101 +133,123 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Header title="Thông Tin Cá Nhân" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl">
           {/* Profile Header */}
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <div className="flex items-center space-x-5">
-              <div className="flex-shrink-0">
+          <div className="px-6 py-8 sm:px-8 bg-gradient-to-r from-blue-500 to-blue-600 border-b border-gray-200">
+            <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <div className="flex-shrink-0 relative group">
                 <img
-                  className="h-20 w-20 rounded-full ring-4 ring-blue-500 p-1"
+                  className="h-24 w-24 sm:h-32 sm:w-32 rounded-full ring-4 ring-white p-1 transition-transform duration-300 group-hover:scale-105"
                   src={userInfo.avatar}
                   alt="Profile"
                 />
+                <div className="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Thay đổi
+                  </span>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Thông tin cá nhân
+              <div className="text-center sm:text-left">
+                <h3 className="text-2xl leading-6 font-bold text-white">
+                  {userInfo.fullName || userInfo.username}
                 </h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                  Quản lý thông tin cá nhân của bạn
+                <p className="mt-2 text-blue-100">
+                  {userInfo.role === 'Admin' ? '🌟 Quản trị viên' : '👤 Người dùng'}
                 </p>
               </div>
             </div>
           </div>
 
           {/* Profile Content */}
-          <div className="px-4 py-5 sm:p-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Tên đăng nhập
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm"
-                  value={userInfo.username}
-                  disabled
-                />
+          <div className="px-6 py-8 sm:p-8">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Tên đăng nhập
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 shadow-sm transition-all duration-300"
+                      value={userInfo.username}
+                      disabled
+                    />
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      🔒
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Họ và tên
+                  </label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
+                    value={userInfo.fullName}
+                    onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}
+                    placeholder="Nhập họ và tên của bạn"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Vai trò
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 shadow-sm transition-all duration-300"
+                      value={userInfo.role === 'Admin' ? 'Quản trị viên' : 'Người dùng'}
+                      disabled
+                    />
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      {userInfo.role === 'Admin' ? '🌟' : '👤'}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Họ và tên
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  value={userInfo.fullName}
-                  onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}
-                />
-              </div>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
+                    value={userInfo.email}
+                    onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                    placeholder="example@email.com"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  value={userInfo.email}
-                  onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Số điện thoại
-                </label>
-                <input
-                  type="tel"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  value={userInfo.phone}
-                  onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Vai trò
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm"
-                  value={userInfo.role}
-                  disabled
-                />
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Số điện thoại
+                  </label>
+                  <input
+                    type="tel"
+                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
+                    value={userInfo.phone}
+                    onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                    placeholder="Nhập số điện thoại của bạn"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-8 flex justify-end">
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex justify-center items-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
               >
                 {saving ? (
                   <>
@@ -237,7 +259,14 @@ const Profile = () => {
                     </svg>
                     Đang lưu...
                   </>
-                ) : 'Lưu thay đổi'}
+                ) : (
+                  <>
+                    <span>Lưu thay đổi</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </>
+                )}
               </button>
             </div>
           </div>

@@ -110,7 +110,6 @@ shopSchema.pre('save', async function(next) {
 });
 
 // Indexes
-shopSchema.index({ shop_id: 1 }, { unique: true });
 shopSchema.index({ shop_name: 1 });
 shopSchema.index({ street: 1 });
 shopSchema.index({ status: 1 });
