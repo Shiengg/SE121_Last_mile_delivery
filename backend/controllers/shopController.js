@@ -123,7 +123,6 @@ exports.updateShop = async (req, res) => {
 exports.deleteShop = async (req, res) => {
     try {
         const { id } = req.params;
-        
         const deletedShop = await Shop.findByIdAndDelete(id);
 
         if (!deletedShop) {
@@ -137,11 +136,15 @@ exports.deleteShop = async (req, res) => {
         await logActivity(
             'DELETE',
             'SHOP',
-            `Shop ${deletedShop.name} was deleted`,
+            `Shop ${deletedShop.shop_name} was deleted`,
             req.user._id,
             {
                 entityId: deletedShop._id,
-                entityName: deletedShop.name
+                entityName: deletedShop.shop_name,
+                details: {
+                    shop_id: deletedShop.shop_id,
+                    location: `${deletedShop.street}, ${deletedShop.ward_code}`
+                }
             }
         );
 
