@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: ''
+        default: 'https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff'
     },
     createdAt: {
         type: Date,

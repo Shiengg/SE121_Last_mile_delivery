@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Shared/Header';
 import authService from '../services/authService';
 import axios from 'axios';
@@ -17,6 +17,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchUserProfile();
@@ -47,7 +48,7 @@ const Profile = () => {
         const userData = response.data.data;
         setUserInfo({
           ...userData,
-          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || userData.username)}&background=0D8ABC&color=fff`
+          avatar: userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName || userData.username)}&background=0D8ABC&color=fff`
         });
       }
     } catch (error) {
@@ -63,6 +64,77 @@ const Profile = () => {
     }
   };
 
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error('Ảnh không được lớn hơn 5MB');
+        return;
+      }
+
+      // Nén ảnh trước khi chuyển thành base64
+      const compressedFile = await compressImage(file);
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        setUserInfo(prev => ({
+          ...prev,
+          avatar: reader.result
+        }));
+      };
+      reader.readAsDataURL(compressedFile);
+    }
+  };
+
+  // Hàm nén ảnh
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            resolve(new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            }));
+          }, 'image/jpeg', 0.7); // Nén với chất lượng 70%
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -73,7 +145,8 @@ const Profile = () => {
         {
           fullName: userInfo.fullName,
           email: userInfo.email,
-          phone: userInfo.phone
+          phone: userInfo.phone,
+          avatar: userInfo.avatar
         },
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -81,16 +154,16 @@ const Profile = () => {
       );
 
       if (response.data.success) {
-        toast.success('Profile updated successfully');
-        // Update avatar with new name
-        setUserInfo(prev => ({
-          ...prev,
-          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(userInfo.fullName || userInfo.username)}&background=0D8ABC&color=fff`
+        toast.success('Cập nhật thông tin thành công');
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        localStorage.setItem('user', JSON.stringify({
+          ...currentUser,
+          ...response.data.data
         }));
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error('Failed to update profile');
+      toast.error('Cập nhật thông tin thất bại');
     } finally {
       setSaving(false);
     }
@@ -141,7 +214,14 @@ const Profile = () => {
           {/* Profile Header */}
           <div className="px-6 py-8 sm:px-8 bg-gradient-to-r from-blue-500 to-blue-600 border-b border-gray-200">
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <div className="flex-shrink-0 relative group">
+              <div className="flex-shrink-0 relative group cursor-pointer" onClick={handleImageClick}>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
                 <img
                   className="h-24 w-24 sm:h-32 sm:w-32 rounded-full ring-4 ring-white p-1 transition-transform duration-300 group-hover:scale-105"
                   src={userInfo.avatar}
@@ -149,7 +229,7 @@ const Profile = () => {
                 />
                 <div className="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                   <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Thay đổi
+                    Thay đổi ảnh
                   </span>
                 </div>
               </div>
