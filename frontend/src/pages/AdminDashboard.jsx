@@ -175,6 +175,11 @@ const AdminDashboard = () => {
 
   const isDashboardHome = location.pathname === '/admin-dashboard';
 
+  // Thêm hàm kiểm tra active card
+  const isActiveCard = (path) => {
+    return location.pathname.includes(path);
+  };
+
   return (
     <AdminContext.Provider value={contextValue}>
       <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -184,72 +189,99 @@ const AdminDashboard = () => {
           {/* Statistics Cards - Always show */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
             {/* Shops Stats */}
-            <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                 onClick={() => navigate('/admin-dashboard/shops')}>
+            <div 
+              onClick={() => navigate('/admin-dashboard/shops')}
+              className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+            >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-blue-50 group-hover:bg-blue-100 transition-colors duration-300">
+                  <div className={`p-3 rounded-xl transition-colors duration-300 
+                    ${isActiveCard('/shops') ? 'bg-blue-100' : 'bg-blue-50 group-hover:bg-blue-100'}`}>
                     <svg className="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <span className="text-4xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                  <span className={`text-4xl font-bold transition-colors duration-300
+                    ${isActiveCard('/shops') ? 'text-blue-600' : 'text-gray-900 group-hover:text-blue-600'}`}>
                     {stats.shops}
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">Shops</h3>
+                  <h3 className={`text-xl font-semibold transition-colors duration-300
+                    ${isActiveCard('/shops') ? 'text-blue-600' : 'text-gray-900 group-hover:text-blue-600'}`}>
+                    Shops
+                  </h3>
                   <p className="text-sm text-gray-500">Total registered stores</p>
                 </div>
               </div>
-              <div className="h-1 w-full bg-gradient-to-r from-blue-400 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className={`h-1 w-full bg-gradient-to-r from-blue-400 to-blue-600 transform transition-transform duration-300 origin-left
+                ${isActiveCard('/shops') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}
+              ></div>
             </div>
 
             {/* Routes Stats */}
-            <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                 onClick={() => navigate('/admin-dashboard/routes')}>
+            <div 
+              onClick={() => navigate('/admin-dashboard/routes')}
+              className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+            >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-300">
+                  <div className={`p-3 rounded-xl transition-colors duration-300 
+                    ${isActiveCard('/routes') ? 'bg-indigo-100' : 'bg-indigo-50 group-hover:bg-indigo-100'}`}>
                     <svg className="h-8 w-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
                         d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                     </svg>
                   </div>
-                  <span className="text-4xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">
+                  <span className={`text-4xl font-bold transition-colors duration-300
+                    ${isActiveCard('/routes') ? 'text-indigo-600' : 'text-gray-900 group-hover:text-indigo-600'}`}>
                     {stats.routes}
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">Routes</h3>
+                  <h3 className={`text-xl font-semibold transition-colors duration-300
+                    ${isActiveCard('/routes') ? 'text-indigo-600' : 'text-gray-900 group-hover:text-indigo-600'}`}>
+                    Routes
+                  </h3>
                   <p className="text-sm text-gray-500">Total delivery paths</p>
                 </div>
               </div>
-              <div className="h-1 w-full bg-gradient-to-r from-indigo-400 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className={`h-1 w-full bg-gradient-to-r from-indigo-400 to-indigo-600 transform transition-transform duration-300 origin-left
+                ${isActiveCard('/routes') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}
+              ></div>
             </div>
 
             {/* Vehicle Types Stats */}
-            <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                 onClick={() => navigate('/admin-dashboard/vehicle-types')}>
+            <div 
+              onClick={() => navigate('/admin-dashboard/vehicle-types')}
+              className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+            >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-purple-50 group-hover:bg-purple-100 transition-colors duration-300">
+                  <div className={`p-3 rounded-xl transition-colors duration-300 
+                    ${isActiveCard('/vehicle-types') ? 'bg-purple-100' : 'bg-purple-50 group-hover:bg-purple-100'}`}>
                     <svg className="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
                         d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                     </svg>
                   </div>
-                  <span className="text-4xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                  <span className={`text-4xl font-bold transition-colors duration-300
+                    ${isActiveCard('/vehicle-types') ? 'text-purple-600' : 'text-gray-900 group-hover:text-purple-600'}`}>
                     {stats.vehicles}
                   </span>
                 </div>
                 <div className="flex flex-col">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">Vehicles</h3>
+                  <h3 className={`text-xl font-semibold transition-colors duration-300
+                    ${isActiveCard('/vehicle-types') ? 'text-purple-600' : 'text-gray-900 group-hover:text-purple-600'}`}>
+                    Vehicles
+                  </h3>
                   <p className="text-sm text-gray-500">Total vehicle types</p>
                 </div>
               </div>
-              <div className="h-1 w-full bg-gradient-to-r from-purple-400 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+              <div className={`h-1 w-full bg-gradient-to-r from-purple-400 to-purple-600 transform transition-transform duration-300 origin-left
+                ${isActiveCard('/vehicle-types') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}
+              ></div>
             </div>
           </div>
 
