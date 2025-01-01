@@ -37,6 +37,8 @@ const ShopManagement = () => {
   const searchTimeout = useRef(null);
   const [visibleShops, setVisibleShops] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,6 +90,64 @@ const ShopManagement = () => {
 
     fetchProvinces();
   }, []);
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      if (!formData.province_id) {
+        setDistricts([]);
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/districts', {
+          params: { province_id: formData.province_id },
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data.success) {
+          setDistricts(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching districts:', error);
+        toast.error('Failed to load districts');
+      }
+    };
+
+    fetchDistricts();
+  }, [formData.province_id]);
+
+  useEffect(() => {
+    const fetchWards = async () => {
+      if (!formData.district_id) {
+        setWards([]);
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/wards', {
+          params: { district_id: formData.district_id },
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data.success) {
+          setWards(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching wards:', error);
+        toast.error('Failed to load wards');
+      }
+    };
+
+    fetchWards();
+  }, [formData.district_id]);
 
   const fetchShops = async (page, search = '') => {
     try {
@@ -620,25 +680,37 @@ const ShopManagement = () => {
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">District ID</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">District</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.district_id}
                   onChange={(e) => setFormData({ ...formData, district_id: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select District</option>
+                  {districts.map((district) => (
+                    <option key={district.district_id} value={district.district_id}>
+                      {district.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">
-                <label className="block text-sm font-medium text-gray-700">Ward Code</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3"
+                <label className="block text-sm font-medium text-gray-700">Ward</label>
+                <select
+                  className="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   value={formData.ward_code}
                   onChange={(e) => setFormData({ ...formData, ward_code: e.target.value })}
                   required
-                />
+                >
+                  <option value="">Select Ward</option>
+                  {wards.map((ward) => (
+                    <option key={ward.ward_code} value={ward.ward_code}>
+                      {ward.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-span-1">

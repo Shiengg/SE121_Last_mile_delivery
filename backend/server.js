@@ -12,6 +12,8 @@ const activityRoutes = require('./routes/activityRoutes');
 const userRoutes = require('./routes/userRoutes');
 const shopRoutes = require('./routes/shopRoutes');
 const provinceRoutes = require('./routes/provinceRoutes');
+const districtRoutes = require('./routes/districtRoutes');
+const wardRoutes = require('./routes/wardRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -37,6 +39,8 @@ app.use('/api/activities', activityRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/shops', shopRoutes);
 app.use('/api/provinces', provinceRoutes);
+app.use('/api/districts', districtRoutes);
+app.use('/api/wards', wardRoutes);
 
 // Test route
 app.get('/', (req, res) => {

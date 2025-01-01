@@ -12,12 +12,12 @@ exports.getAllProvinces = async (req, res) => {
         console.log(`Found ${provinces.length} provinces`);
 
         const transformedProvinces = provinces.map(province => ({
-            province_id: province.code.toString(),
+            province_id: province.code.toString().padStart(2, '0'),
             name: province.name,
             code: province.code
         }));
 
-        console.log('Sending response with transformed provinces');
+        console.log('Sending transformed provinces:', transformedProvinces);
 
         res.json({
             success: true,
