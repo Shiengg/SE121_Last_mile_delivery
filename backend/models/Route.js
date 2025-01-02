@@ -1,35 +1,42 @@
 const mongoose = require('mongoose');
 
 const routeSchema = new mongoose.Schema({
-    name: {
+    route_code: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        index: true
     },
-    description: String,
-    shops: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shop'
-    }],
-    vehicle_type: {
+    shop1_id: {
         type: String,
+        required: true,
+        ref: 'Shop'
+    },
+    shop2_id: {
+        type: String,
+        required: true,
+        ref: 'Shop'
+    },
+    vehicle_type_id: {
+        type: String,
+        required: true,
         ref: 'VehicleType'
     },
-    created_by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    distance: {
+        type: Number,
+        required: true
     },
     status: {
         type: String,
-        enum: ['active', 'inactive'],
-        default: 'active'
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
+        enum: ['active', 'delivering', 'delivered'],
+        default: 'active',
+        index: true
+    }
+}, {
+    collection: 'Route',
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 });
 
