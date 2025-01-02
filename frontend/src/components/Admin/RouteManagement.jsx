@@ -217,8 +217,8 @@ const RouteManagement = () => {
     };
 
     return (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-[90%] md:w-96 shadow-lg rounded-md bg-white">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-medium">Edit Route</h3>
                     <button onClick={() => setShowEditModal(false)}>
@@ -301,6 +301,67 @@ const RouteManagement = () => {
     return !nonDeletableStatuses.includes(status);
   };
 
+  // Thêm component RouteCard cho mobile view
+  const RouteCard = ({ route, onEdit, onDelete, isDeletable }) => {
+    const getStatusBadgeClass = (status) => {
+      switch (status) {
+        case 'pending': return 'bg-yellow-100 text-yellow-800';
+        case 'assigned': return 'bg-purple-100 text-purple-800';
+        case 'delivering': return 'bg-blue-100 text-blue-800';
+        case 'delivered': return 'bg-green-100 text-green-800';
+        case 'cancelled': return 'bg-red-100 text-red-800';
+        case 'failed': return 'bg-gray-100 text-gray-800';
+        default: return 'bg-gray-100 text-gray-800';
+      }
+    };
+
+    return (
+      <div className="bg-white rounded-lg shadow-sm p-4 mb-4 border border-gray-200">
+        <div className="flex justify-between items-start mb-3">
+          <div>
+            <h3 className="text-sm font-medium text-gray-900">{route.route_code}</h3>
+            <span className={`mt-1 px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(route.status)}`}>
+              {route.status.charAt(0).toUpperCase() + route.status.slice(1)}
+            </span>
+          </div>
+          <div className="flex space-x-2">
+            <button 
+              onClick={() => onEdit(route)}
+              className="text-indigo-600 hover:text-indigo-900 p-1"
+            >
+              <FiEdit2 className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => isDeletable(route.status) && onDelete(route._id, route.route_code)}
+              className={`p-1 ${isDeletable(route.status) ? 'text-red-600 hover:text-red-900' : 'text-gray-400'}`}
+              disabled={!isDeletable(route.status)}
+              title={!isDeletable(route.status) ? `Cannot delete route in ${route.status} status` : 'Delete route'}
+            >
+              <FiTrash2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-2 space-y-2 text-sm text-gray-600">
+          <div>
+            <span className="font-medium">Shops:</span>
+            {route.shops.map((shop, index) => (
+              <div key={shop.shop_id} className="ml-2 text-xs">
+                {index + 1}. {shop.shop_name}
+              </div>
+            ))}
+          </div>
+          <div>
+            <span className="font-medium">Vehicle Type:</span> {route.vehicle_type}
+          </div>
+          <div>
+            <span className="font-medium">Distance:</span> {route.distance.toFixed(2)} km
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -310,48 +371,52 @@ const RouteManagement = () => {
   }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 md:p-6 max-w-7xl mx-auto">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Route Management</h2>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Pending: {routes.filter(route => route.status === 'pending').length}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-purple-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Assigned: {routes.filter(route => route.status === 'assigned').length}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Delivering: {routes.filter(route => route.status === 'delivering').length}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Delivered: {routes.filter(route => route.status === 'delivered').length}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Cancelled: {routes.filter(route => route.status === 'cancelled').length}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-gray-500 mr-1.5"></span>
-              <span className="text-sm text-gray-600">
-                Failed: {routes.filter(route => route.status === 'failed').length}
-              </span>
-            </div>
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">Route Management</h2>
+        
+        {/* Status summary - Responsive */}
+        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-4 mb-4">
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Pending: {routes.filter(route => route.status === 'pending').length}
+            </span>
           </div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-purple-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Assigned: {routes.filter(route => route.status === 'assigned').length}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Delivering: {routes.filter(route => route.status === 'delivering').length}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Delivered: {routes.filter(route => route.status === 'delivered').length}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Cancelled: {routes.filter(route => route.status === 'cancelled').length}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-gray-500 mr-1.5"></span>
+            <span className="text-xs md:text-sm text-gray-600">
+              Failed: {routes.filter(route => route.status === 'failed').length}
+            </span>
+          </div>
+        </div>
+
+        {/* Add New Route Button */}
+        <div className="flex justify-end mb-4">
           <button
             onClick={() => setShowAddModal(true)}
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -360,87 +425,103 @@ const RouteManagement = () => {
             Add New Route
           </button>
         </div>
-      </div>
 
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Route ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Shops
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Vehicle Type
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Distance (km)
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {routes.map((route) => (
-                <tr key={route._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {route.route_code}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
-                    {route.shops.map((shop, index) => (
-                      <div key={shop.shop_id}>
-                        {index + 1}. {shop.shop_id} - {shop.shop_name}
-                      </div>
-                    ))}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.vehicle_type}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.distance.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(route.status)}`}>
-                      {route.status.charAt(0).toUpperCase() + route.status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button 
-                      onClick={() => handleEdit(route)}
-                      className="text-indigo-600 hover:text-indigo-900 mr-4"
-                    >
-                      <FiEdit2 className="inline" />
-                    </button>
-                    <button 
-                      onClick={() => isDeletable(route.status) && handleDelete(route._id, route.route_code)}
-                      className={`transition-colors duration-200 ${
-                        isDeletable(route.status)
-                          ? 'text-red-600 hover:text-red-900'
-                          : 'text-gray-400 cursor-not-allowed'
-                      }`}
-                      disabled={!isDeletable(route.status)}
-                      title={
-                        !isDeletable(route.status)
-                          ? `Cannot delete route in ${route.status} status`
-                          : 'Delete route'
-                      }
-                    >
-                      <FiTrash2 className="inline w-5 h-5" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Table for desktop, Cards for mobile */}
+        <div className="hidden md:block"> {/* Desktop view */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Route ID
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Shops
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Vehicle Type
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Distance (km)
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {routes.map((route) => (
+                    <tr key={route._id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {route.route_code}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {route.shops.map((shop, index) => (
+                          <div key={shop.shop_id}>
+                            {index + 1}. {shop.shop_id} - {shop.shop_name}
+                          </div>
+                        ))}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {route.vehicle_type}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {route.distance.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(route.status)}`}>
+                          {route.status.charAt(0).toUpperCase() + route.status.slice(1)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button 
+                          onClick={() => handleEdit(route)}
+                          className="text-indigo-600 hover:text-indigo-900 mr-4"
+                        >
+                          <FiEdit2 className="inline" />
+                        </button>
+                        <button 
+                          onClick={() => isDeletable(route.status) && handleDelete(route._id, route.route_code)}
+                          className={`transition-colors duration-200 ${
+                            isDeletable(route.status)
+                              ? 'text-red-600 hover:text-red-900'
+                              : 'text-gray-400 cursor-not-allowed'
+                          }`}
+                          disabled={!isDeletable(route.status)}
+                          title={
+                            !isDeletable(route.status)
+                              ? `Cannot delete route in ${route.status} status`
+                              : 'Delete route'
+                          }
+                        >
+                          <FiTrash2 className="inline w-5 h-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="md:hidden"> {/* Mobile view */}
+          {routes.map(route => (
+            <RouteCard
+              key={route._id}
+              route={route}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              isDeletable={isDeletable}
+            />
+          ))}
         </div>
       </div>
+
       {showEditModal && <EditModal />}
     </div>
   );
