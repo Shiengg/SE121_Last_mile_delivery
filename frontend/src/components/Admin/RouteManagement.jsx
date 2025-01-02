@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
@@ -8,9 +8,34 @@ const RouteManagement = () => {
   const [routes, setRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [editForm, setEditForm] = useState({
+    vehicle_type_id: '',
+    status: ''
+  });
+  const [vehicleTypes, setVehicleTypes] = useState([]);
 
   useEffect(() => {
     fetchRoutes();
+  }, []);
+
+  useEffect(() => {
+    const fetchVehicleTypes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:5000/api/vehicles', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (response.data.success) {
+          setVehicleTypes(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching vehicle types:', error);
+      }
+    };
+
+    fetchVehicleTypes();
   }, []);
 
   const fetchRoutes = async () => {
@@ -104,6 +129,110 @@ const RouteManagement = () => {
       });
     }
   };
+
+  const handleEdit = (route) => {
+    setSelectedRoute(route);
+    setEditForm({
+      vehicle_type_id: route.vehicle_type_code,
+      status: route.status
+    });
+    setShowEditModal(true);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(
+        `http://localhost:5000/api/routes/${selectedRoute._id}`,
+        editForm,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        await fetchRoutes();
+
+        setShowEditModal(false);
+        setSelectedRoute(null);
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Route updated successfully',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Error updating route:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: error.response?.data?.message || 'Failed to update route'
+      });
+    }
+  };
+
+  const EditModal = () => (
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-medium">Edit Route</h3>
+          <button onClick={() => setShowEditModal(false)}>
+            <FiX className="h-6 w-6" />
+          </button>
+        </div>
+        <form onSubmit={handleEditSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Vehicle Type</label>
+            <select
+              value={editForm.vehicle_type_id}
+              onChange={(e) => setEditForm({...editForm, vehicle_type_id: e.target.value})}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            >
+              {vehicleTypes.map((type) => (
+                <option key={type.code} value={type.code}>
+                  {type.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Status</label>
+            <select
+              value={editForm.status}
+              onChange={(e) => setEditForm({...editForm, status: e.target.value})}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            >
+              <option value="pending">Pending</option>
+              <option value="assigned">Assigned</option>
+              <option value="delivering">Delivering</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+          <div className="flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={() => setShowEditModal(false)}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 
   if (loading) {
     return (
@@ -216,7 +345,10 @@ const RouteManagement = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button className="text-indigo-600 hover:text-indigo-900 mr-4">
+                    <button 
+                      onClick={() => handleEdit(route)}
+                      className="text-indigo-600 hover:text-indigo-900 mr-4"
+                    >
                       <FiEdit2 className="inline" />
                     </button>
                     <button 
@@ -232,6 +364,7 @@ const RouteManagement = () => {
           </table>
         </div>
       </div>
+      {showEditModal && <EditModal />}
     </div>
   );
 };

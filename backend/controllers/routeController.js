@@ -356,3 +356,64 @@ exports.assignRoute = async (req, res) => {
         });
     }
 };
+
+exports.updateRoute = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { vehicle_type_id, status } = req.body;
+
+        const route = await Route.findById(id);
+        
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        // Kiểm tra status mới có hợp lệ không
+        const validStatuses = ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'];
+        if (status && !validStatuses.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid status',
+                validStatuses
+            });
+        }
+
+        // Kiểm tra vehicle_type tồn tại
+        if (vehicle_type_id) {
+            const vehicleType = await VehicleType.findOne({ code: vehicle_type_id });
+            if (!vehicleType) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Vehicle type not found'
+                });
+            }
+        }
+
+        // Chỉ cập nhật các trường được phép
+        const updateData = {};
+        if (vehicle_type_id) updateData.vehicle_type_id = vehicle_type_id;
+        if (status) updateData.status = status;
+
+        const updatedRoute = await Route.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true }
+        );
+
+        res.json({
+            success: true,
+            message: 'Route updated successfully',
+            data: updatedRoute
+        });
+    } catch (error) {
+        console.error('Error updating route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error updating route',
+            error: error.message
+        });
+    }
+};
