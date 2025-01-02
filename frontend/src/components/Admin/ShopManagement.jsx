@@ -151,30 +151,40 @@ const ShopManagement = () => {
 
   const fetchShops = async (page, search = '') => {
     try {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      
-      const response = await axios.get('http://localhost:5000/api/shops', {
-        params: {
-          page,
-          limit: pageSize,
-          search
-        },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        
+        const response = await axios.get('http://localhost:5000/api/shops', {
+            params: {
+                page,
+                limit: pageSize,
+                search
+            },
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
-      if (response.data.success) {
-        setShops(response.data.data);
-        setTotalPages(response.data.pagination.totalPages);
-        setTotalItems(response.data.pagination.total);
-      }
+        if (response.data.success) {
+            setShops(response.data.data);
+            const pagination = response.data.pagination || {
+                total: response.data.data.length,
+                page: 1,
+                limit: pageSize,
+                totalPages: 1
+            };
+            setTotalPages(pagination.totalPages);
+            setTotalItems(pagination.total);
+        }
     } catch (err) {
-      console.error('Error fetching shops:', err);
-      toast.error('Failed to load shops');
+        console.error('Error fetching shops:', err);
+        if (err.response) {
+            console.error('Response data:', err.response.data);
+            console.error('Response status:', err.response.status);
+        }
+        toast.error('Failed to load shops');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 

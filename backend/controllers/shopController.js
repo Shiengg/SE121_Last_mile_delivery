@@ -3,37 +3,47 @@ const { logActivity } = require('./activityController');
 
 exports.getAllShops = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const search = req.query.search || '';
+        const { ward_code, status, page = 1, limit = 10 } = req.query;
+        
+        // Xây dựng query
+        let query = {};
+        
+        // Lọc theo ward_code nếu có
+        if (ward_code) {
+            query.ward_code = ward_code;
+        }
+        
+        // Lọc theo status nếu có
+        if (status) {
+            query.status = status;
+        }
 
-        // Tạo query với index
-        const searchQuery = search ? {
-            $or: [
-                { shop_id: new RegExp(search, 'i') },
-                { shop_name: new RegExp(search, 'i') },
-                { street: new RegExp(search, 'i') }
-            ]
-        } : {};
+        console.log('Shop query:', query);
 
-        // Sử dụng Promise.all để chạy song song 2 query
-        const [total, shops] = await Promise.all([
-            Shop.countDocuments(searchQuery),
-            Shop.find(searchQuery)
-                .select('shop_id shop_name street ward_code district_id province_id latitude longitude shop_type status') // Chỉ lấy các trường cần thiết
-                .skip((page - 1) * limit)
-                .limit(limit)
-                .lean()
-        ]);
+        // Tính toán skip cho pagination
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+
+        // Đếm tổng số documents thỏa mãn query
+        const total = await Shop.countDocuments(query);
+
+        // Lấy data với pagination
+        const shops = await Shop.find(query)
+            .select('shop_id shop_name country_id province_id district_id ward_code house_number street latitude longitude shop_type status')
+            .sort({ shop_id: 1 })
+            .skip(skip)
+            .limit(parseInt(limit));
+
+        // Tính tổng số trang
+        const totalPages = Math.ceil(total / parseInt(limit));
 
         res.json({
             success: true,
             data: shops,
             pagination: {
                 total,
-                page,
-                totalPages: Math.ceil(total / limit),
-                limit
+                page: parseInt(page),
+                limit: parseInt(limit),
+                totalPages
             }
         });
     } catch (error) {

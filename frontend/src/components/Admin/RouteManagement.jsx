@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import AddRouteModal from './AddRouteModal';
 
 const RouteManagement = () => {
   const [routes, setRoutes] = useState([]);
@@ -362,6 +363,38 @@ const RouteManagement = () => {
     );
   };
 
+  const handleAddRoute = async (routeData) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:5000/api/routes',
+            routeData,
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        );
+
+        if (response.data.success) {
+            await fetchRoutes();
+            setShowAddModal(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Route created successfully',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+    } catch (error) {
+        console.error('Error creating route:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: error.response?.data?.message || 'Failed to create route'
+        });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -523,6 +556,13 @@ const RouteManagement = () => {
       </div>
 
       {showEditModal && <EditModal />}
+      {showAddModal && (
+        <AddRouteModal
+          onClose={() => setShowAddModal(false)}
+          onAdd={handleAddRoute}
+          vehicleTypes={vehicleTypes}
+        />
+      )}
     </div>
   );
 };
