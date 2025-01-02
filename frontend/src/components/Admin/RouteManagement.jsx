@@ -22,17 +22,20 @@ const RouteManagement = () => {
 
   useEffect(() => {
     const fetchVehicleTypes = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/vehicles', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (response.data.success) {
-          setVehicleTypes(response.data.data);
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:5000/api/vehicles', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (response.data.success) {
+                // Lọc chỉ lấy các vehicle type có status là active
+                const activeVehicleTypes = response.data.data.filter(type => type.status === 'active');
+                setVehicleTypes(activeVehicleTypes);
+            }
+        } catch (error) {
+            console.error('Error fetching vehicle types:', error);
+            toast.error('Failed to load vehicle types');
         }
-      } catch (error) {
-        console.error('Error fetching vehicle types:', error);
-      }
     };
 
     fetchVehicleTypes();
@@ -133,8 +136,8 @@ const RouteManagement = () => {
   const handleEdit = (route) => {
     setSelectedRoute(route);
     setEditForm({
-      vehicle_type_id: route.vehicle_type_code,
-      status: route.status
+        vehicle_type_id: route.vehicle_type_id || '',
+        status: route.status
     });
     setShowEditModal(true);
   };
@@ -142,97 +145,155 @@ const RouteManagement = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(
-        `http://localhost:5000/api/routes/${selectedRoute._id}`,
-        editForm,
-        {
-          headers: { Authorization: `Bearer ${token}` }
+        if (editForm.vehicle_type_id === '') {
+            toast.error('Please select a vehicle type');
+            return;
         }
-      );
 
-      if (response.data.success) {
-        await fetchRoutes();
+        console.log('Submitting edit form:', editForm);
 
-        setShowEditModal(false);
-        setSelectedRoute(null);
-        
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Route updated successfully',
-          timer: 1500,
-          showConfirmButton: false
-        });
-      }
+        const token = localStorage.getItem('token');
+        const response = await axios.put(
+            `http://localhost:5000/api/routes/${selectedRoute._id}`,
+            editForm,
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        );
+
+        if (response.data.success) {
+            await fetchRoutes();
+
+            setShowEditModal(false);
+            setSelectedRoute(null);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Route updated successfully',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
     } catch (error) {
-      console.error('Error updating route:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: error.response?.data?.message || 'Failed to update route'
-      });
+        console.error('Error updating route:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: error.response?.data?.message || 'Failed to update route'
+        });
     }
   };
 
-  const EditModal = () => (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium">Edit Route</h3>
-          <button onClick={() => setShowEditModal(false)}>
-            <FiX className="h-6 w-6" />
-          </button>
+  const EditModal = () => {
+    // Định nghĩa các trạng thái có thể chuyển đổi
+    const getAllowedStatuses = (currentStatus) => {
+        const transitions = {
+            'pending': ['assigned', 'cancelled'],
+            'assigned': ['delivering', 'cancelled'],
+            'delivering': ['delivered', 'failed'],
+            'delivered': [],
+            'cancelled': [],
+            'failed': ['pending']
+        };
+        return transitions[currentStatus] || [];
+    };
+
+    const allowedStatuses = getAllowedStatuses(selectedRoute.status);
+
+    // Kiểm tra xem có cho phép edit vehicle type không
+    const isVehicleTypeEditable = (status) => {
+        const nonEditableStatuses = [
+            'assigned', 'delivering', 'delivered', 
+            'cancelled', 'failed'
+        ];
+        return !nonEditableStatuses.includes(status);
+    };
+
+    return (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-medium">Edit Route</h3>
+                    <button onClick={() => setShowEditModal(false)}>
+                        <FiX className="h-6 w-6" />
+                    </button>
+                </div>
+                <form onSubmit={handleEditSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Vehicle Type</label>
+                        <select
+                            value={editForm.vehicle_type_id}
+                            onChange={(e) => setEditForm({...editForm, vehicle_type_id: e.target.value})}
+                            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm ${
+                                !isVehicleTypeEditable(selectedRoute.status) ? 'bg-gray-100' : ''
+                            }`}
+                            disabled={!isVehicleTypeEditable(selectedRoute.status)}
+                            required
+                        >
+                            <option value="" disabled>Select Vehicle Type</option>
+                            {vehicleTypes.map((type) => (
+                                <option key={type.code} value={type.code}>
+                                    {type.name}
+                                </option>
+                            ))}
+                        </select>
+                        {vehicleTypes.length === 0 && (
+                            <p className="mt-1 text-sm text-yellow-600">
+                                No active vehicle types available
+                            </p>
+                        )}
+                        {!isVehicleTypeEditable(selectedRoute.status) && (
+                            <p className="mt-1 text-sm text-gray-500">
+                                Vehicle type cannot be changed in {selectedRoute.status} status
+                            </p>
+                        )}
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Status</label>
+                        <select
+                            value={editForm.status}
+                            onChange={(e) => setEditForm({...editForm, status: e.target.value})}
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                        >
+                            <option value={selectedRoute.status}>
+                                {selectedRoute.status.charAt(0).toUpperCase() + selectedRoute.status.slice(1)}
+                            </option>
+                            {allowedStatuses.map((status) => (
+                                status !== selectedRoute.status && (
+                                    <option key={status} value={status}>
+                                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                                    </option>
+                                )
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex justify-end space-x-3">
+                        <button
+                            type="button"
+                            onClick={() => setShowEditModal(false)}
+                            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form onSubmit={handleEditSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Vehicle Type</label>
-            <select
-              value={editForm.vehicle_type_id}
-              onChange={(e) => setEditForm({...editForm, vehicle_type_id: e.target.value})}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            >
-              {vehicleTypes.map((type) => (
-                <option key={type.code} value={type.code}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Status</label>
-            <select
-              value={editForm.status}
-              onChange={(e) => setEditForm({...editForm, status: e.target.value})}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            >
-              <option value="pending">Pending</option>
-              <option value="assigned">Assigned</option>
-              <option value="delivering">Delivering</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="failed">Failed</option>
-            </select>
-          </div>
-          <div className="flex justify-end space-x-3">
-            <button
-              type="button"
-              onClick={() => setShowEditModal(false)}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+    );
+  };
+
+  // Thêm hàm kiểm tra xem route có thể xóa không
+  const isDeletable = (status) => {
+    const nonDeletableStatuses = ['assigned', 'delivering', 'delivered'];
+    return !nonDeletableStatuses.includes(status);
+  };
 
   if (loading) {
     return (
@@ -352,8 +413,18 @@ const RouteManagement = () => {
                       <FiEdit2 className="inline" />
                     </button>
                     <button 
-                      onClick={() => handleDelete(route._id, route.route_code)}
-                      className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                      onClick={() => isDeletable(route.status) && handleDelete(route._id, route.route_code)}
+                      className={`transition-colors duration-200 ${
+                        isDeletable(route.status)
+                          ? 'text-red-600 hover:text-red-900'
+                          : 'text-gray-400 cursor-not-allowed'
+                      }`}
+                      disabled={!isDeletable(route.status)}
+                      title={
+                        !isDeletable(route.status)
+                          ? `Cannot delete route in ${route.status} status`
+                          : 'Delete route'
+                      }
                     >
                       <FiTrash2 className="inline w-5 h-5" />
                     </button>

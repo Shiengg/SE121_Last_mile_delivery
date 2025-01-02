@@ -4,7 +4,7 @@ const VehicleType = require('../models/VehicleType');
 const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
 
-// Thêm hằng số để quản lý các trạng thái và luồng chuyển đổi
+// Định nghĩa các trạng thái và luồng chuyển đổi ở đầu file
 const ROUTE_STATUS = {
     PENDING: 'pending',
     ASSIGNED: 'assigned',
@@ -14,14 +14,14 @@ const ROUTE_STATUS = {
     FAILED: 'failed'
 };
 
-// Định nghĩa các trạng thái có thể chuyển đổi
+// Định nghĩa luồng chuyển đổi trạng thái
 const ALLOWED_STATUS_TRANSITIONS = {
     [ROUTE_STATUS.PENDING]: [ROUTE_STATUS.ASSIGNED, ROUTE_STATUS.CANCELLED],
     [ROUTE_STATUS.ASSIGNED]: [ROUTE_STATUS.DELIVERING, ROUTE_STATUS.CANCELLED],
     [ROUTE_STATUS.DELIVERING]: [ROUTE_STATUS.DELIVERED, ROUTE_STATUS.FAILED],
-    [ROUTE_STATUS.DELIVERED]: [], // Trạng thái cuối
-    [ROUTE_STATUS.CANCELLED]: [], // Trạng thái cuối
-    [ROUTE_STATUS.FAILED]: [ROUTE_STATUS.ASSIGNED] // Có thể thử lại
+    [ROUTE_STATUS.DELIVERED]: [], // Không thể chuyển sang trạng thái khác
+    [ROUTE_STATUS.CANCELLED]: [], // Không thể chuyển sang trạng thái khác
+    [ROUTE_STATUS.FAILED]: [ROUTE_STATUS.PENDING] // Có thể thử lại từ đầu
 };
 
 exports.createRoute = async (req, res) => {
@@ -260,24 +260,17 @@ exports.deleteRoute = async (req, res) => {
             });
         }
 
-        // Chuẩn hóa status trước khi so sánh
-        const currentStatus = route.status.trim().toLowerCase();
-        
-        console.log('Route data:', {
-            id: route._id,
-            route_code: route.route_code,
-            status: currentStatus
-        });
+        // Kiểm tra trạng thái route trước khi xóa
+        const nonDeletableStatuses = [
+            ROUTE_STATUS.ASSIGNED,
+            ROUTE_STATUS.DELIVERING,
+            ROUTE_STATUS.DELIVERED
+        ];
 
-        // Kiểm tra xem route có đang ở trạng thái có thể xóa không
-        if (currentStatus === 'assigned' || 
-            currentStatus === 'delivering' || 
-            currentStatus === 'delivered') {
+        if (nonDeletableStatuses.includes(route.status)) {
             return res.status(400).json({
                 success: false,
-                message: `Cannot delete route with status "${currentStatus}". Only routes with status pending, cancelled, or failed can be deleted.`,
-                currentStatus: currentStatus,
-                deletableStatuses: ['pending', 'cancelled', 'failed']
+                message: `Cannot delete route in ${route.status} status. Only routes in pending, cancelled, or failed status can be deleted.`
             });
         }
 
@@ -362,6 +355,8 @@ exports.updateRoute = async (req, res) => {
         const { id } = req.params;
         const { vehicle_type_id, status } = req.body;
 
+        console.log('Updating route:', { id, vehicle_type_id, status });
+
         const route = await Route.findById(id);
         
         if (!route) {
@@ -372,7 +367,7 @@ exports.updateRoute = async (req, res) => {
         }
 
         // Kiểm tra status mới có hợp lệ không
-        const validStatuses = ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'];
+        const validStatuses = Object.values(ROUTE_STATUS);
         if (status && !validStatuses.includes(status)) {
             return res.status(400).json({
                 success: false,
@@ -381,13 +376,18 @@ exports.updateRoute = async (req, res) => {
             });
         }
 
-        // Kiểm tra vehicle_type tồn tại
-        if (vehicle_type_id) {
-            const vehicleType = await VehicleType.findOne({ code: vehicle_type_id });
-            if (!vehicleType) {
+        // Kiểm tra luồng chuyển đổi trạng thái
+        if (status && status !== route.status) {
+            console.log('Current status:', route.status);
+            console.log('New status:', status);
+            console.log('Allowed transitions:', ALLOWED_STATUS_TRANSITIONS[route.status]);
+
+            const allowedNextStatuses = ALLOWED_STATUS_TRANSITIONS[route.status] || [];
+            if (!allowedNextStatuses.includes(status)) {
+                console.log('Invalid transition detected');
                 return res.status(400).json({
                     success: false,
-                    message: 'Vehicle type not found'
+                    message: `Cannot change status from ${route.status} to ${status}. Allowed next statuses are: ${allowedNextStatuses.join(', ')}`
                 });
             }
         }
