@@ -198,3 +198,42 @@ exports.updateRouteStatus = async (req, res) => {
         });
     }
 };
+
+exports.deleteRoute = async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log('Deleting route with ID:', id);
+
+        const route = await Route.findById(id);
+        
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        // Kiểm tra xem route có đang được giao hàng không
+        if (route.status === 'delivering') {
+            return res.status(400).json({
+                success: false,
+                message: 'Cannot delete route that is currently being delivered'
+            });
+        }
+
+        await Route.findByIdAndDelete(id);
+
+        res.json({
+            success: true,
+            message: 'Route deleted successfully',
+            data: route
+        });
+    } catch (error) {
+        console.error('Error deleting route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error deleting route',
+            error: error.message
+        });
+    }
+};
