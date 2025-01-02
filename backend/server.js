@@ -15,6 +15,7 @@ const shopRoutes = require('./routes/shopRoutes');
 const provinceRoutes = require('./routes/provinceRoutes');
 const districtRoutes = require('./routes/districtRoutes');
 const wardRoutes = require('./routes/wardRoutes');
+const routeRoutes = require('./routes/routeRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,7 @@ app.use('/api/shops', shopRoutes);
 app.use('/api/provinces', provinceRoutes);
 app.use('/api/districts', districtRoutes);
 app.use('/api/wards', wardRoutes);
+app.use('/api/routes', routeRoutes);
 
 // Test route
 app.get('/', (req, res) => {

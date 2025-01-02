@@ -4,33 +4,26 @@ const vehicleTypeSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        primary: true
     },
     name: {
         type: String,
         required: true
     },
     description: String,
+    capacity: {
+        type: Number,
+        required: true
+    },
     status: {
         type: String,
         enum: ['active', 'inactive'],
         default: 'active'
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
     }
 }, {
-    collection: 'VehicleType'
-});
-
-vehicleTypeSchema.pre('save', function(next) {
-    this.updated_at = new Date();
-    next();
+    collection: 'VehicleType',
+    timestamps: true
 });
 
 module.exports = mongoose.model('VehicleType', vehicleTypeSchema); 
