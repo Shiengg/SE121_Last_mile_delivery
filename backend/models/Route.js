@@ -4,19 +4,19 @@ const routeSchema = new mongoose.Schema({
     route_code: {
         type: String,
         required: true,
-        unique: true,
-        index: true
+        unique: true
     },
-    shop1_id: {
-        type: String,
-        required: true,
-        ref: 'Shop'
-    },
-    shop2_id: {
-        type: String,
-        required: true,
-        ref: 'Shop'
-    },
+    shops: [{
+        shop_id: {
+            type: String,
+            required: true,
+            ref: 'Shop'
+        },
+        order: {
+            type: Number,
+            required: true
+        }
+    }],
     vehicle_type_id: {
         type: String,
         required: true,
@@ -26,34 +26,28 @@ const routeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    polyline: {
+        type: String
+    },
     status: {
         type: String,
-        enum: [
-            'pending',     // Chờ xử lý/phân công
-            'assigned',    // Đã phân công cho shipper
-            'delivering',  // Đang giao hàng
-            'delivered',   // Đã giao xong
-            'cancelled',   // Đã hủy
-            'failed'       // Giao hàng thất bại
-        ],
-        default: 'pending',
-        index: true
+        enum: ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'],
+        default: 'pending'
     }
 }, {
-    collection: 'Route',
-    timestamps: {
-        createdAt: 'created_at',
-        updatedAt: 'updated_at'
-    }
+    timestamps: true
 });
 
-// Thêm middleware pre-save để validate status
-routeSchema.pre('save', function(next) {
-    const validStatuses = ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'];
-    if (!validStatuses.includes(this.status)) {
-        next(new Error(`Invalid status: ${this.status}. Must be one of: ${validStatuses.join(', ')}`));
+// Xóa index cũ nếu tồn tại
+routeSchema.pre('save', async function() {
+    try {
+        await this.collection.dropIndex('route_id_1');
+    } catch (error) {
+        // Bỏ qua lỗi nếu index không tồn tại
+        if (error.code !== 27) {
+            throw error;
+        }
     }
-    next();
 });
 
 module.exports = mongoose.model('Route', routeSchema);

@@ -344,12 +344,15 @@ const RouteManagement = () => {
         </div>
 
         <div className="mt-2 space-y-2 text-sm text-gray-600">
-          <div>
-            <span className="font-medium">Shops:</span>
+          <div className="text-sm text-gray-600 mt-2">
+            <div className="font-medium mb-1">Shops:</div>
             {route.shops.map((shop, index) => (
-              <div key={shop.shop_id} className="ml-2 text-xs">
-                {index + 1}. {shop.shop_name}
-              </div>
+                <div key={shop.shop_id} className="ml-2 mb-1">
+                    {index + 1}. {shop.shop_name}
+                    <span className="text-xs text-gray-400 ml-2">
+                        ({shop.shop_id})
+                    </span>
+                </div>
             ))}
           </div>
           <div>
@@ -494,9 +497,12 @@ const RouteManagement = () => {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {route.shops.map((shop, index) => (
-                          <div key={shop.shop_id}>
-                            {index + 1}. {shop.shop_id} - {shop.shop_name}
-                          </div>
+                            <div key={shop.shop_id} className="mb-1">
+                                {index + 1}. {shop.shop_name}
+                                <span className="text-xs text-gray-400 ml-2">
+                                    ({shop.shop_id})
+                                </span>
+                            </div>
                         ))}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
