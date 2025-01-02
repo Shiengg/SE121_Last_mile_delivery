@@ -28,8 +28,15 @@ const routeSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['active', 'delivering', 'delivered'],
-        default: 'active',
+        enum: [
+            'pending',     // Chờ xử lý/phân công
+            'assigned',    // Đã phân công cho shipper
+            'delivering',  // Đang giao hàng
+            'delivered',   // Đã giao xong
+            'cancelled',   // Đã hủy
+            'failed'       // Giao hàng thất bại
+        ],
+        default: 'pending',
         index: true
     }
 }, {
@@ -38,6 +45,15 @@ const routeSchema = new mongoose.Schema({
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     }
+});
+
+// Thêm middleware pre-save để validate status
+routeSchema.pre('save', function(next) {
+    const validStatuses = ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'];
+    if (!validStatuses.includes(this.status)) {
+        next(new Error(`Invalid status: ${this.status}. Must be one of: ${validStatuses.join(', ')}`));
+    }
+    next();
 });
 
 module.exports = mongoose.model('Route', routeSchema);

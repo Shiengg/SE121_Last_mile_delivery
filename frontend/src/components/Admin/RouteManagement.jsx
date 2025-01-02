@@ -45,10 +45,18 @@ const RouteManagement = () => {
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'assigned':
+        return 'bg-purple-100 text-purple-800';
       case 'delivering':
         return 'bg-blue-100 text-blue-800';
       case 'delivered':
         return 'bg-green-100 text-green-800';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800';
+      case 'failed':
+        return 'bg-gray-100 text-gray-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
@@ -112,6 +120,18 @@ const RouteManagement = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
+              <span className="w-2 h-2 rounded-full bg-yellow-500 mr-1.5"></span>
+              <span className="text-sm text-gray-600">
+                Pending: {routes.filter(route => route.status === 'pending').length}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <span className="w-2 h-2 rounded-full bg-purple-500 mr-1.5"></span>
+              <span className="text-sm text-gray-600">
+                Assigned: {routes.filter(route => route.status === 'assigned').length}
+              </span>
+            </div>
+            <div className="flex items-center">
               <span className="w-2 h-2 rounded-full bg-blue-500 mr-1.5"></span>
               <span className="text-sm text-gray-600">
                 Delivering: {routes.filter(route => route.status === 'delivering').length}
@@ -121,6 +141,18 @@ const RouteManagement = () => {
               <span className="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
               <span className="text-sm text-gray-600">
                 Delivered: {routes.filter(route => route.status === 'delivered').length}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <span className="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+              <span className="text-sm text-gray-600">
+                Cancelled: {routes.filter(route => route.status === 'cancelled').length}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <span className="w-2 h-2 rounded-full bg-gray-500 mr-1.5"></span>
+              <span className="text-sm text-gray-600">
+                Failed: {routes.filter(route => route.status === 'failed').length}
               </span>
             </div>
           </div>
