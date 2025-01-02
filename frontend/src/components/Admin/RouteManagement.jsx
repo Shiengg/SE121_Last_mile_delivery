@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const RouteManagement = () => {
   const [routes, setRoutes] = useState([]);
@@ -50,6 +51,49 @@ const RouteManagement = () => {
         return 'bg-green-100 text-green-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleDelete = async (id, routeCode) => {
+    try {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: `Do you want to delete route ${routeCode}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      });
+
+      if (result.isConfirmed) {
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:5000/api/routes/${id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        setRoutes(prevRoutes => prevRoutes.filter(route => route._id !== id));
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: `Route ${routeCode} has been deleted.`,
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting route:', error);
+      
+      const errorMessage = error.response?.data?.message || 'Failed to delete route';
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: errorMessage,
+        confirmButtonText: 'OK'
+      });
     }
   };
 
@@ -119,17 +163,17 @@ const RouteManagement = () => {
               {routes.map((route) => (
                 <tr key={route._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {route.route_id}
+                    {route.route_code}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {route.shops.map((shop, index) => (
                       <div key={shop.shop_id}>
-                        {index + 1}. {shop.shop_id}
+                        {index + 1}. {shop.shop_id} - {shop.shop_name}
                       </div>
                     ))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.vehicle_type_id}
+                    {route.vehicle_type}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {route.distance.toFixed(2)}
@@ -143,8 +187,11 @@ const RouteManagement = () => {
                     <button className="text-indigo-600 hover:text-indigo-900 mr-4">
                       <FiEdit2 className="inline" />
                     </button>
-                    <button className="text-red-600 hover:text-red-900">
-                      <FiTrash2 className="inline" />
+                    <button 
+                      onClick={() => handleDelete(route._id, route.route_code)}
+                      className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                    >
+                      <FiTrash2 className="inline w-5 h-5" />
                     </button>
                   </td>
                 </tr>
