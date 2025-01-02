@@ -12,46 +12,79 @@ class MapService {
 
     async calculateRoute(shops) {
         try {
-            // Tạo waypoints từ danh sách shops
-            const waypoints = shops.map(shop => 
-                `${shop.latitude},${shop.longitude}`
-            ).join('&waypoint=');
-
-            const url = `${this.baseUrl}/routes?transportMode=truck&return=polyline,summary&waypoint=${waypoints}&apiKey=${this.apiKey}`;
-
-            // Gọi Here Maps Routing API
-            const response = await axios.get(url);
-
-            if (!response.data || !response.data.routes || !response.data.routes[0]) {
-                throw new Error('No route found');
+            if (!shops || shops.length < 2) {
+                throw new Error('At least 2 shops are required');
             }
 
-            const route = response.data.routes[0];
-            const sections = route.sections;
+            console.log('Calculating route for shops:', shops.map(s => ({
+                id: s.shop_id,
+                name: s.shop_name,
+                coords: `${s.latitude},${s.longitude}`
+            })));
 
-            // Tính tổng khoảng cách
-            const totalDistance = sections.reduce(
-                (sum, section) => sum + section.summary.length,
-                0
-            );
+            // Validate coordinates
+            shops.forEach(shop => {
+                if (!this.validateCoordinates(shop.latitude, shop.longitude)) {
+                    throw new Error(`Invalid coordinates for shop ${shop.shop_id}: ${shop.latitude},${shop.longitude}`);
+                }
+            });
 
-            // Lấy encoded polyline của route
-            const polyline = route.sections.map(section => 
-                section.polyline
-            ).join('');
+            // Tính toán khoảng cách giữa các cặp shop liên tiếp
+            let totalDistance = 0;
+            let combinedPolyline = '';
+
+            // Lặp qua các cặp shop liên tiếp
+            for (let i = 0; i < shops.length - 1; i++) {
+                const origin = `${shops[i].latitude},${shops[i].longitude}`;
+                const destination = `${shops[i + 1].latitude},${shops[i + 1].longitude}`;
+
+                const url = `${this.baseUrl}/routes?` + 
+                    `transportMode=truck` +
+                    `&origin=${origin}` +
+                    `&destination=${destination}` +
+                    `&return=polyline,summary` +
+                    `&apikey=${this.apiKey}`;
+
+                console.log(`Calculating distance from shop ${i + 1} to shop ${i + 2}`);
+                console.log('HERE Maps API URL:', url);
+
+                const response = await axios.get(url);
+                console.log('HERE Maps API Response:', response.data);
+
+                if (!response.data?.routes?.[0]) {
+                    throw new Error(`No route found between shops ${i + 1} and ${i + 2}`);
+                }
+
+                const route = response.data.routes[0];
+                const sections = route.sections;
+
+                // Cộng dồn khoảng cách
+                const segmentDistance = sections.reduce((sum, section) => 
+                    sum + section.summary.length, 0
+                );
+                totalDistance += segmentDistance;
+
+                // Nối các polyline
+                const segmentPolyline = sections.map(section => 
+                    section.polyline
+                ).join('');
+                combinedPolyline += (combinedPolyline ? ',' : '') + segmentPolyline;
+            }
 
             return {
                 distance: totalDistance / 1000, // Chuyển đổi từ mét sang km
-                polyline: polyline
+                polyline: combinedPolyline
             };
         } catch (error) {
+            console.error('MapService error:', error);
             if (error.response?.status === 401) {
                 throw new Error('Invalid HERE Maps API key');
             } else if (error.response?.status === 429) {
                 throw new Error('HERE Maps API rate limit exceeded');
+            } else if (error.response?.data) {
+                throw new Error(`HERE Maps API error: ${JSON.stringify(error.response.data)}`);
             }
-            
-            throw new Error(`Failed to calculate route: ${error.message}`);
+            throw error;
         }
     }
 

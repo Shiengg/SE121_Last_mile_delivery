@@ -4,19 +4,19 @@ import { FiX } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 const AddRouteModal = ({ onClose, onAdd, vehicleTypes }) => {
-    const [provinces, setProvinces] = useState([]);
-    const [districts, setDistricts] = useState([]);
-    const [wards, setWards] = useState([]);
-    const [shops, setShops] = useState([]);
-    const [filteredShops, setFilteredShops] = useState([]);
-    const [selectedShops, setSelectedShops] = useState([]);
-    
     const [formData, setFormData] = useState({
         province_id: '',
         district_id: '',
         ward_code: '',
         vehicle_type_id: '',
     });
+    
+    const [selectedShops, setSelectedShops] = useState([]);
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+    const [shops, setShops] = useState([]);
+    const [filteredShops, setFilteredShops] = useState([]);
 
     // Fetch provinces when component mounts
     useEffect(() => {
@@ -139,11 +139,14 @@ const AddRouteModal = ({ onClose, onAdd, vehicleTypes }) => {
     };
 
     const handleShopSelect = (shop) => {
-        if (selectedShops.find(s => s.shop_id === shop.shop_id)) {
-            setSelectedShops(selectedShops.filter(s => s.shop_id !== shop.shop_id));
-        } else {
-            setSelectedShops([...selectedShops, shop]);
-        }
+        setSelectedShops(prevSelected => {
+            const isSelected = prevSelected.some(s => s.shop_id === shop.shop_id);
+            if (isSelected) {
+                return prevSelected.filter(s => s.shop_id !== shop.shop_id);
+            } else {
+                return [...prevSelected, shop];
+            }
+        });
     };
 
     return (
@@ -257,34 +260,35 @@ const AddRouteModal = ({ onClose, onAdd, vehicleTypes }) => {
                             )}
                         </label>
                         <div className="border rounded-md max-h-60 overflow-y-auto">
-                            {filteredShops.map((shop) => (
-                                <div
-                                    key={shop.shop_id}
-                                    className={`p-2 hover:bg-gray-50 cursor-pointer flex items-center space-x-2 ${
-                                        selectedShops.find(s => s.shop_id === shop.shop_id)
-                                            ? 'bg-blue-50'
-                                            : ''
-                                    }`}
-                                    onClick={() => handleShopSelect(shop)}
-                                >
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedShops.find(s => s.shop_id === shop.shop_id)}
-                                        onChange={() => {}}
-                                        className="h-4 w-4 text-blue-600"
-                                    />
-                                    <div className="flex-1">
-                                        <div className="font-medium">{shop.shop_name}</div>
-                                        <div className="text-sm text-gray-500">
-                                            {shop.house_number && `${shop.house_number}, `}{shop.street}
-                                        </div>
-                                        <div className="text-xs text-gray-400 flex justify-between">
-                                            <span>ID: {shop.shop_id}</span>
-                                            <span>Type: {shop.shop_type}</span>
+                            {filteredShops.map((shop) => {
+                                const isSelected = selectedShops.some(s => s.shop_id === shop.shop_id);
+                                return (
+                                    <div
+                                        key={shop.shop_id}
+                                        className={`p-2 hover:bg-gray-50 cursor-pointer flex items-center space-x-2 ${
+                                            isSelected ? 'bg-blue-50' : ''
+                                        }`}
+                                        onClick={() => handleShopSelect(shop)}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={isSelected}
+                                            onChange={() => {}}
+                                            className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                                        />
+                                        <div className="flex-1">
+                                            <div className="font-medium">{shop.shop_name}</div>
+                                            <div className="text-sm text-gray-500">
+                                                {shop.house_number && `${shop.house_number}, `}{shop.street}
+                                            </div>
+                                            <div className="text-xs text-gray-400 flex justify-between">
+                                                <span>ID: {shop.shop_id}</span>
+                                                <span>Type: {shop.shop_type}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                             {filteredShops.length === 0 && (
                                 <div className="p-4 text-center text-gray-500">
                                     {formData.ward_code 

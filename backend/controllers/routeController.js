@@ -27,6 +27,7 @@ const ALLOWED_STATUS_TRANSITIONS = {
 exports.createRoute = async (req, res) => {
     try {
         const { shop_ids, vehicle_type_id } = req.body;
+        console.log('Creating route with data:', { shop_ids, vehicle_type_id });
 
         // Validate input
         if (!shop_ids || !Array.isArray(shop_ids) || shop_ids.length < 2) {
@@ -38,6 +39,7 @@ exports.createRoute = async (req, res) => {
 
         // Lấy thông tin chi tiết của các shop
         const shops = await Shop.find({ shop_id: { $in: shop_ids } });
+        console.log('Found shops:', shops);
         
         if (shops.length !== shop_ids.length) {
             return res.status(400).json({
@@ -51,17 +53,18 @@ exports.createRoute = async (req, res) => {
             if (!mapService.validateCoordinates(shop.latitude, shop.longitude)) {
                 return res.status(400).json({
                     success: false,
-                    message: `Invalid coordinates for shop ${shop.shop_id}`
+                    message: `Invalid coordinates for shop ${shop.shop_id}: ${shop.latitude},${shop.longitude}`
                 });
             }
         }
 
         // Tính toán route sử dụng Here Maps API
         const routeDetails = await mapService.calculateRoute(shops);
+        console.log('Route details:', routeDetails);
 
         // Tạo route mới
         const newRoute = new Route({
-            route_id: await generateRouteId(),
+            route_code: await generateRouteId(),
             shops: shop_ids.map((shop_id, index) => ({
                 shop_id,
                 order: index + 1
@@ -69,10 +72,11 @@ exports.createRoute = async (req, res) => {
             vehicle_type_id,
             distance: routeDetails.distance,
             polyline: routeDetails.polyline,
-            status: 'delivering'
+            status: 'pending'
         });
 
         await newRoute.save();
+        console.log('Route created:', newRoute);
 
         res.status(201).json({
             success: true,
@@ -83,7 +87,8 @@ exports.createRoute = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error creating route',
-            error: error.message
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 };
@@ -98,71 +103,48 @@ exports.getAllRoutes = async (req, res) => {
         console.log('Found routes:', routes);
 
         // Lấy tất cả shop_id cần thiết
-        const shopIds = routes.flatMap(route => [route.shop1_id, route.shop2_id])
-            .filter(id => id); // Lọc bỏ null/undefined
+        const shopIds = routes.flatMap(route => 
+            route.shops.map(shop => shop.shop_id)
+        );
 
         const vehicleTypeIds = routes
             .map(route => route.vehicle_type_id)
             .filter(id => id);
 
-        console.log('Fetching data for shops:', shopIds);
-        console.log('Fetching data for vehicle types:', vehicleTypeIds);
-        
         // Fetch shops and vehicle types in bulk
         const [shops, vehicleTypes] = await Promise.all([
-            shopIds.length > 0 
-                ? Shop.find({ shop_id: { $in: shopIds } })
-                    .select('shop_id shop_name latitude longitude')
-                    .lean()
-                : [],
-            vehicleTypeIds.length > 0
-                ? VehicleType.find({ code: { $in: vehicleTypeIds } })
-                    .select('code name')
-                    .lean()
-                : []
+            Shop.find({ shop_id: { $in: shopIds } })
+                .select('shop_id shop_name latitude longitude')
+                .lean(),
+            VehicleType.find({ code: { $in: vehicleTypeIds } })
+                .select('code name')
+                .lean()
         ]);
 
-        // Create lookup maps for faster access
+        // Create lookup maps
         const shopMap = new Map(shops.map(shop => [shop.shop_id, shop]));
         const vehicleTypeMap = new Map(vehicleTypes.map(vt => [vt.code, vt]));
 
         // Transform routes with related data
-        const transformedRoutes = routes.map(route => {
-            const shop1Data = shopMap.get(route.shop1_id);
-            const shop2Data = shopMap.get(route.shop2_id);
-            const vehicleType = vehicleTypeMap.get(route.vehicle_type_id);
-
-            return {
-                _id: route._id,
-                route_code: route.route_code,
-                shops: [
-                    {
-                        shop_id: route.shop1_id,
-                        shop_name: shop1Data?.shop_name || 'Unknown Shop',
-                        coordinates: shop1Data ? {
-                            latitude: shop1Data.latitude,
-                            longitude: shop1Data.longitude
-                        } : null
-                    },
-                    {
-                        shop_id: route.shop2_id,
-                        shop_name: shop2Data?.shop_name || 'Unknown Shop',
-                        coordinates: shop2Data ? {
-                            latitude: shop2Data.latitude,
-                            longitude: shop2Data.longitude
-                        } : null
-                    }
-                ],
-                vehicle_type: vehicleType?.name || route.vehicle_type_id,
-                vehicle_type_code: route.vehicle_type_id,
-                distance: route.distance || 0,
-                status: route.status || 'unknown',
-                created_at: route.created_at,
-                updated_at: route.updated_at
-            };
-        });
-
-        console.log(`Successfully transformed ${transformedRoutes.length} routes`);
+        const transformedRoutes = routes.map(route => ({
+            _id: route._id,
+            route_code: route.route_code,
+            shops: route.shops.map(shop => ({
+                shop_id: shop.shop_id,
+                order: shop.order,
+                shop_name: shopMap.get(shop.shop_id)?.shop_name || 'Unknown Shop',
+                coordinates: {
+                    latitude: shopMap.get(shop.shop_id)?.latitude,
+                    longitude: shopMap.get(shop.shop_id)?.longitude
+                }
+            })).sort((a, b) => a.order - b.order),
+            vehicle_type: vehicleTypeMap.get(route.vehicle_type_id)?.name || route.vehicle_type_id,
+            vehicle_type_code: route.vehicle_type_id,
+            distance: route.distance || 0,
+            status: route.status || 'unknown',
+            created_at: route.createdAt,
+            updated_at: route.updatedAt
+        }));
 
         res.json({
             success: true,
@@ -170,12 +152,10 @@ exports.getAllRoutes = async (req, res) => {
         });
     } catch (error) {
         console.error('Error in getAllRoutes:', error);
-        console.error('Error stack:', error.stack);
         res.status(500).json({
             success: false,
             message: 'Error fetching routes',
-            error: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            error: error.message
         });
     }
 };

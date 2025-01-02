@@ -203,8 +203,8 @@ async function findShopsInWard(ward) {
 
             console.log(`\nRequest #${requestCount}: Searching for "${searchType}" in ${ward.name}...`);
             
-            // Tăng limit lên 20 để lấy nhiều kết quả hơn trong 1 request
-            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchType + ' ' + ward.name)}&in=circle:21.0285,105.8542;r=3000&limit=20&apiKey=${getCurrentApiKey()}`;
+            // Tăng bán kính tìm kiếm từ 3000m lên 5000m (5km)
+            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchType + ' ' + ward.name)}&in=circle:10.7758,106.7018;r=10000&limit=20&apiKey=${getCurrentApiKey()}`;
             
             try {
                 const response = await makeRequestWithRetry(url);
@@ -314,7 +314,7 @@ async function processAllWards() {
     try {
         console.log('Reading wards data...');
         const rawData = JSON.parse(
-            await fs.readFile('./generate_shops/data/data_ward_Haiphong.json', 'utf8')
+            await fs.readFile('./generate_shops/data/data_ward_Hochiminh.json', 'utf8')
         );
         const wardsData = rawData.Sheet1;
         
