@@ -136,7 +136,7 @@ const RouteManagement = () => {
   const handleEdit = (route) => {
     setSelectedRoute(route);
     setEditForm({
-        vehicle_type_id: route.vehicle_type_id || '',
+        vehicle_type_id: route.vehicle_type_id,
         status: route.status
     });
     setShowEditModal(true);
@@ -145,17 +145,23 @@ const RouteManagement = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-        if (editForm.vehicle_type_id === '') {
+        const isVehicleTypeEditable = !['assigned', 'delivering', 'delivered', 'cancelled', 'failed'].includes(selectedRoute.status);
+        if (isVehicleTypeEditable && editForm.vehicle_type_id === '') {
             toast.error('Please select a vehicle type');
             return;
         }
 
-        console.log('Submitting edit form:', editForm);
+        const payload = {
+            status: editForm.status,
+            vehicle_type_id: isVehicleTypeEditable ? editForm.vehicle_type_id : selectedRoute.vehicle_type_id
+        };
+
+        console.log('Submitting edit form:', payload);
 
         const token = localStorage.getItem('token');
         const response = await axios.put(
             `http://localhost:5000/api/routes/${selectedRoute._id}`,
-            editForm,
+            payload,
             {
                 headers: { Authorization: `Bearer ${token}` }
             }
