@@ -4,6 +4,26 @@ const VehicleType = require('../models/VehicleType');
 const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
 
+// Thêm hằng số để quản lý các trạng thái và luồng chuyển đổi
+const ROUTE_STATUS = {
+    PENDING: 'pending',
+    ASSIGNED: 'assigned',
+    DELIVERING: 'delivering',
+    DELIVERED: 'delivered',
+    CANCELLED: 'cancelled',
+    FAILED: 'failed'
+};
+
+// Định nghĩa các trạng thái có thể chuyển đổi
+const ALLOWED_STATUS_TRANSITIONS = {
+    [ROUTE_STATUS.PENDING]: [ROUTE_STATUS.ASSIGNED, ROUTE_STATUS.CANCELLED],
+    [ROUTE_STATUS.ASSIGNED]: [ROUTE_STATUS.DELIVERING, ROUTE_STATUS.CANCELLED],
+    [ROUTE_STATUS.DELIVERING]: [ROUTE_STATUS.DELIVERED, ROUTE_STATUS.FAILED],
+    [ROUTE_STATUS.DELIVERED]: [], // Trạng thái cuối
+    [ROUTE_STATUS.CANCELLED]: [], // Trạng thái cuối
+    [ROUTE_STATUS.FAILED]: [ROUTE_STATUS.ASSIGNED] // Có thể thử lại
+};
+
 exports.createRoute = async (req, res) => {
     try {
         const { shop_ids, vehicle_type_id } = req.body;
@@ -163,21 +183,9 @@ exports.getAllRoutes = async (req, res) => {
 exports.updateRouteStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status } = req.body;
+        const { status: newStatus } = req.body;
 
-        if (!['delivering', 'delivered'].includes(status)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid status'
-            });
-        }
-
-        const route = await Route.findByIdAndUpdate(
-            id,
-            { status },
-            { new: true }
-        );
-
+        const route = await Route.findById(id);
         if (!route) {
             return res.status(404).json({
                 success: false,
@@ -185,9 +193,48 @@ exports.updateRouteStatus = async (req, res) => {
             });
         }
 
+        // Kiểm tra trạng thái mới có hợp lệ không
+        if (!Object.values(ROUTE_STATUS).includes(newStatus)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid status'
+            });
+        }
+
+        // Kiểm tra xem có được phép chuyển từ trạng thái hiện tại sang trạng thái mới không
+        const allowedNextStatuses = ALLOWED_STATUS_TRANSITIONS[route.status] || [];
+        if (!allowedNextStatuses.includes(newStatus)) {
+            return res.status(400).json({
+                success: false,
+                message: `Cannot change status from ${route.status} to ${newStatus}`,
+                allowedStatuses: allowedNextStatuses
+            });
+        }
+
+        // Cập nhật trạng thái
+        const updatedRoute = await Route.findByIdAndUpdate(
+            id,
+            { status: newStatus },
+            { new: true }
+        ).populate([
+            {
+                path: 'shop1_id',
+                select: 'shop_id shop_name latitude longitude'
+            },
+            {
+                path: 'shop2_id',
+                select: 'shop_id shop_name latitude longitude'
+            },
+            {
+                path: 'vehicle_type_id',
+                select: 'code name'
+            }
+        ]);
+
         res.json({
             success: true,
-            data: route
+            message: 'Route status updated successfully',
+            data: updatedRoute
         });
     } catch (error) {
         console.error('Error updating route status:', error);
@@ -213,11 +260,24 @@ exports.deleteRoute = async (req, res) => {
             });
         }
 
-        // Kiểm tra xem route có đang được giao hàng không
-        if (route.status === 'delivering') {
+        // Chuẩn hóa status trước khi so sánh
+        const currentStatus = route.status.trim().toLowerCase();
+        
+        console.log('Route data:', {
+            id: route._id,
+            route_code: route.route_code,
+            status: currentStatus
+        });
+
+        // Kiểm tra xem route có đang ở trạng thái có thể xóa không
+        if (currentStatus === 'assigned' || 
+            currentStatus === 'delivering' || 
+            currentStatus === 'delivered') {
             return res.status(400).json({
                 success: false,
-                message: 'Cannot delete route that is currently being delivered'
+                message: `Cannot delete route with status "${currentStatus}". Only routes with status pending, cancelled, or failed can be deleted.`,
+                currentStatus: currentStatus,
+                deletableStatuses: ['pending', 'cancelled', 'failed']
             });
         }
 
@@ -233,6 +293,65 @@ exports.deleteRoute = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error deleting route',
+            error: error.message
+        });
+    }
+};
+
+exports.assignRoute = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { shipper_id } = req.body;
+
+        const route = await Route.findById(id);
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        // Chỉ có thể assign route ở trạng thái pending
+        if (route.status !== ROUTE_STATUS.PENDING) {
+            return res.status(400).json({
+                success: false,
+                message: 'Can only assign routes with pending status'
+            });
+        }
+
+        // Cập nhật route với shipper và trạng thái mới
+        const updatedRoute = await Route.findByIdAndUpdate(
+            id,
+            {
+                shipper_id,
+                status: ROUTE_STATUS.ASSIGNED
+            },
+            { new: true }
+        ).populate([
+            {
+                path: 'shop1_id',
+                select: 'shop_id shop_name latitude longitude'
+            },
+            {
+                path: 'shop2_id',
+                select: 'shop_id shop_name latitude longitude'
+            },
+            {
+                path: 'vehicle_type_id',
+                select: 'code name'
+            }
+        ]);
+
+        res.json({
+            success: true,
+            message: 'Route assigned successfully',
+            data: updatedRoute
+        });
+    } catch (error) {
+        console.error('Error assigning route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error assigning route',
             error: error.message
         });
     }
