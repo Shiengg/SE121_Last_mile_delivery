@@ -620,3 +620,47 @@ exports.claimRoute = async (req, res) => {
         });
     }
 };
+
+exports.getRouteById = async (req, res) => {
+    try {
+        const route = await Route.findById(req.params.id)
+            .populate('delivery_staff_id', 'username fullName')
+            .populate({
+                path: 'shops.shop_id',
+                model: 'Shop',
+                localField: 'shops.shop_id',
+                foreignField: 'shop_id',
+                select: 'shop_id shop_name address latitude longitude'
+            });
+
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        // Transform data để đảm bảo shops được sắp xếp theo order
+        const transformedRoute = {
+            ...route.toObject(),
+            shops: route.shops
+                .sort((a, b) => a.order - b.order)
+                .map(shop => ({
+                    ...shop,
+                    shop_details: shop.shop_id // shop_id bây giờ chứa thông tin chi tiết của shop
+                }))
+        };
+
+        res.status(200).json({
+            success: true,
+            data: transformedRoute
+        });
+    } catch (error) {
+        console.error('Error getting route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error getting route',
+            error: error.message
+        });
+    }
+};

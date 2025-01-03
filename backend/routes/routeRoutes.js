@@ -8,7 +8,8 @@ const {
     deleteRoute, 
     updateRoute, 
     assignRoute,
-    claimRoute
+    claimRoute,
+    getRouteById
 } = require('../controllers/routeController');
 
 // Protect all routes
@@ -36,5 +37,8 @@ router.post('/', protect, authorize('Admin'), createRoute);
 router.delete('/:id', protect, authorize('Admin'), deleteRoute);
 router.put('/:id', protect, authorize('Admin'), updateRoute);
 router.post('/assign', protect, authorize('Admin'), assignRoute);
+
+// Thêm route mới
+router.get('/:id', protect, getRouteById);
 
 module.exports = router;

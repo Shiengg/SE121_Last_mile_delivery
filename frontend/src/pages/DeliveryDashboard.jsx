@@ -5,8 +5,10 @@ import { toast } from 'react-hot-toast';
 import { FiMapPin, FiTruck, FiClock, FiPackage, FiUser, FiMail, FiPhone, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const DeliveryDashboard = () => {
+  const navigate = useNavigate();
   const [assignedRoutes, setAssignedRoutes] = useState([]);
   const [pendingRoutes, setPendingRoutes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -176,17 +178,31 @@ const DeliveryDashboard = () => {
           );
         case 'delivering':
           return (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleStatusChange(route._id, status)}
-              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg 
-                hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-sm
-                hover:shadow-md flex items-center space-x-2"
-            >
-              <span>Complete Delivery</span>
-              <FiCheckCircle className="w-4 h-4" />
-            </motion.button>
+            <div className="flex space-x-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleStatusChange(route._id, status)}
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg 
+                  hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-sm
+                  hover:shadow-md flex items-center space-x-2"
+              >
+                <span>Complete Delivery</span>
+                <FiCheckCircle className="w-4 h-4" />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate(`/delivery/map/${route._id}`)}
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg 
+                  hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-sm
+                  hover:shadow-md flex items-center space-x-2"
+              >
+                <span>View Map</span>
+                <FiMapPin className="w-4 h-4" />
+              </motion.button>
+            </div>
           );
         default:
           return null;
