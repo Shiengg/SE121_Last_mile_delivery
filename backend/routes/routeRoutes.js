@@ -1,24 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const { createRoute, getAllRoutes, updateRouteStatus, deleteRoute, updateRoute, assignRoute, claimRoute } = require('../controllers/routeController');
 const { protect, authorize } = require('../middlewares/authMiddleware');
+const { 
+    createRoute, 
+    getAllRoutes, 
+    updateRouteStatus, 
+    deleteRoute, 
+    updateRoute, 
+    assignRoute 
+} = require('../controllers/routeController');
 
+// Protect all routes
 router.use(protect);
+
+// Public routes
+router.get('/', getAllRoutes);
+
+// Admin only routes
 router.use(authorize('Admin'));
 
-router.route('/')
-    .get(getAllRoutes)
-    .post(createRoute);
+router.post('/', createRoute);
+router.put('/:id/status', updateRouteStatus);
+router.delete('/:id', deleteRoute);
+router.put('/:id', updateRoute);
 
-router.route('/:id/status')
-    .put(updateRouteStatus);
-
-router.delete('/:id', protect, authorize('Admin'), deleteRoute);
-
-router.put('/:id', protect, authorize('Admin'), updateRoute);
-
-router.post('/assign', protect, authorize('Admin'), assignRoute);
-
-router.post('/claim', protect, authorize('DeliveryStaff'), claimRoute);
+// Move assignRoute outside of Admin authorization
+router.post('/assign', assignRoute);
 
 module.exports = router;

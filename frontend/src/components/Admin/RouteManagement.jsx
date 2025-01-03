@@ -17,6 +17,7 @@ const RouteManagement = () => {
   });
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [deliveryStaff, setDeliveryStaff] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchRoutes();
@@ -47,19 +48,27 @@ const RouteManagement = () => {
     const fetchDeliveryStaff = async () => {
         try {
             const token = localStorage.getItem('token');
+            console.log('Fetching delivery staff with token:', token); // Debug log
+
             const response = await axios.get(
                 'http://localhost:5000/api/users/delivery-staff',
                 {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
             
+            console.log('Delivery staff response:', response.data); // Debug log
+
             if (response.data.success) {
                 setDeliveryStaff(response.data.data);
             }
         } catch (error) {
             console.error('Error fetching delivery staff:', error);
-            toast.error('Failed to load delivery staff');
+            console.error('Error details:', error.response?.data);
+            toast.error(error.response?.data?.message || 'Failed to load delivery staff');
         }
     };
 
@@ -424,6 +433,13 @@ const RouteManagement = () => {
 
   const handleAssignRoute = async (route_id, delivery_staff_id) => {
     try {
+        if (!route_id || !delivery_staff_id) {
+            toast.error('Please select a delivery staff');
+            return;
+        }
+
+        console.log('Assigning route:', { route_id, delivery_staff_id });
+        
         const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:5000/api/routes/assign',
@@ -432,17 +448,23 @@ const RouteManagement = () => {
                 delivery_staff_id
             },
             {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { 
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             }
         );
 
         if (response.data.success) {
             toast.success('Route assigned successfully');
-            fetchRoutes(); // Refresh danh sách routes
+            await fetchRoutes(); // Đợi fetch hoàn tất
         }
     } catch (error) {
-        console.error('Error assigning route:', error);
-        toast.error(error.response?.data?.message || 'Failed to assign route');
+        console.error('Error assigning route:', error.response?.data || error);
+        toast.error(
+            error.response?.data?.message || 
+            'Failed to assign route. Please try again.'
+        );
     }
   };
 
@@ -451,6 +473,15 @@ const RouteManagement = () => {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+        <div className="p-4 text-red-500">
+            <h3 className="font-bold">Error loading data:</h3>
+            <p>{error}</p>
+        </div>
     );
   }
 
@@ -570,14 +601,23 @@ const RouteManagement = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {route.status === 'pending' ? (
                             <select
-                                onChange={(e) => handleAssignRoute(route._id, e.target.value)}
-                                className="w-full text-sm border rounded py-1 px-2"
-                                defaultValue=""
+                                onChange={(e) => {
+                                    if (e.target.value) { // Kiểm tra có giá trị được chọn
+                                        handleAssignRoute(route._id, e.target.value);
+                                    }
+                                }}
+                                value="" // Đặt giá trị mặc định
+                                className="w-full text-sm border rounded py-1 px-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="" disabled>Select delivery staff...</option>
                                 {deliveryStaff.map(staff => (
-                                    <option key={staff._id} value={staff._id}>
-                                        {staff.fullName || staff.username} 
+                                    <option 
+                                        key={staff._id} 
+                                        value={staff._id}
+                                        disabled={staff.status === 'inactive'}
+                                    >
+                                        {staff.fullName || staff.username}
+                                        {staff.status === 'inactive' && ' (Inactive)'}
                                         {staff.phone && ` - ${staff.phone}`}
                                     </option>
                                 ))}

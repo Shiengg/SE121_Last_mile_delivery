@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['Admin', 'DeliveryStaff', 'Customer']
     },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active'
+    },
     fullName: {
         type: String,
         default: ''

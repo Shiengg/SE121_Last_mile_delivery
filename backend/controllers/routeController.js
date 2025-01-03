@@ -274,6 +274,7 @@ exports.deleteRoute = async (req, res) => {
 exports.assignRoute = async (req, res) => {
     try {
         const { route_id, delivery_staff_id } = req.body;
+        console.log('Assigning route:', { route_id, delivery_staff_id });
 
         // Validate input
         if (!route_id || !delivery_staff_id) {
@@ -300,16 +301,27 @@ exports.assignRoute = async (req, res) => {
         }
 
         // Kiểm tra delivery staff tồn tại và có role phù hợp
-        const deliveryStaff = await User.findOne({
-            _id: delivery_staff_id,
-            role: 'DeliveryStaff',
-            status: 'active'
-        });
+        const deliveryStaff = await User.findById(delivery_staff_id);
+        console.log('Found delivery staff:', deliveryStaff);
 
         if (!deliveryStaff) {
             return res.status(404).json({
                 success: false,
-                message: 'Delivery staff not found or inactive'
+                message: 'Delivery staff not found'
+            });
+        }
+
+        if (deliveryStaff.role !== 'DeliveryStaff') {
+            return res.status(403).json({
+                success: false,
+                message: 'Selected user is not a delivery staff'
+            });
+        }
+
+        if (deliveryStaff.status === 'inactive') {
+            return res.status(400).json({
+                success: false,
+                message: 'Selected delivery staff is inactive'
             });
         }
 
@@ -329,6 +341,9 @@ exports.assignRoute = async (req, res) => {
             },
             {
                 path: 'shops.shop_id',
+                model: 'Shop',
+                localField: 'shops.shop_id',
+                foreignField: 'shop_id',
                 select: 'shop_name shop_id latitude longitude'
             }
         ]);
@@ -337,7 +352,7 @@ exports.assignRoute = async (req, res) => {
         await logActivity(
             'ASSIGN',
             'ROUTE',
-            `Route ${route.route_code} assigned to ${deliveryStaff.fullName}`,
+            `Route ${route.route_code} assigned to ${deliveryStaff.fullName || deliveryStaff.username}`,
             req.user._id,
             {
                 entityId: route._id,
