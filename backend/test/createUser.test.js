@@ -4,9 +4,9 @@ const createTestUser = async () => {
     try {
         console.log('Đang tạo user test...');
         const testUser = {
-            username: "customer",
+            username: "delivery1",
             password: "123123123",
-            role: "Customer"
+            role: "DeliveryStaff"
         };
         
         console.log('Đang gửi dữ liệu đăng ký:', testUser);
