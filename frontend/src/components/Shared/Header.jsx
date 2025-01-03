@@ -283,7 +283,7 @@ const Header = ({ title }) => {
                     ) : (
                       notifications.map((notification, index) => (
                         <div 
-                          key={notification._id || notification.id || `notification-${index}`} 
+                          key={notification._id || `notification-${index}`} 
                           className="px-4 py-3 hover:bg-gray-50 transition-colors duration-200"
                         >
                           <div className="flex items-start space-x-3">
@@ -300,7 +300,7 @@ const Header = ({ title }) => {
                                 by {notification.performedBy}
                               </p>
                               <p className="text-xs text-gray-400 mt-1">
-                                {notification.timeAgo}
+                                {new Date(notification.createdAt).toLocaleString()}
                               </p>
                             </div>
                           </div>
