@@ -1,11 +1,7 @@
 const axios = require('axios');
 
-const HERE_API_KEY = process.env.HERE_API_KEY;
-if (!HERE_API_KEY) {
-    throw new Error('HERE_API_KEY is not defined in environment variables');
-}
-
-const ROUTING_API_URL = 'https://router.hereapi.com/v8/routes';
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || 'pk.eyJ1Ijoic2hpZW5nIiwiYSI6ImNtNTkwY3R4ZDNybHUyanNmM2hoaDAxa2oifQ.ZUcv_MrKBuTc2lZ2jyofmQ';
+const MAPBOX_DIRECTIONS_API = 'https://api.mapbox.com/directions/v5/mapbox/driving';
 
 class MapService {
     async calculateRouteDetails(waypoints) {
@@ -14,51 +10,41 @@ class MapService {
                 throw new Error('At least 2 waypoints are required');
             }
 
-            // Format origin và destination
-            const origin = `${waypoints[0].latitude},${waypoints[0].longitude}`;
-            const destination = `${waypoints[waypoints.length - 1].latitude},${waypoints[waypoints.length - 1].longitude}`;
-
-            // Format via points (các điểm trung gian)
-            const via = waypoints.slice(1, -1).map(point => 
-                `via=${point.latitude},${point.longitude}`
-            ).join('&');
-
-            // Tạo URL với đúng format
-            const url = `${ROUTING_API_URL}?` + 
-                `transportMode=truck` +
-                `&origin=${origin}` +
-                `&destination=${destination}` +
-                (via ? `&${via}` : '') +
-                `&return=polyline,summary,actions` +
-                `&apiKey=${HERE_API_KEY}`;
-
-            console.log('Calling HERE Maps API with URL:', url);
-
-            const response = await axios.get(url);
-
-            if (!response.data || !response.data.routes || !response.data.routes[0]) {
-                throw new Error('Invalid response from HERE API');
-            }
-
-            const route = response.data.routes[0];
-            const sections = route.sections;
-
-            // Tính tổng khoảng cách và lấy polyline
             let totalDistance = 0;
             const sectionDistances = [];
-            let fullPolyline = '';
 
-            sections.forEach(section => {
-                const sectionDistance = section.summary.length / 1000; // Convert to km
-                totalDistance += sectionDistance;
+            // Tính toán khoảng cách tuần tự giữa các điểm
+            for (let i = 0; i < waypoints.length - 1; i++) {
+                const start = waypoints[i];
+                const end = waypoints[i + 1];
+
+                // Tạo URL cho Mapbox Directions API
+                const url = `${MAPBOX_DIRECTIONS_API}/${start.longitude},${start.latitude};${end.longitude},${end.latitude}`;
+                
+                // Thêm các parameters
+                const params = {
+                    access_token: MAPBOX_ACCESS_TOKEN,
+                    geometries: 'geojson',
+                    overview: 'full'
+                };
+
+                console.log(`Calculating distance from point ${i} to point ${i + 1}`);
+                const response = await axios.get(url, { params });
+
+                if (!response.data || !response.data.routes || !response.data.routes[0]) {
+                    throw new Error('Invalid response from Mapbox API');
+                }
+
+                // Lấy khoảng cách của đoạn đường (convert từ meters sang kilometers)
+                const sectionDistance = response.data.routes[0].distance / 1000;
                 sectionDistances.push(sectionDistance);
-                fullPolyline += section.polyline;
-            });
+                totalDistance += sectionDistance;
+            }
 
             return {
-                totalDistance: Math.round(totalDistance * 100) / 100, // Round to 2 decimal places
+                totalDistance: Math.round(totalDistance * 100) / 100, // Làm tròn 2 chữ số thập phân
                 sectionDistances,
-                polyline: fullPolyline
+                polyline: null // Không cần polyline nữa
             };
         } catch (error) {
             console.error('Error calculating route details:', error.response?.data || error.message);
