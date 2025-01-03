@@ -3,7 +3,7 @@ const { logActivity } = require('./activityController');
 
 exports.getAllShops = async (req, res) => {
     try {
-        const { ward_code, status, page = 1, limit = 10 } = req.query;
+        const { ward_code, status, page = 1, limit = 10, search } = req.query;
         
         // Xây dựng query
         let query = {};
@@ -16,6 +16,15 @@ exports.getAllShops = async (req, res) => {
         // Lọc theo status nếu có
         if (status) {
             query.status = status;
+        }
+
+        // Thêm điều kiện tìm kiếm
+        if (search) {
+            query.$or = [
+                { shop_name: { $regex: search, $options: 'i' } },
+                { shop_id: { $regex: search, $options: 'i' } },
+                { street: { $regex: search, $options: 'i' } }
+            ];
         }
 
         console.log('Shop query:', query);
