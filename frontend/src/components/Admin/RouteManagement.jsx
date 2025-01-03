@@ -401,32 +401,53 @@ const RouteManagement = () => {
 
   const handleAddRoute = async (routeData) => {
     try {
+        // Kiểm tra có ít nhất 2 shop
+        if (!routeData.shops || routeData.shops.length < 2) {
+            toast.error('At least 2 shops are required for a route');
+            return;
+        }
+
+        // Format dữ liệu trước khi gửi
+        const formattedData = {
+            shops: routeData.shops.map((shop, index) => ({
+                shop_id: shop.shop_id,
+                order: index + 1  // Gán order theo thứ tự trong mảng
+            })),
+            vehicle_type_id: routeData.vehicle_type_id
+        };
+
         const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:5000/api/routes',
-            routeData,
+            formattedData,
             {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             }
         );
 
         if (response.data.success) {
-            await fetchRoutes();
-            setShowAddModal(false);
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: 'Route created successfully',
                 timer: 1500,
                 showConfirmButton: false
             });
+
+            // Refresh routes list
+            await fetchRoutes();
+            setShowAddModal(false);
         }
     } catch (error) {
         console.error('Error creating route:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: error.response?.data?.message || 'Failed to create route'
+            text: error.response?.data?.message || 'Failed to create route',
+            confirmButtonText: 'OK'
         });
     }
   };

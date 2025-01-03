@@ -118,25 +118,27 @@ const AddRouteModal = ({ onClose, onAdd, vehicleTypes }) => {
         fetchShops();
     }, [formData.ward_code]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Validate số lượng shop
         if (selectedShops.length < 2) {
             toast.error('Please select at least 2 shops');
             return;
         }
 
-        try {
-            const routeData = {
-                shop_ids: selectedShops.map(shop => shop.shop_id),
-                vehicle_type_id: formData.vehicle_type_id
-            };
-            console.log('Submitting route data:', routeData);
-            await onAdd(routeData);
-            onClose();
-        } catch (error) {
-            console.error('Error creating route:', error);
-            toast.error('Failed to create route');
+        // Validate vehicle type
+        if (!formData.vehicle_type_id) {
+            toast.error('Please select a vehicle type');
+            return;
         }
+
+        const routeData = {
+            shops: selectedShops,
+            vehicle_type_id: formData.vehicle_type_id
+        };
+
+        onAdd(routeData);
     };
 
     const handleShopSelect = (shop) => {
@@ -279,16 +281,13 @@ const AddRouteModal = ({ onClose, onAdd, vehicleTypes }) => {
                                         </label>
                                         <select
                                             value={formData.vehicle_type_id}
-                                            onChange={(e) => setFormData({
-                                                ...formData,
-                                                vehicle_type_id: e.target.value
-                                            })}
-                                            className="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200"
+                                            onChange={(e) => setFormData({ ...formData, vehicle_type_id: e.target.value })}
+                                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                             required
                                         >
                                             <option value="">Select Vehicle Type</option>
                                             {vehicleTypes.map((type) => (
-                                                <option key={type.code} value={type.code}>
+                                                <option key={type._id} value={type.code}>
                                                     {type.name}
                                                 </option>
                                             ))}

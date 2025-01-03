@@ -26,71 +26,135 @@ const ALLOWED_STATUS_TRANSITIONS = {
     [ROUTE_STATUS.FAILED]: [ROUTE_STATUS.PENDING] // Có thể thử lại từ đầu
 };
 
+// Hàm tính khoảng cách giữa 2 điểm dùng Haversine formula
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c; // Distance in km
+    return distance;
+};
+
+const deg2rad = (deg) => {
+    return deg * (Math.PI/180);
+};
+
 exports.createRoute = async (req, res) => {
     try {
-        const { shop_ids, vehicle_type_id } = req.body;
-        console.log('Creating route with data:', { shop_ids, vehicle_type_id });
+        const { shops, vehicle_type_id } = req.body;
 
         // Validate input
-        if (!shop_ids || !Array.isArray(shop_ids) || shop_ids.length < 2) {
+        if (!shops || !Array.isArray(shops) || shops.length < 2) {
             return res.status(400).json({
                 success: false,
-                message: 'At least 2 shops are required'
+                message: 'At least 2 shops are required for a route'
             });
         }
 
-        // Lấy thông tin chi tiết của các shop
-        const shops = await Shop.find({ shop_id: { $in: shop_ids } });
-        console.log('Found shops:', shops);
-        
-        if (shops.length !== shop_ids.length) {
+        // Kiểm tra vehicle type
+        const vehicleType = await VehicleType.findOne({ code: vehicle_type_id });
+        if (!vehicleType) {
             return res.status(400).json({
                 success: false,
-                message: 'Some shops not found'
+                message: 'Invalid vehicle type'
             });
         }
 
-        // Validate coordinates
-        for (const shop of shops) {
-            if (!mapService.validateCoordinates(shop.latitude, shop.longitude)) {
-                return res.status(400).json({
-                    success: false,
-                    message: `Invalid coordinates for shop ${shop.shop_id}: ${shop.latitude},${shop.longitude}`
-                });
-            }
+        // Sắp xếp shops theo order
+        const sortedShops = [...shops].sort((a, b) => a.order - b.order);
+
+        // Lấy thông tin chi tiết của shops
+        const shopDetails = await Promise.all(
+            sortedShops.map(shop => 
+                Shop.findOne({ shop_id: shop.shop_id })
+                    .select('shop_id shop_name latitude longitude')
+            )
+        );
+
+        // Kiểm tra shops tồn tại
+        if (shopDetails.some(shop => !shop)) {
+            return res.status(400).json({
+                success: false,
+                message: 'One or more shop IDs are invalid'
+            });
         }
 
-        // Tính toán route sử dụng Here Maps API
-        const routeDetails = await mapService.calculateRoute(shops);
-        console.log('Route details:', routeDetails);
+        // Tính toán route với HERE Maps API
+        const waypoints = shopDetails.map(shop => ({
+            latitude: parseFloat(shop.latitude),
+            longitude: parseFloat(shop.longitude)
+        }));
+
+        const routeDetails = await mapService.calculateRouteDetails(waypoints);
 
         // Tạo route mới
-        const newRoute = new Route({
+        const route = new Route({
             route_code: await generateRouteId(),
-            shops: shop_ids.map((shop_id, index) => ({
-                shop_id,
-                order: index + 1
+            shops: sortedShops.map(shop => ({
+                shop_id: shop.shop_id,
+                order: shop.order
             })),
-            vehicle_type_id,
-            distance: routeDetails.distance,
+            vehicle_type_id: vehicleType.code,
+            distance: routeDetails.totalDistance,
             polyline: routeDetails.polyline,
+            section_distances: routeDetails.sectionDistances,
             status: 'pending'
         });
 
-        await newRoute.save();
-        console.log('Route created:', newRoute);
+        await route.save();
+
+        // Tạo response với thông tin chi tiết
+        const routeWithDetails = {
+            ...route.toObject(),
+            vehicle_type: {
+                code: vehicleType.code,
+                name: vehicleType.name
+            },
+            shopDetails: shopDetails.map((shop, index) => ({
+                ...shop.toObject(),
+                order: sortedShops[index].order,
+                distance_to_next: index < routeDetails.sectionDistances.length 
+                    ? routeDetails.sectionDistances[index] 
+                    : null
+            }))
+        };
+
+        // Log activity
+        await logActivity(
+            'CREATE',
+            'ROUTE',
+            `New route ${route.route_code} was created with total distance ${routeDetails.totalDistance.toFixed(2)} km`,
+            req.user._id,
+            {
+                entityId: route._id,
+                entityCode: route.route_code,
+                details: {
+                    shops: shopDetails.map(shop => ({
+                        shop_id: shop.shop_id,
+                        shop_name: shop.shop_name
+                    })),
+                    distance: routeDetails.totalDistance,
+                    vehicle_type: vehicleType.code
+                }
+            }
+        );
 
         res.status(201).json({
             success: true,
-            data: newRoute
+            message: 'Route created successfully',
+            data: routeWithDetails
         });
     } catch (error) {
         console.error('Error creating route:', error);
         res.status(500).json({
             success: false,
             message: 'Error creating route',
-            error: error.message,
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            error: error.message
         });
     }
 };

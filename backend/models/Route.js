@@ -9,8 +9,7 @@ const routeSchema = new mongoose.Schema({
     shops: [{
         shop_id: {
             type: String,
-            required: true,
-            ref: 'Shop'
+            required: true
         },
         order: {
             type: Number,
@@ -19,28 +18,31 @@ const routeSchema = new mongoose.Schema({
     }],
     vehicle_type_id: {
         type: String,
-        required: true,
-        ref: 'VehicleType'
+        ref: 'VehicleType',
+        required: true
     },
     delivery_staff_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    assigned_at: {
-        type: Date
-    },
     distance: {
         type: Number,
         required: true
-    },
-    polyline: {
-        type: String
     },
     status: {
         type: String,
         enum: ['pending', 'assigned', 'delivering', 'delivered', 'cancelled', 'failed'],
         default: 'pending'
-    }
+    },
+    assigned_at: Date,
+    polyline: {
+        type: String,
+        required: true
+    },
+    section_distances: [{
+        type: Number,
+        required: true
+    }]
 }, {
     timestamps: true
 });

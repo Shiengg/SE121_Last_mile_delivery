@@ -12,10 +12,6 @@ const vehicleTypeSchema = new mongoose.Schema({
         required: true
     },
     description: String,
-    capacity: {
-        type: Number,
-        required: true
-    },
     status: {
         type: String,
         enum: ['active', 'inactive'],
