@@ -281,8 +281,11 @@ const Header = ({ title }) => {
                         No notifications
                       </div>
                     ) : (
-                      notifications.map(notification => (
-                        <div key={notification.id} className="px-4 py-3 hover:bg-gray-50 transition-colors duration-200">
+                      notifications.map((notification, index) => (
+                        <div 
+                          key={notification._id || notification.id || `notification-${index}`} 
+                          className="px-4 py-3 hover:bg-gray-50 transition-colors duration-200"
+                        >
                           <div className="flex items-start space-x-3">
                             <div className="flex-shrink-0">
                               <span className={`w-8 h-8 rounded-full flex items-center justify-center ${getActivityIconStyle(notification.type)}`}>

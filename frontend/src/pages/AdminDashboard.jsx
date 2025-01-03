@@ -365,8 +365,8 @@ const AdminDashboard = () => {
                   ) : notifications.length === 0 ? (
                     <p className="text-gray-500 text-center py-4">No recent activities</p>
                   ) : (
-                    notifications.map(activity => (
-                      <div key={activity.id} className="flex items-start space-x-3">
+                    notifications.map((activity, index) => (
+                      <div key={activity._id || index} className="flex items-start space-x-3">
                         <div className="flex-shrink-0">
                           <span className={`w-8 h-8 rounded-full flex items-center justify-center
                             ${getActivityIconStyle(activity.type)}`}>
