@@ -37,7 +37,7 @@ const routeSchema = new mongoose.Schema({
     assigned_at: Date,
     polyline: {
         type: String,
-        required: true
+        required: false
     },
     section_distances: [{
         type: Number,
