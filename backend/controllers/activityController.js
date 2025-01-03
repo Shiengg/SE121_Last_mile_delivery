@@ -1,44 +1,37 @@
 const Activity = require('../models/Activity');
 
-exports.logActivity = async (type, module, description, userId, metadata) => {
+exports.logActivity = async (action, target_type, description, user_id, details = {}) => {
   try {
     const activity = new Activity({
-      type,
-      module,
+      user_id,
+      action,
+      target_type,
       description,
-      performedBy: userId,
-      metadata
+      details
     });
+
     await activity.save();
+    return activity;
   } catch (error) {
     console.error('Error logging activity:', error);
+    return null;
   }
 };
 
 exports.getRecentActivities = async (req, res) => {
   try {
     const activities = await Activity.find()
+      .populate('user_id', 'username fullName')
       .sort({ createdAt: -1 })
-      .limit(15)
-      .populate('performedBy', 'name')
+      .limit(10)
       .lean();
-
-    const formattedActivities = activities.map(activity => ({
-      id: activity._id,
-      type: activity.type,
-      module: activity.module,
-      description: activity.description,
-      performedBy: activity.performedBy.name,
-      metadata: activity.metadata,
-      createdAt: activity.createdAt,
-      timeAgo: getTimeAgo(activity.createdAt)
-    }));
 
     res.json({
       success: true,
-      data: formattedActivities
+      data: activities
     });
   } catch (error) {
+    console.error('Error fetching recent activities:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching activities',

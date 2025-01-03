@@ -4,7 +4,7 @@ const VehicleType = require('../models/VehicleType');
 const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
 const User = require('../models/User');
-const logActivity = require('../utils/logActivity');
+const { logActivity } = require('../controllers/activityController');
 
 // Định nghĩa các trạng thái và luồng chuyển đổi ở đầu file
 const ROUTE_STATUS = {
@@ -97,41 +97,48 @@ exports.createRoute = async (req, res) => {
 
 exports.getAllRoutes = async (req, res) => {
     try {
+        // Lấy tất cả routes và chỉ populate delivery_staff_id
         const routes = await Route.find()
-            .populate([
-                {
-                    path: 'delivery_staff_id',
-                    select: 'username fullName phone email'
-                },
-                {
-                    path: 'shops.shop_id',
-                    model: 'Shop',
-                    select: 'shop_id shop_name latitude longitude'
-                },
-                {
-                    path: 'vehicle_type_id',
-                    model: 'VehicleType',
-                    select: 'code name'
-                }
-            ])
+            .populate('delivery_staff_id', 'username fullName phone email')
             .sort({ createdAt: -1 })
             .lean();
+
+        // Lấy tất cả shop_ids từ các routes
+        const shopIds = routes.flatMap(route => route.shops.map(shop => shop.shop_id));
+        const uniqueShopIds = [...new Set(shopIds)];
+
+        // Lấy thông tin shops một lần
+        const shops = await Shop.find({ shop_id: { $in: uniqueShopIds } })
+            .select('shop_id shop_name latitude longitude')
+            .lean();
+
+        // Lấy thông tin vehicle types
+        const vehicleTypes = await VehicleType.find({ 
+            code: { $in: routes.map(r => r.vehicle_type_id) } 
+        }).lean();
+
+        // Tạo maps để dễ dàng lookup
+        const shopMap = new Map(shops.map(shop => [shop.shop_id, shop]));
+        const vehicleTypeMap = new Map(vehicleTypes.map(vt => [vt.code, vt]));
 
         // Transform routes với thông tin đầy đủ
         const transformedRoutes = routes.map(route => ({
             _id: route._id,
             route_code: route.route_code,
-            shops: route.shops.map(shop => ({
-                shop_id: shop.shop_id?.shop_id || shop.shop_id,
-                shop_name: shop.shop_id?.shop_name || 'Unknown Shop',
-                order: shop.order,
-                coordinates: {
-                    latitude: shop.shop_id?.latitude,
-                    longitude: shop.shop_id?.longitude
-                }
-            })).sort((a, b) => a.order - b.order),
-            vehicle_type: route.vehicle_type_id?.name || route.vehicle_type_id,
-            vehicle_type_code: route.vehicle_type_id?.code,
+            shops: route.shops.map(shop => {
+                const shopData = shopMap.get(shop.shop_id);
+                return {
+                    shop_id: shop.shop_id,
+                    shop_name: shopData?.shop_name || 'Unknown Shop',
+                    order: shop.order,
+                    coordinates: {
+                        latitude: shopData?.latitude,
+                        longitude: shopData?.longitude
+                    }
+                };
+            }).sort((a, b) => a.order - b.order),
+            vehicle_type: vehicleTypeMap.get(route.vehicle_type_id)?.name || route.vehicle_type_id,
+            vehicle_type_code: route.vehicle_type_id,
             delivery_staff_id: route.delivery_staff_id,
             assigned_at: route.assigned_at,
             distance: route.distance,
@@ -417,6 +424,102 @@ exports.updateRoute = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error updating route',
+            error: error.message
+        });
+    }
+};
+
+exports.claimRoute = async (req, res) => {
+    try {
+        const { route_id } = req.body;
+        const staff_id = req.user._id; // Lấy ID của staff đang đăng nhập
+
+        // Kiểm tra route tồn tại và có status là pending
+        const route = await Route.findById(route_id);
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        if (route.status !== 'pending') {
+            return res.status(400).json({
+                success: false,
+                message: 'This route is no longer available'
+            });
+        }
+
+        // Kiểm tra xem user có phải là delivery staff không
+        const staff = await User.findOne({
+            _id: staff_id,
+            role: 'DeliveryStaff',
+            status: 'active'
+        });
+
+        if (!staff) {
+            return res.status(403).json({
+                success: false,
+                message: 'Only active delivery staff can claim routes'
+            });
+        }
+
+        // Kiểm tra số lượng route đang active của staff
+        const activeRoutes = await Route.countDocuments({
+            delivery_staff_id: staff_id,
+            status: { $in: ['assigned', 'delivering'] }
+        });
+
+        const MAX_ACTIVE_ROUTES = 5; // Có thể điều chỉnh số này
+        if (activeRoutes >= MAX_ACTIVE_ROUTES) {
+            return res.status(400).json({
+                success: false,
+                message: `You cannot have more than ${MAX_ACTIVE_ROUTES} active routes`
+            });
+        }
+
+        // Cập nhật route
+        const updatedRoute = await Route.findByIdAndUpdate(
+            route_id,
+            {
+                delivery_staff_id: staff_id,
+                status: 'assigned',
+                assigned_at: new Date()
+            },
+            { new: true }
+        ).populate([
+            {
+                path: 'delivery_staff_id',
+                select: 'username fullName phone'
+            },
+            {
+                path: 'shops.shop_id',
+                select: 'shop_name shop_id latitude longitude'
+            }
+        ]);
+
+        // Log activity
+        await logActivity(
+            'CLAIM',
+            'ROUTE',
+            `Route ${route.route_code} claimed by ${staff.fullName}`,
+            staff_id,
+            {
+                entityId: route._id,
+                entityCode: route.route_code
+            }
+        );
+
+        res.json({
+            success: true,
+            message: 'Route claimed successfully',
+            data: updatedRoute
+        });
+    } catch (error) {
+        console.error('Error claiming route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error claiming route',
             error: error.message
         });
     }
