@@ -300,85 +300,52 @@ const ShopManagement = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, shopId) => {
     try {
         const result = await Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: `Do you want to delete shop ${shopId}?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel',
-            showLoaderOnConfirm: true,
-            preConfirm: async () => {
-                try {
-                    const token = localStorage.getItem('token');
-                    const response = await axios.delete(
-                        `http://localhost:5000/api/shops/${id}`,
-                        {
-                            headers: { Authorization: `Bearer ${token}` }
-                        }
-                    );
-                    
-                    if (!response.data.success) {
-                        throw new Error(response.data.message);
-                    }
-                    return response.data;
-                } catch (error) {
-                    throw new Error(
-                        error.response?.data?.message || 
-                        error.message || 
-                        'Failed to delete shop'
-                    );
-                }
-            },
-            allowOutsideClick: () => !Swal.isLoading()
+            cancelButtonText: 'Cancel'
         });
 
-        if (result.isConfirmed && result.value) {
-            // Cập nhật UI
-            setShops(prevShops => prevShops.filter(s => s._id !== id));
-            
-            // Cập nhật số liệu thống kê
-            await fetchStats();
-            
-            // Lấy thông tin hoạt động mới nhất
+        if (result.isConfirmed) {
             const token = localStorage.getItem('token');
-            const activitiesResponse = await axios.get(
-                'http://localhost:5000/api/activities/recent',
+            const response = await axios.delete(
+                `http://localhost:5000/api/shops/${id}`,
                 {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
-            
-            if (activitiesResponse.data.success) {
-                updateNotifications(activitiesResponse.data.data);
-            }
 
-            // Hiển thị thông báo thành công bằng SweetAlert2
-            await Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Shop has been deleted successfully.',
-                timer: 1500,
-                showConfirmButton: false
-            });
+            if (response.data.success) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: `Shop ${shopId} has been deleted.`,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Refresh shop list
+                fetchShops();
+            }
         }
     } catch (error) {
-        console.error('Delete error:', error);
-        
-        // Hiển thị thông báo lỗi bằng SweetAlert2
-        await Swal.fire({
+        console.error('Error deleting shop:', error);
+        Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: error.message || 'Failed to delete shop',
+            text: error.response?.data?.message || 'Failed to delete shop',
             confirmButtonText: 'OK'
         });
-        
-        // Refresh data nếu có lỗi
-        await fetchShops(currentPage, searchTerm);
     }
   };
 
@@ -539,7 +506,7 @@ const ShopManagement = () => {
                         <FiEdit2 className="inline" />
                       </button>
                       <button
-                        onClick={() => handleDelete(shop._id)}
+                        onClick={() => handleDelete(shop._id, shop.shop_id)}
                         className="text-red-600 hover:text-red-900 transition-colors duration-200"
                       >
                         <FiTrash2 className="inline w-5 h-5" />
