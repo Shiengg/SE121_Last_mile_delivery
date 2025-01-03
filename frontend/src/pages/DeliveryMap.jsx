@@ -1,160 +1,146 @@
-/* eslint-disable no-undef */
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { FiArrowLeft } from 'react-icons/fi';
+import mapboxgl from 'mapbox-gl';
 
-/* global H */
+// Thêm Mapbox access token
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2hpZW5nIiwiYSI6ImNtNTkwY3R4ZDNybHUyanNmM2hoaDAxa2oifQ.ZUcv_MrKBuTc2lZ2jyofmQ';
 
 const DeliveryMap = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const mapRef = useRef(null);
+  const mapContainerRef = useRef(null);
   const [route, setRoute] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [map, setMap] = useState(null);
 
   useEffect(() => {
-    console.log('DeliveryMap mounted with ID:', id);
-    if (!id) {
-      console.error('No route ID provided');
-      setError('No route ID provided');
-      setLoading(false);
-      return;
-    }
     fetchRouteData();
   }, [id]);
 
-  // Thêm useEffect mới để xử lý việc khởi tạo map
   useEffect(() => {
-    if (route && mapRef.current && !map) {
-      try {
-        initializeMap(route);
-      } catch (error) {
-        console.error('Error initializing map:', error);
-        setError('Failed to initialize map');
-        toast.error('Failed to initialize map');
-      }
+    if (route && mapContainerRef.current && !mapRef.current) {
+      initializeMap(route);
     }
-  }, [route, map]);
+  }, [route]);
 
   const fetchRouteData = async () => {
     try {
-      console.log('Fetching route data for ID:', id);
       const token = localStorage.getItem('token');
-      
-      if (!token) {
-        console.error('No token found');
-        navigate('/login');
-        return;
-      }
-
       const response = await axios.get(`http://localhost:5000/api/routes/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      console.log('Route data received:', response.data);
-
       if (response.data.success) {
+        console.log('Full route data:', response.data.data);
+        console.log('Shops data:', response.data.data.shops);
         setRoute(response.data.data);
-      } else {
-        console.error('API returned success: false');
-        setError(response.data.message || 'Failed to load route data');
       }
     } catch (error) {
       console.error('Error fetching route:', error);
       setError(error.response?.data?.message || 'Failed to load route data');
-      toast.error(error.response?.data?.message || 'Failed to load route data');
+      toast.error('Failed to load route data');
     } finally {
       setLoading(false);
     }
   };
 
-  const initializeMap = (routeData) => {
+  const initializeMap = async (routeData) => {
     try {
-      console.log('Initializing map with route data:', routeData);
-      if (!routeData || !routeData.polyline || !mapRef.current) {
-        console.error('Invalid route data, missing polyline, or map container not ready');
-        return;
-      }
+      if (!routeData.shops || routeData.shops.length < 2) return;
 
-      const platform = new H.service.Platform({
-        apikey: process.env.REACT_APP_HERE_API_KEY || '-fNjzDS4R773cGTnnKzfLL6Q4hg9v8_johaojqXFu0U'
+      // Log thông tin shops
+      console.log('Shops information:');
+      routeData.shops.forEach((shop, index) => {
+        console.log(`Shop ${index + 1}:`, {
+          name: shop.shop_details.shop_name,
+          shop_id: shop.shop_details.shop_id,
+          latitude: shop.shop_details.latitude,
+          longitude: shop.shop_details.longitude,
+          address: shop.shop_details.address
+        });
       });
 
-      const defaultLayers = platform.createDefaultLayers();
-      
-      // Create map instance
-      const newMap = new H.Map(
-        mapRef.current,
-        defaultLayers.vector.normal.map,
-        {
-          zoom: 10,
-          pixelRatio: window.devicePixelRatio || 1,
-          center: { lat: 0, lng: 0 } // Thêm center mặc định
-        }
-      );
-
-      // Add window resize handler
-      window.addEventListener('resize', () => newMap.getViewPort().resize());
-
-      // Add map behavior
-      const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(newMap));
-
-      // Add UI controls
-      const ui = new H.ui.UI.createDefault(newMap, defaultLayers);
-
-      // Decode and display the polyline
-      const lineString = H.geo.LineString.fromFlexiblePolyline(routeData.polyline);
-      const polyline = new H.map.Polyline(lineString, {
-        style: {
-          lineWidth: 4,
-          strokeColor: '#00A8E8'
-        }
+      // Tạo map instance
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [routeData.shops[0].shop_details.longitude, routeData.shops[0].shop_details.latitude],
+        zoom: 13
       });
 
-      // Add the polyline to the map
-      newMap.addObject(polyline);
+      mapRef.current = map;
 
-      // Set the map's viewport to cover the entire route
-      newMap.getViewModel().setLookAtData({
-        bounds: polyline.getBoundingBox()
-      });
+      // Đợi map load xong
+      map.on('load', async () => {
+        // Tạo array của coordinates
+        const coordinates = routeData.shops.map(shop => [
+          shop.shop_details.longitude,
+          shop.shop_details.latitude
+        ]);
 
-      // Add markers for each shop
-      if (routeData.shops && Array.isArray(routeData.shops)) {
+        // Thêm markers cho mỗi shop
         routeData.shops.forEach((shop, index) => {
-          if (shop.shop_details && shop.shop_details.latitude && shop.shop_details.longitude) {
-            // Tạo SVG cho marker
-            const svgMarkup = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" fill="white" stroke="#00A8E8" stroke-width="2"/>
-                <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#00A8E8" font-size="12">${index + 1}</text>
-            </svg>`;
+          // Tạo custom marker element
+          const el = document.createElement('div');
+          el.className = 'marker';
+          el.style.backgroundColor = 'white';
+          el.style.width = '24px';
+          el.style.height = '24px';
+          el.style.borderRadius = '50%';
+          el.style.border = '2px solid #00A8E8';
+          el.style.display = 'flex';
+          el.style.alignItems = 'center';
+          el.style.justifyContent = 'center';
+          el.style.color = '#00A8E8';
+          el.innerHTML = `${index + 1}`;
 
-            const icon = new H.map.Icon(svgMarkup, {
-                size: { w: 24, h: 24 }
-            });
+          // Thêm marker vào map
+          new mapboxgl.Marker(el)
+            .setLngLat([shop.shop_details.longitude, shop.shop_details.latitude])
+            .addTo(map);
+        });
 
-            const marker = new H.map.Marker(
-                {
-                    lat: shop.shop_details.latitude,
-                    lng: shop.shop_details.longitude
-                },
-                { icon: icon }
-            );
-            
-            newMap.addObject(marker);
+        // Lấy route directions từ Mapbox API
+        const query = await fetch(
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinates.map(coord => coord.join(',')).join(';')}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+        );
+        const json = await query.json();
+
+        // Thêm route line vào map
+        map.addLayer({
+          id: 'route',
+          type: 'line',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              properties: {},
+              geometry: json.routes[0].geometry
+            }
+          },
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          paint: {
+            'line-color': '#00A8E8',
+            'line-width': 4
           }
         });
-        console.log('Added shop markers');
-      }
 
-      setMap(newMap);
+        // Fit map để hiển thị toàn bộ route
+        const bounds = new mapboxgl.LngLatBounds();
+        coordinates.forEach(coord => bounds.extend(coord));
+        map.fitBounds(bounds, { padding: 50 });
+      });
     } catch (error) {
       console.error('Error initializing map:', error);
-      throw error;
+      setError('Failed to initialize map');
+      toast.error('Failed to initialize map');
     }
   };
 
@@ -175,7 +161,7 @@ const DeliveryMap = () => {
           </div>
         )}
       </div>
-      <div ref={mapRef} className="flex-1" style={{ width: '100%', height: '100%' }} />
+      <div ref={mapContainerRef} className="flex-1" />
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
