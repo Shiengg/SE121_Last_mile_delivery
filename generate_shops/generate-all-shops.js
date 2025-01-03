@@ -276,7 +276,43 @@ const DISTRICT_COORDINATES = {
     }
 };
 
-async function findShopsInWard(ward) {
+// Thêm hàm kiểm tra địa chỉ
+function validateAddress(item, ward, district) {
+    try {
+        // Kiểm tra xem địa chỉ có chứa tên phường không
+        const addressLower = item.address.label.toLowerCase();
+        const wardNameLower = ward.name.toLowerCase();
+        const districtNameLower = district.name.toLowerCase();
+
+        // Kiểm tra cả tên phường và tên quận trong địa chỉ
+        const hasWardName = addressLower.includes(wardNameLower);
+        const hasDistrictName = addressLower.includes(districtNameLower);
+
+        // Nếu địa chỉ không chứa cả tên phường và tên quận, return false
+        if (!hasWardName || !hasDistrictName) {
+            return false;
+        }
+
+        // Kiểm tra khoảng cách từ điểm này đến trung tâm quận
+        const districtCoords = DISTRICT_COORDINATES[ward.district_id];
+        if (!districtCoords) return false;
+
+        const distance = calculateDistance(
+            item.position.lat,
+            item.position.lng,
+            districtCoords.center.lat,
+            districtCoords.center.lng
+        );
+
+        // Chỉ chấp nhận nếu nằm trong bán kính cho phép
+        return distance <= districtCoords.radius / 1000;
+    } catch (error) {
+        console.error('Error validating address:', error);
+        return false;
+    }
+}
+
+async function findShopsInWard(ward, district) {
     let allShops = [];
 
     try {
@@ -286,7 +322,6 @@ async function findShopsInWard(ward) {
             'supermarket convenience',
         ];
 
-        // Lấy tọa độ trung tâm của quận
         const districtCoords = DISTRICT_COORDINATES[ward.district_id];
         if (!districtCoords) {
             console.log(`⚠️ Warning: No coordinates found for district ${ward.district_id}`);
@@ -306,18 +341,16 @@ async function findShopsInWard(ward) {
 
             console.log(`\nRequest #${requestCount}: Searching for "${searchType}" in ${ward.full_location}...`);
             
-            // Sử dụng tọa độ trung tâm của quận và bán kính phù hợp
-            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchType + ' ' + ward.name)}&in=circle:${districtCoords.center.lat},${districtCoords.center.lng};r=${districtCoords.radius}&limit=20&apiKey=${getCurrentApiKey()}`;
+            // Thêm tên phường vào query tìm kiếm
+            const searchQuery = `${searchType} ${ward.name} ${district.name}`;
+            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchQuery)}&in=circle:${districtCoords.center.lat},${districtCoords.center.lng};r=${districtCoords.radius}&limit=20&apiKey=${getCurrentApiKey()}`;
             
             try {
                 const response = await makeRequestWithRetry(url);
                 
                 if (response.data.items) {
                     const shops = response.data.items
-                        .filter(item => {
-                            // Kiểm tra xem địa điểm có thực sự nằm trong phường này không
-                            return isLocationInWard(item.position, ward.name, ward.district_id);
-                        })
+                        .filter(item => validateAddress(item, ward, district))
                         .map((item, index) => {
                             const { houseNumber, street } = parseAddress(item);
                             const shopType = getShopType(item.title, item.categories);
@@ -334,6 +367,7 @@ async function findShopsInWard(ward) {
                                 ward_code: ward.code,
                                 house_number: houseNumber,
                                 street: street,
+                                full_address: item.address.label,
                                 latitude: item.position.lat,
                                 longitude: item.position.lng,
                                 shop_type: shopType,
@@ -342,7 +376,7 @@ async function findShopsInWard(ward) {
                         }).filter(shop => shop !== null);
                     
                     if (shops.length > 0) {
-                        console.log(`Found ${shops.length} shops for ${searchType} in ${ward.full_location}`);
+                        console.log(`Found ${shops.length} valid shops for ${searchType} in ${ward.full_location}`);
                         allShops.push(...shops);
                     }
                 }
@@ -360,26 +394,8 @@ async function findShopsInWard(ward) {
             
             await sleep(2000);
         }
-        
-        // Lọc trùng dựa trên vị trí và tên
-        const uniqueShops = allShops.filter((shop, index, self) =>
-            index === self.findIndex((s) => (
-                s.latitude === shop.latitude && 
-                s.longitude === shop.longitude &&
-                s.shop_name === shop.shop_name
-            ))
-        );
-        
-        console.log(`\nFound ${uniqueShops.length} unique shops in ${ward.full_location}:`);
-        const typeCount = {};
-        uniqueShops.forEach(shop => {
-            typeCount[shop.shop_type] = (typeCount[shop.shop_type] || 0) + 1;
-        });
-        console.log('Shops by type:', typeCount);
-        
-        // Trả về tất cả shops tìm được (tối đa 20)
-        return uniqueShops.slice(0, 20);
-            
+
+        return allShops;
     } catch (error) {
         if (error.message === 'RATE_LIMIT_REACHED' || 
             error.message === 'DAILY_LIMIT_REACHED') {
@@ -428,7 +444,6 @@ async function processAllWards() {
             await fs.readFile('./generate_shops/data/data_district_Hochiminh.json', 'utf8')
         ).Sheet1;
 
-        // Tạo map districts để tra cứu nhanh
         const districtsMap = new Map(
             districtsData.map(district => [district.code, district])
         );
@@ -447,21 +462,18 @@ async function processAllWards() {
             const district = districtsMap.get(ward.district_id);
             
             if (!district) {
-                console.log(`⚠️ Warning: District not found for ward ${ward.name} (district_id: ${ward.district_id})`);
+                console.log(`⚠️ Warning: District not found for ward ${ward.name}`);
                 continue;
             }
 
-            // Tạo search query kết hợp tên phường và quận
             const searchLocation = `${ward.name}, ${district.name}, Ho Chi Minh City`;
             console.log(`\n📌 Processing: ${searchLocation}`);
             
             try {
-                // Truyền thêm thông tin district vào hàm findShopsInWard
-                const shopsInWard = await findShopsInWard({
-                    ...ward,
-                    district_name: district.name,
-                    full_location: searchLocation
-                });
+                const shopsInWard = await findShopsInWard(
+                    { ...ward, full_location: searchLocation },
+                    district
+                );
 
                 if (shopsInWard.length > 0) {
                     allShops.push(...shopsInWard);

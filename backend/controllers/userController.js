@@ -111,4 +111,29 @@ exports.updateProfile = async (req, res) => {
       error: error.message
     });
   }
+};
+
+exports.getDeliveryStaff = async (req, res) => {
+    try {
+        const deliveryStaff = await User.find({ 
+            role: 'DeliveryStaff',
+            // Chỉ lấy những user có đầy đủ thông tin
+            fullName: { $exists: true },
+            phone: { $exists: true }
+        })
+        .select('_id username fullName phone email')
+        .sort({ fullName: 1 });
+
+        res.json({
+            success: true,
+            data: deliveryStaff
+        });
+    } catch (error) {
+        console.error('Error fetching delivery staff:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching delivery staff',
+            error: error.message
+        });
+    }
 }; 

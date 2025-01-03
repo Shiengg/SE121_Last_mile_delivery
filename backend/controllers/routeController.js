@@ -3,6 +3,8 @@ const Shop = require('../models/Shop');
 const VehicleType = require('../models/VehicleType');
 const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
+const User = require('../models/User');
+const logActivity = require('../utils/logActivity');
 
 // Định nghĩa các trạng thái và luồng chuyển đổi ở đầu file
 const ROUTE_STATUS = {
@@ -95,55 +97,46 @@ exports.createRoute = async (req, res) => {
 
 exports.getAllRoutes = async (req, res) => {
     try {
-        console.log('Fetching all routes...');
-        
-        // Fetch routes without populate first
-        const routes = await Route.find().lean();
-        
-        console.log('Found routes:', routes);
+        const routes = await Route.find()
+            .populate([
+                {
+                    path: 'delivery_staff_id',
+                    select: 'username fullName phone email'
+                },
+                {
+                    path: 'shops.shop_id',
+                    model: 'Shop',
+                    select: 'shop_id shop_name latitude longitude'
+                },
+                {
+                    path: 'vehicle_type_id',
+                    model: 'VehicleType',
+                    select: 'code name'
+                }
+            ])
+            .sort({ createdAt: -1 })
+            .lean();
 
-        // Lấy tất cả shop_id cần thiết
-        const shopIds = routes.flatMap(route => 
-            route.shops.map(shop => shop.shop_id)
-        );
-
-        const vehicleTypeIds = routes
-            .map(route => route.vehicle_type_id)
-            .filter(id => id);
-
-        // Fetch shops and vehicle types in bulk
-        const [shops, vehicleTypes] = await Promise.all([
-            Shop.find({ shop_id: { $in: shopIds } })
-                .select('shop_id shop_name latitude longitude')
-                .lean(),
-            VehicleType.find({ code: { $in: vehicleTypeIds } })
-                .select('code name')
-                .lean()
-        ]);
-
-        // Create lookup maps
-        const shopMap = new Map(shops.map(shop => [shop.shop_id, shop]));
-        const vehicleTypeMap = new Map(vehicleTypes.map(vt => [vt.code, vt]));
-
-        // Transform routes with related data
+        // Transform routes với thông tin đầy đủ
         const transformedRoutes = routes.map(route => ({
             _id: route._id,
             route_code: route.route_code,
             shops: route.shops.map(shop => ({
-                shop_id: shop.shop_id,
+                shop_id: shop.shop_id?.shop_id || shop.shop_id,
+                shop_name: shop.shop_id?.shop_name || 'Unknown Shop',
                 order: shop.order,
-                shop_name: shopMap.get(shop.shop_id)?.shop_name || 'Unknown Shop',
                 coordinates: {
-                    latitude: shopMap.get(shop.shop_id)?.latitude,
-                    longitude: shopMap.get(shop.shop_id)?.longitude
+                    latitude: shop.shop_id?.latitude,
+                    longitude: shop.shop_id?.longitude
                 }
             })).sort((a, b) => a.order - b.order),
-            vehicle_type: vehicleTypeMap.get(route.vehicle_type_id)?.name || route.vehicle_type_id,
-            vehicle_type_code: route.vehicle_type_id,
-            distance: route.distance || 0,
-            status: route.status || 'unknown',
-            created_at: route.createdAt,
-            updated_at: route.updatedAt
+            vehicle_type: route.vehicle_type_id?.name || route.vehicle_type_id,
+            vehicle_type_code: route.vehicle_type_id?.code,
+            delivery_staff_id: route.delivery_staff_id,
+            assigned_at: route.assigned_at,
+            distance: route.distance,
+            status: route.status,
+            created_at: route.createdAt
         }));
 
         res.json({
@@ -273,10 +266,18 @@ exports.deleteRoute = async (req, res) => {
 
 exports.assignRoute = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { shipper_id } = req.body;
+        const { route_id, delivery_staff_id } = req.body;
 
-        const route = await Route.findById(id);
+        // Validate input
+        if (!route_id || !delivery_staff_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Route ID and Delivery Staff ID are required'
+            });
+        }
+
+        // Kiểm tra route tồn tại và có status là pending
+        const route = await Route.findById(route_id);
         if (!route) {
             return res.status(404).json({
                 success: false,
@@ -284,36 +285,59 @@ exports.assignRoute = async (req, res) => {
             });
         }
 
-        // Chỉ có thể assign route ở trạng thái pending
-        if (route.status !== ROUTE_STATUS.PENDING) {
+        if (route.status !== 'pending') {
             return res.status(400).json({
                 success: false,
-                message: 'Can only assign routes with pending status'
+                message: 'Only pending routes can be assigned'
             });
         }
 
-        // Cập nhật route với shipper và trạng thái mới
+        // Kiểm tra delivery staff tồn tại và có role phù hợp
+        const deliveryStaff = await User.findOne({
+            _id: delivery_staff_id,
+            role: 'DeliveryStaff',
+            status: 'active'
+        });
+
+        if (!deliveryStaff) {
+            return res.status(404).json({
+                success: false,
+                message: 'Delivery staff not found or inactive'
+            });
+        }
+
+        // Cập nhật route
         const updatedRoute = await Route.findByIdAndUpdate(
-            id,
+            route_id,
             {
-                shipper_id,
-                status: ROUTE_STATUS.ASSIGNED
+                delivery_staff_id,
+                status: 'assigned',
+                assigned_at: new Date()
             },
             { new: true }
         ).populate([
             {
-                path: 'shop1_id',
-                select: 'shop_id shop_name latitude longitude'
+                path: 'delivery_staff_id',
+                select: 'username fullName phone'
             },
             {
-                path: 'shop2_id',
-                select: 'shop_id shop_name latitude longitude'
-            },
-            {
-                path: 'vehicle_type_id',
-                select: 'code name'
+                path: 'shops.shop_id',
+                select: 'shop_name shop_id latitude longitude'
             }
         ]);
+
+        // Log activity
+        await logActivity(
+            'ASSIGN',
+            'ROUTE',
+            `Route ${route.route_code} assigned to ${deliveryStaff.fullName}`,
+            req.user._id,
+            {
+                entityId: route._id,
+                entityCode: route.route_code,
+                assignedTo: delivery_staff_id
+            }
+        );
 
         res.json({
             success: true,
