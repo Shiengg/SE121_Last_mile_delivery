@@ -115,14 +115,15 @@ exports.updateProfile = async (req, res) => {
 
 exports.getDeliveryStaff = async (req, res) => {
     try {
-        const deliveryStaff = await User.find({ 
-            role: 'DeliveryStaff',
-            // Chỉ lấy những user có đầy đủ thông tin
-            fullName: { $exists: true },
-            phone: { $exists: true }
+        console.log('Fetching delivery staff...'); // Debug log
+
+        const deliveryStaff = await User.find({
+            role: 'DeliveryStaff'
         })
-        .select('_id username fullName phone email')
-        .sort({ fullName: 1 });
+        .select('_id username fullName phone email status')
+        .lean();
+
+        console.log('Found delivery staff:', deliveryStaff); // Debug log
 
         res.json({
             success: true,
