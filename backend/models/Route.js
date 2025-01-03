@@ -22,6 +22,13 @@ const routeSchema = new mongoose.Schema({
         required: true,
         ref: 'VehicleType'
     },
+    delivery_staff_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    assigned_at: {
+        type: Date
+    },
     distance: {
         type: Number,
         required: true

@@ -1,42 +1,36 @@
 const mongoose = require('mongoose');
 
 const activitySchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-    enum: ['CREATE', 'UPDATE', 'DELETE']
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
-  module: {
+  action: {
     type: String,
     required: true,
-    enum: ['VEHICLE', 'ROUTE', 'SHOP']
+    enum: ['CREATE', 'UPDATE', 'DELETE', 'ASSIGN']
+  },
+  target_type: {
+    type: String,
+    required: true,
+    enum: ['ROUTE', 'SHOP', 'USER', 'VEHICLE']
   },
   description: {
     type: String,
     required: true
   },
-  performedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  metadata: {
-    entityId: {
-      type: mongoose.Schema.Types.ObjectId,
-      refPath: 'module'
-    },
-    entityName: String,
-    changes: Object
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
+  details: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {}
   }
+}, {
+  timestamps: true
 });
 
-// Index để tối ưu truy vấn
+// Indexes
+activitySchema.index({ user_id: 1 });
 activitySchema.index({ createdAt: -1 });
-activitySchema.index({ type: 1, module: 1 });
+activitySchema.index({ action: 1, target_type: 1 });
 
-const Activity = mongoose.model('Activity', activitySchema);
-module.exports = Activity; 
+module.exports = mongoose.model('Activity', activitySchema); 

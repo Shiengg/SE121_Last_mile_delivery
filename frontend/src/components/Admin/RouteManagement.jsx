@@ -16,6 +16,7 @@ const RouteManagement = () => {
     status: ''
   });
   const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [deliveryStaff, setDeliveryStaff] = useState([]);
 
   useEffect(() => {
     fetchRoutes();
@@ -40,6 +41,29 @@ const RouteManagement = () => {
     };
 
     fetchVehicleTypes();
+  }, []);
+
+  useEffect(() => {
+    const fetchDeliveryStaff = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(
+                'http://localhost:5000/api/users/delivery-staff',
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            
+            if (response.data.success) {
+                setDeliveryStaff(response.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching delivery staff:', error);
+            toast.error('Failed to load delivery staff');
+        }
+    };
+
+    fetchDeliveryStaff();
   }, []);
 
   const fetchRoutes = async () => {
@@ -398,6 +422,30 @@ const RouteManagement = () => {
     }
   };
 
+  const handleAssignRoute = async (route_id, delivery_staff_id) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+            'http://localhost:5000/api/routes/assign',
+            {
+                route_id,
+                delivery_staff_id
+            },
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+        );
+
+        if (response.data.success) {
+            toast.success('Route assigned successfully');
+            fetchRoutes(); // Refresh danh sách routes
+        }
+    } catch (error) {
+        console.error('Error assigning route:', error);
+        toast.error(error.response?.data?.message || 'Failed to assign route');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -484,6 +532,9 @@ const RouteManagement = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Delivery Staff
+                    </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Actions
                     </th>
@@ -515,6 +566,41 @@ const RouteManagement = () => {
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(route.status)}`}>
                           {route.status.charAt(0).toUpperCase() + route.status.slice(1)}
                         </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {route.status === 'pending' ? (
+                            <select
+                                onChange={(e) => handleAssignRoute(route._id, e.target.value)}
+                                className="w-full text-sm border rounded py-1 px-2"
+                                defaultValue=""
+                            >
+                                <option value="" disabled>Select delivery staff...</option>
+                                {deliveryStaff.map(staff => (
+                                    <option key={staff._id} value={staff._id}>
+                                        {staff.fullName || staff.username} 
+                                        {staff.phone && ` - ${staff.phone}`}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : route.delivery_staff_id ? (
+                            <div>
+                                <div className="font-medium">
+                                    {route.delivery_staff_id.fullName || route.delivery_staff_id.username}
+                                </div>
+                                {route.delivery_staff_id.phone && (
+                                    <div className="text-xs text-gray-500">
+                                        {route.delivery_staff_id.phone}
+                                    </div>
+                                )}
+                                {route.assigned_at && (
+                                    <div className="text-xs text-gray-400">
+                                        Assigned: {new Date(route.assigned_at).toLocaleDateString()}
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <span className="text-gray-400">Not assigned</span>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button 
