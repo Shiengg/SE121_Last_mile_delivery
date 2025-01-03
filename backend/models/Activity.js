@@ -23,6 +23,11 @@ const activitySchema = new mongoose.Schema({
   details: {
     type: mongoose.Schema.Types.Mixed,
     default: {}
+  },
+  status: {
+    type: String,
+    enum: ['unread', 'read'],
+    default: 'unread'
   }
 }, {
   timestamps: true
@@ -32,5 +37,6 @@ const activitySchema = new mongoose.Schema({
 activitySchema.index({ user_id: 1 });
 activitySchema.index({ createdAt: -1 });
 activitySchema.index({ action: 1, target_type: 1 });
+activitySchema.index({ status: 1 });
 
 module.exports = mongoose.model('Activity', activitySchema); 

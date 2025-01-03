@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createRoute, getAllRoutes, updateRouteStatus, deleteRoute, updateRoute, assignRoute } = require('../controllers/routeController');
+const { createRoute, getAllRoutes, updateRouteStatus, deleteRoute, updateRoute, assignRoute, claimRoute } = require('../controllers/routeController');
 const { protect, authorize } = require('../middlewares/authMiddleware');
 
 router.use(protect);
@@ -18,5 +18,7 @@ router.delete('/:id', protect, authorize('Admin'), deleteRoute);
 router.put('/:id', protect, authorize('Admin'), updateRoute);
 
 router.post('/assign', protect, authorize('Admin'), assignRoute);
+
+router.post('/claim', protect, authorize('DeliveryStaff'), claimRoute);
 
 module.exports = router;
