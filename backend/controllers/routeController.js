@@ -228,7 +228,7 @@ exports.getAllRoutes = async (req, res) => {
 exports.updateRouteStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status: newStatus } = req.body;
+        const { status } = req.body;
 
         const route = await Route.findById(id);
         if (!route) {
@@ -238,43 +238,53 @@ exports.updateRouteStatus = async (req, res) => {
             });
         }
 
-        // Kiểm tra trạng thái mới có hợp lệ không
-        if (!Object.values(ROUTE_STATUS).includes(newStatus)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid status'
-            });
+        // Kiểm tra quyền: chỉ Admin hoặc DeliveryStaff được assign có thể cập nhật
+        if (req.user.role === 'DeliveryStaff') {
+            if (!route.delivery_staff_id || route.delivery_staff_id.toString() !== req.user._id.toString()) {
+                return res.status(403).json({
+                    success: false,
+                    message: 'You are not authorized to update this route'
+                });
+            }
         }
 
-        // Kiểm tra xem có được phép chuyển từ trạng thái hiện tại sang trạng thái mới không
-        const allowedNextStatuses = ALLOWED_STATUS_TRANSITIONS[route.status] || [];
-        if (!allowedNextStatuses.includes(newStatus)) {
+        // Kiểm tra luồng trạng thái hợp lệ
+        const validTransitions = {
+            'assigned': ['delivering', 'cancelled'],
+            'delivering': ['delivered', 'failed'],
+            'delivered': [],
+            'failed': ['pending'],
+            'cancelled': []
+        };
+
+        if (!validTransitions[route.status]?.includes(status)) {
             return res.status(400).json({
                 success: false,
-                message: `Cannot change status from ${route.status} to ${newStatus}`,
-                allowedStatuses: allowedNextStatuses
+                message: `Cannot change status from ${route.status} to ${status}`
             });
         }
 
         // Cập nhật trạng thái
         const updatedRoute = await Route.findByIdAndUpdate(
             id,
-            { status: newStatus },
+            { status },
             { new: true }
-        ).populate([
-            {
-                path: 'shop1_id',
-                select: 'shop_id shop_name latitude longitude'
+        ).populate('delivery_staff_id', 'username fullName');
+
+        // Log activity
+        await Activity.create({
+            performedBy: req.user._id,
+            action: 'UPDATE',
+            target_type: 'ROUTE',
+            description: `Route ${route.route_code} status updated to ${status}`,
+            details: {
+                entityId: route._id,
+                entityCode: route.route_code,
+                oldStatus: route.status,
+                newStatus: status
             },
-            {
-                path: 'shop2_id',
-                select: 'shop_id shop_name latitude longitude'
-            },
-            {
-                path: 'vehicle_type_id',
-                select: 'code name'
-            }
-        ]);
+            status: 'unread'
+        });
 
         res.json({
             success: true,

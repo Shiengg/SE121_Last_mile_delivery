@@ -4,6 +4,7 @@ import Header from '../components/Shared/Header';
 import { toast } from 'react-hot-toast';
 import { FiMapPin, FiTruck, FiClock, FiPackage, FiUser, FiMail, FiPhone, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 const DeliveryDashboard = () => {
   const [assignedRoutes, setAssignedRoutes] = useState([]);
@@ -12,6 +13,25 @@ const DeliveryDashboard = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [currentPage, setCurrentPage] = useState({ assigned: 1, pending: 1 });
   const [itemsPerPage] = useState(5);
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
 
   useEffect(() => {
     fetchUserInfo();
@@ -84,22 +104,44 @@ const DeliveryDashboard = () => {
     }
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  const handleStatusChange = async (routeId, currentStatus) => {
+    try {
+      let newStatus;
+      if (currentStatus === 'assigned') {
+        newStatus = 'delivering';
+      } else if (currentStatus === 'delivering') {
+        // Hiển thị dialog để chọn delivered hoặc failed
+        const result = await Swal.fire({
+          title: 'Complete Delivery',
+          text: 'Was the delivery successful?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#10B981',
+          cancelButtonColor: '#EF4444',
+          confirmButtonText: 'Yes, Delivered',
+          cancelButtonText: 'No, Failed',
+          reverseButtons: true
+        });
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
+        newStatus = result.isConfirmed ? 'delivered' : 'failed';
+      }
+
+      if (newStatus) {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(
+          `http://localhost:5000/api/routes/${routeId}/status`,
+          { status: newStatus },
+          { headers: { Authorization: `Bearer ${token}` }}
+        );
+
+        if (response.data.success) {
+          toast.success(`Route status updated to ${newStatus}`);
+          fetchRoutes(); // Refresh routes
+        }
+      }
+    } catch (error) {
+      console.error('Error updating route status:', error);
+      toast.error(error.response?.data?.message || 'Failed to update route status');
     }
   };
 
@@ -114,6 +156,41 @@ const DeliveryDashboard = () => {
         failed: 'bg-red-100 text-red-800 border border-red-200'
       };
       return classes[status] || 'bg-gray-100 text-gray-800';
+    };
+
+    const getActionButton = (status) => {
+      switch (status) {
+        case 'assigned':
+          return (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleStatusChange(route._id, status)}
+              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg 
+                hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-sm
+                hover:shadow-md flex items-center space-x-2"
+            >
+              <span>Start Delivery</span>
+              <FiTruck className="w-4 h-4" />
+            </motion.button>
+          );
+        case 'delivering':
+          return (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleStatusChange(route._id, status)}
+              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg 
+                hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-sm
+                hover:shadow-md flex items-center space-x-2"
+            >
+              <span>Complete Delivery</span>
+              <FiCheckCircle className="w-4 h-4" />
+            </motion.button>
+          );
+        default:
+          return null;
+      }
     };
 
     return (
@@ -211,12 +288,15 @@ const DeliveryDashboard = () => {
               </div>
             </div>
 
-            {route.assigned_at && (
-              <div className="flex items-center text-sm text-gray-600 pt-2 border-t">
-                <FiClock className="mr-2 text-blue-500" />
-                <span>Assigned: {new Date(route.assigned_at).toLocaleString()}</span>
-              </div>
-            )}
+            <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+              {route.assigned_at && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <FiClock className="mr-2 text-blue-500" />
+                  <span>Assigned: {new Date(route.assigned_at).toLocaleString()}</span>
+                </div>
+              )}
+              {type === 'assigned' && getActionButton(route.status)}
+            </div>
           </div>
         </div>
       </motion.div>
