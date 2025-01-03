@@ -1,30 +1,25 @@
 const Activity = require('../models/Activity');
 
-exports.logActivity = async (action, target_type, description, user_id, details = {}) => {
+exports.logActivity = async (action, target_type, description, userId, details = {}) => {
   try {
-    const activity = new Activity({
-      user_id,
+    await Activity.create({
+      performedBy: userId,
       action,
       target_type,
       description,
       details
     });
-
-    await activity.save();
-    return activity;
   } catch (error) {
     console.error('Error logging activity:', error);
-    return null;
   }
 };
 
 exports.getRecentActivities = async (req, res) => {
   try {
     const activities = await Activity.find()
-      .populate('user_id', 'username fullName')
+      .populate('performedBy', 'username fullName')
       .sort({ createdAt: -1 })
-      .limit(10)
-      .lean();
+      .limit(20);
 
     res.json({
       success: true,

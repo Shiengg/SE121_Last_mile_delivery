@@ -37,7 +37,6 @@ class MapService {
             const response = await axios.get(url);
 
             if (!response.data || !response.data.routes || !response.data.routes[0]) {
-                console.error('Invalid HERE API response:', response.data);
                 throw new Error('Invalid response from HERE API');
             }
 
@@ -56,17 +55,8 @@ class MapService {
                 fullPolyline += section.polyline;
             });
 
-            const roundedDistance = Math.round(totalDistance * 100) / 100;
-
-            console.log('Route calculation successful:', {
-                totalDistance: roundedDistance,
-                sections: sections.length,
-                polylineLength: fullPolyline.length,
-                sectionDistances
-            });
-
             return {
-                totalDistance: roundedDistance,
+                totalDistance: Math.round(totalDistance * 100) / 100, // Round to 2 decimal places
                 sectionDistances,
                 polyline: fullPolyline
             };

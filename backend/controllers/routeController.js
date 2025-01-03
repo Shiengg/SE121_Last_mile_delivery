@@ -5,6 +5,7 @@ const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
 const User = require('../models/User');
 const { logActivity } = require('../controllers/activityController');
+const Activity = require('../models/Activity');
 
 // Định nghĩa các trạng thái và luồng chuyển đổi ở đầu file
 const ROUTE_STATUS = {
@@ -65,12 +66,9 @@ exports.createRoute = async (req, res) => {
             });
         }
 
-        // Sắp xếp shops theo order
-        const sortedShops = [...shops].sort((a, b) => a.order - b.order);
-
-        // Lấy thông tin chi tiết của shops
+        // Lấy thông tin chi tiết của shops theo thứ tự
         const shopDetails = await Promise.all(
-            sortedShops.map(shop => 
+            shops.map(shop => 
                 Shop.findOne({ shop_id: shop.shop_id })
                     .select('shop_id shop_name latitude longitude')
             )
@@ -84,20 +82,21 @@ exports.createRoute = async (req, res) => {
             });
         }
 
-        // Tính toán route với HERE Maps API
+        // Chuẩn bị waypoints cho HERE Maps API
         const waypoints = shopDetails.map(shop => ({
             latitude: parseFloat(shop.latitude),
             longitude: parseFloat(shop.longitude)
         }));
 
+        // Tính toán route với HERE Maps API
         const routeDetails = await mapService.calculateRouteDetails(waypoints);
 
         // Tạo route mới
         const route = new Route({
             route_code: await generateRouteId(),
-            shops: sortedShops.map(shop => ({
+            shops: shops.map((shop, index) => ({
                 shop_id: shop.shop_id,
-                order: shop.order
+                order: index + 1  // Gán order theo thứ tự trong mảng
             })),
             vehicle_type_id: vehicleType.code,
             distance: routeDetails.totalDistance,
@@ -111,13 +110,15 @@ exports.createRoute = async (req, res) => {
         // Tạo response với thông tin chi tiết
         const routeWithDetails = {
             ...route.toObject(),
-            vehicle_type: {
-                code: vehicleType.code,
-                name: vehicleType.name
-            },
-            shopDetails: shopDetails.map((shop, index) => ({
-                ...shop.toObject(),
-                order: sortedShops[index].order,
+            vehicle_type: vehicleType.name,
+            shops: shopDetails.map((shop, index) => ({
+                shop_id: shop.shop_id,
+                shop_name: shop.shop_name,
+                order: index + 1,
+                coordinates: {
+                    latitude: shop.latitude,
+                    longitude: shop.longitude
+                },
                 distance_to_next: index < routeDetails.sectionDistances.length 
                     ? routeDetails.sectionDistances[index] 
                     : null
@@ -413,17 +414,23 @@ exports.assignRoute = async (req, res) => {
         ]);
 
         // Log activity
-        await logActivity(
-            'ASSIGN',
-            'ROUTE',
-            `Route ${route.route_code} assigned to ${deliveryStaff.fullName || deliveryStaff.username}`,
-            req.user._id,
-            {
+        await Activity.create({
+            performedBy: req.user._id,
+            action: 'ASSIGN',
+            target_type: 'ROUTE',
+            description: `You have been assigned to route ${route.route_code}`,
+            details: {
                 entityId: route._id,
                 entityCode: route.route_code,
-                assignedTo: delivery_staff_id
-            }
-        );
+                routeDetails: {
+                    shops: route.shops,
+                    distance: route.distance,
+                    vehicle_type: route.vehicle_type_id
+                }
+            },
+            affectedUsers: [delivery_staff_id],
+            status: 'unread'
+        });
 
         res.json({
             success: true,
