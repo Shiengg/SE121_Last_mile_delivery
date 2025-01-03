@@ -401,32 +401,53 @@ const RouteManagement = () => {
 
   const handleAddRoute = async (routeData) => {
     try {
+        // Kiểm tra có ít nhất 2 shop
+        if (!routeData.shops || routeData.shops.length < 2) {
+            toast.error('At least 2 shops are required for a route');
+            return;
+        }
+
+        // Format dữ liệu trước khi gửi
+        const formattedData = {
+            shops: routeData.shops.map((shop, index) => ({
+                shop_id: shop.shop_id,
+                order: index + 1  // Gán order theo thứ tự trong mảng
+            })),
+            vehicle_type_id: routeData.vehicle_type_id
+        };
+
         const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:5000/api/routes',
-            routeData,
+            formattedData,
             {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
             }
         );
 
         if (response.data.success) {
-            await fetchRoutes();
-            setShowAddModal(false);
-            Swal.fire({
+            await Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: 'Route created successfully',
                 timer: 1500,
                 showConfirmButton: false
             });
+
+            // Refresh routes list
+            await fetchRoutes();
+            setShowAddModal(false);
         }
     } catch (error) {
         console.error('Error creating route:', error);
         Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: error.response?.data?.message || 'Failed to create route'
+            text: error.response?.data?.message || 'Failed to create route',
+            confirmButtonText: 'OK'
         });
     }
   };
@@ -438,8 +459,6 @@ const RouteManagement = () => {
             return;
         }
 
-        console.log('Assigning route:', { route_id, delivery_staff_id });
-        
         const token = localStorage.getItem('token');
         const response = await axios.post(
             'http://localhost:5000/api/routes/assign',
@@ -456,15 +475,26 @@ const RouteManagement = () => {
         );
 
         if (response.data.success) {
-            toast.success('Route assigned successfully');
-            await fetchRoutes(); // Đợi fetch hoàn tất
+            // Hiển thị SweetAlert2
+            await Swal.fire({
+                icon: 'success',
+                title: 'Route Assigned Successfully!',
+                text: `Route has been assigned to ${response.data.data.delivery_staff_id.fullName || response.data.data.delivery_staff_id.username}`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            // Reload trang sau khi SweetAlert đóng
+            window.location.reload();
         }
     } catch (error) {
         console.error('Error assigning route:', error.response?.data || error);
-        toast.error(
-            error.response?.data?.message || 
-            'Failed to assign route. Please try again.'
-        );
+        Swal.fire({
+            icon: 'error',
+            title: 'Assignment Failed',
+            text: error.response?.data?.message || 'Failed to assign route',
+            confirmButtonText: 'OK'
+        });
     }
   };
 

@@ -19,29 +19,45 @@ exports.getAllVehicleTypes = async (req, res) => {
 
 exports.createVehicleType = async (req, res) => {
     try {
-        const newVehicleType = new VehicleType(req.body);
-        await newVehicleType.save();
+        const { code, name, description, status = 'active' } = req.body;
+
+        // Validate required fields
+        if (!code || !name) {
+            return res.status(400).json({
+                success: false,
+                message: 'Code and name are required'
+            });
+        }
+
+        // Create new vehicle type
+        const vehicleType = new VehicleType({
+            code,
+            name,
+            description,
+            status
+        });
+
+        await vehicleType.save();
 
         // Log activity
-        try {
-            await logActivity(
-                'CREATE',
-                'VEHICLE',
-                `New vehicle type ${newVehicleType.code} was added`,
-                req.user._id,
-                {
-                    entityId: newVehicleType._id,
-                    entityName: newVehicleType.code
+        await logActivity(
+            'CREATE',
+            'VEHICLE',
+            `New vehicle type ${name} was added`,
+            req.user._id,
+            {
+                entityId: vehicleType._id,
+                entityCode: code,
+                details: {
+                    name
                 }
-            );
-            console.log('Activity logged successfully');
-        } catch (logError) {
-            console.error('Error logging activity:', logError);
-        }
+            }
+        );
 
         res.status(201).json({
             success: true,
-            data: newVehicleType
+            message: 'Vehicle type created successfully',
+            data: vehicleType
         });
     } catch (error) {
         console.error('Error in createVehicleType:', error);

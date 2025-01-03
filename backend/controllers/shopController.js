@@ -3,7 +3,7 @@ const { logActivity } = require('./activityController');
 
 exports.getAllShops = async (req, res) => {
     try {
-        const { ward_code, status, page = 1, limit = 10 } = req.query;
+        const { ward_code, status, page = 1, limit = 10, search } = req.query;
         
         // Xây dựng query
         let query = {};
@@ -16,6 +16,15 @@ exports.getAllShops = async (req, res) => {
         // Lọc theo status nếu có
         if (status) {
             query.status = status;
+        }
+
+        // Thêm điều kiện tìm kiếm
+        if (search) {
+            query.$or = [
+                { shop_name: { $regex: search, $options: 'i' } },
+                { shop_id: { $regex: search, $options: 'i' } },
+                { street: { $regex: search, $options: 'i' } }
+            ];
         }
 
         console.log('Shop query:', query);
@@ -212,27 +221,44 @@ exports.updateShop = async (req, res) => {
 exports.deleteShop = async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedShop = await Shop.findByIdAndDelete(id);
 
-        if (!deletedShop) {
+        // Kiểm tra shop có tồn tại không
+        const shop = await Shop.findById(id);
+        if (!shop) {
             return res.status(404).json({
                 success: false,
                 message: 'Shop not found'
             });
         }
 
+        // Kiểm tra shop có đang được sử dụng trong route nào không
+        const Route = require('../models/Route');
+        const routeWithShop = await Route.findOne({
+            'shops.shop_id': shop.shop_id
+        });
+
+        if (routeWithShop) {
+            return res.status(400).json({
+                success: false,
+                message: 'Cannot delete shop that is assigned to a route'
+            });
+        }
+
+        // Xóa shop
+        await Shop.findByIdAndDelete(id);
+
         // Log activity
         await logActivity(
             'DELETE',
             'SHOP',
-            `Shop ${deletedShop.shop_name} was deleted`,
+            `Shop ${shop.shop_name} was deleted`,
             req.user._id,
             {
-                entityId: deletedShop._id,
-                entityName: deletedShop.shop_name,
+                entityId: shop._id,
+                entityName: shop.shop_name,
                 details: {
-                    shop_id: deletedShop.shop_id,
-                    location: `${deletedShop.street}, ${deletedShop.ward_code}`
+                    shop_id: shop.shop_id,
+                    location: `${shop.street}, ${shop.ward_code}`
                 }
             }
         );
@@ -242,7 +268,8 @@ exports.deleteShop = async (req, res) => {
             message: 'Shop deleted successfully'
         });
     } catch (error) {
-        res.status(400).json({
+        console.error('Error deleting shop:', error);
+        res.status(500).json({
             success: false,
             message: 'Error deleting shop',
             error: error.message

@@ -149,42 +149,29 @@ const ShopManagement = () => {
     fetchWards();
   }, [formData.district_id]);
 
-  const fetchShops = async (page, search = '') => {
+  const fetchShops = async (page = currentPage, search = searchTerm) => {
     try {
-        setLoading(true);
-        const token = localStorage.getItem('token');
-        
-        const response = await axios.get('http://localhost:5000/api/shops', {
-            params: {
-                page,
-                limit: pageSize,
-                search
-            },
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/shops', {
+        headers: { Authorization: `Bearer ${token}` },
+        params: {
+          page,
+          limit: pageSize,
+          search: search || undefined
+        }
+      });
 
-        if (response.data.success) {
-            setShops(response.data.data);
-            const pagination = response.data.pagination || {
-                total: response.data.data.length,
-                page: 1,
-                limit: pageSize,
-                totalPages: 1
-            };
-            setTotalPages(pagination.totalPages);
-            setTotalItems(pagination.total);
-        }
-    } catch (err) {
-        console.error('Error fetching shops:', err);
-        if (err.response) {
-            console.error('Response data:', err.response.data);
-            console.error('Response status:', err.response.status);
-        }
-        toast.error('Failed to load shops');
+      if (response.data.success) {
+        setShops(response.data.data);
+        setTotalItems(response.data.pagination.total);
+        setTotalPages(response.data.pagination.totalPages);
+      }
+    } catch (error) {
+      console.error('Error fetching shops:', error);
+      toast.error('Failed to load shops');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -300,85 +287,51 @@ const ShopManagement = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, shopId) => {
     try {
         const result = await Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: `Do you want to delete shop ${shopId}?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel',
-            showLoaderOnConfirm: true,
-            preConfirm: async () => {
-                try {
-                    const token = localStorage.getItem('token');
-                    const response = await axios.delete(
-                        `http://localhost:5000/api/shops/${id}`,
-                        {
-                            headers: { Authorization: `Bearer ${token}` }
-                        }
-                    );
-                    
-                    if (!response.data.success) {
-                        throw new Error(response.data.message);
-                    }
-                    return response.data;
-                } catch (error) {
-                    throw new Error(
-                        error.response?.data?.message || 
-                        error.message || 
-                        'Failed to delete shop'
-                    );
-                }
-            },
-            allowOutsideClick: () => !Swal.isLoading()
+            cancelButtonText: 'Cancel'
         });
 
-        if (result.isConfirmed && result.value) {
-            // Cập nhật UI
-            setShops(prevShops => prevShops.filter(s => s._id !== id));
-            
-            // Cập nhật số liệu thống kê
-            await fetchStats();
-            
-            // Lấy thông tin hoạt động mới nhất
+        if (result.isConfirmed) {
             const token = localStorage.getItem('token');
-            const activitiesResponse = await axios.get(
-                'http://localhost:5000/api/activities/recent',
+            const response = await axios.delete(
+                `http://localhost:5000/api/shops/${id}`,
                 {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
                 }
             );
-            
-            if (activitiesResponse.data.success) {
-                updateNotifications(activitiesResponse.data.data);
-            }
 
-            // Hiển thị thông báo thành công bằng SweetAlert2
-            await Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Shop has been deleted successfully.',
-                timer: 1500,
-                showConfirmButton: false
-            });
+            if (response.data.success) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: `Shop ${shopId} has been deleted.`,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                window.location.reload();
+            }
         }
     } catch (error) {
-        console.error('Delete error:', error);
-        
-        // Hiển thị thông báo lỗi bằng SweetAlert2
-        await Swal.fire({
+        console.error('Error deleting shop:', error);
+        Swal.fire({
             icon: 'error',
             title: 'Error!',
-            text: error.message || 'Failed to delete shop',
+            text: error.response?.data?.message || 'Failed to delete shop',
             confirmButtonText: 'OK'
         });
-        
-        // Refresh data nếu có lỗi
-        await fetchShops(currentPage, searchTerm);
     }
   };
 
@@ -426,15 +379,19 @@ const ShopManagement = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Search shops..."
-                className="w-full sm:max-w-xs pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={searchTerm}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <div className="w-full sm:w-64 mb-4 sm:mb-0">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search shops..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <FiSearch className="text-gray-400" />
+                </div>
+              </div>
             </div>
 
             <button
@@ -442,10 +399,10 @@ const ShopManagement = () => {
                 setSelectedShop(null);
                 setShowAddModal(true);
               }}
-              className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
               <FiPlus className="mr-2" />
-              <span>Add Shop</span>
+              Add New Shop
             </button>
           </div>
         </div>
@@ -539,7 +496,7 @@ const ShopManagement = () => {
                         <FiEdit2 className="inline" />
                       </button>
                       <button
-                        onClick={() => handleDelete(shop._id)}
+                        onClick={() => handleDelete(shop._id, shop.shop_id)}
                         className="text-red-600 hover:text-red-900 transition-colors duration-200"
                       >
                         <FiTrash2 className="inline w-5 h-5" />
