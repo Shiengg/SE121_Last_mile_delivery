@@ -321,8 +321,7 @@ const ShopManagement = () => {
                     showConfirmButton: false
                 });
 
-                // Refresh shop list
-                fetchShops();
+                window.location.reload();
             }
         }
     } catch (error) {
