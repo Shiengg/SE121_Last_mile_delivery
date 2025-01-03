@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import DeliveryDashboard from './pages/DeliveryDashboard';
+import DeliveryMap from './pages/DeliveryMap';
 import CustomerTracking from './pages/CustomerTracking';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
@@ -64,6 +65,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['DeliveryStaff']}>
                 <DeliveryDashboard />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/delivery/map/:id" 
+            element={
+              <ProtectedRoute allowedRoles={['DeliveryStaff']}>
+                <DeliveryMap />
               </ProtectedRoute>
             } 
           />

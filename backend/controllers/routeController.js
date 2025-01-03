@@ -5,6 +5,7 @@ const mapService = require('../services/mapService');
 const { generateRouteId } = require('../utils/idGenerator');
 const User = require('../models/User');
 const { logActivity } = require('../controllers/activityController');
+const Activity = require('../models/Activity');
 
 // Định nghĩa các trạng thái và luồng chuyển đổi ở đầu file
 const ROUTE_STATUS = {
@@ -65,12 +66,9 @@ exports.createRoute = async (req, res) => {
             });
         }
 
-        // Sắp xếp shops theo order
-        const sortedShops = [...shops].sort((a, b) => a.order - b.order);
-
-        // Lấy thông tin chi tiết của shops
+        // Lấy thông tin chi tiết của shops theo thứ tự
         const shopDetails = await Promise.all(
-            sortedShops.map(shop => 
+            shops.map(shop => 
                 Shop.findOne({ shop_id: shop.shop_id })
                     .select('shop_id shop_name latitude longitude')
             )
@@ -84,20 +82,21 @@ exports.createRoute = async (req, res) => {
             });
         }
 
-        // Tính toán route với HERE Maps API
+        // Chuẩn bị waypoints cho HERE Maps API
         const waypoints = shopDetails.map(shop => ({
             latitude: parseFloat(shop.latitude),
             longitude: parseFloat(shop.longitude)
         }));
 
+        // Tính toán route với HERE Maps API
         const routeDetails = await mapService.calculateRouteDetails(waypoints);
 
         // Tạo route mới
         const route = new Route({
             route_code: await generateRouteId(),
-            shops: sortedShops.map(shop => ({
+            shops: shops.map((shop, index) => ({
                 shop_id: shop.shop_id,
-                order: shop.order
+                order: index + 1  // Gán order theo thứ tự trong mảng
             })),
             vehicle_type_id: vehicleType.code,
             distance: routeDetails.totalDistance,
@@ -111,13 +110,15 @@ exports.createRoute = async (req, res) => {
         // Tạo response với thông tin chi tiết
         const routeWithDetails = {
             ...route.toObject(),
-            vehicle_type: {
-                code: vehicleType.code,
-                name: vehicleType.name
-            },
-            shopDetails: shopDetails.map((shop, index) => ({
-                ...shop.toObject(),
-                order: sortedShops[index].order,
+            vehicle_type: vehicleType.name,
+            shops: shopDetails.map((shop, index) => ({
+                shop_id: shop.shop_id,
+                shop_name: shop.shop_name,
+                order: index + 1,
+                coordinates: {
+                    latitude: shop.latitude,
+                    longitude: shop.longitude
+                },
                 distance_to_next: index < routeDetails.sectionDistances.length 
                     ? routeDetails.sectionDistances[index] 
                     : null
@@ -227,7 +228,7 @@ exports.getAllRoutes = async (req, res) => {
 exports.updateRouteStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status: newStatus } = req.body;
+        const { status } = req.body;
 
         const route = await Route.findById(id);
         if (!route) {
@@ -237,43 +238,53 @@ exports.updateRouteStatus = async (req, res) => {
             });
         }
 
-        // Kiểm tra trạng thái mới có hợp lệ không
-        if (!Object.values(ROUTE_STATUS).includes(newStatus)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid status'
-            });
+        // Kiểm tra quyền: chỉ Admin hoặc DeliveryStaff được assign có thể cập nhật
+        if (req.user.role === 'DeliveryStaff') {
+            if (!route.delivery_staff_id || route.delivery_staff_id.toString() !== req.user._id.toString()) {
+                return res.status(403).json({
+                    success: false,
+                    message: 'You are not authorized to update this route'
+                });
+            }
         }
 
-        // Kiểm tra xem có được phép chuyển từ trạng thái hiện tại sang trạng thái mới không
-        const allowedNextStatuses = ALLOWED_STATUS_TRANSITIONS[route.status] || [];
-        if (!allowedNextStatuses.includes(newStatus)) {
+        // Kiểm tra luồng trạng thái hợp lệ
+        const validTransitions = {
+            'assigned': ['delivering', 'cancelled'],
+            'delivering': ['delivered', 'failed'],
+            'delivered': [],
+            'failed': ['pending'],
+            'cancelled': []
+        };
+
+        if (!validTransitions[route.status]?.includes(status)) {
             return res.status(400).json({
                 success: false,
-                message: `Cannot change status from ${route.status} to ${newStatus}`,
-                allowedStatuses: allowedNextStatuses
+                message: `Cannot change status from ${route.status} to ${status}`
             });
         }
 
         // Cập nhật trạng thái
         const updatedRoute = await Route.findByIdAndUpdate(
             id,
-            { status: newStatus },
+            { status },
             { new: true }
-        ).populate([
-            {
-                path: 'shop1_id',
-                select: 'shop_id shop_name latitude longitude'
+        ).populate('delivery_staff_id', 'username fullName');
+
+        // Log activity
+        await Activity.create({
+            performedBy: req.user._id,
+            action: 'UPDATE',
+            target_type: 'ROUTE',
+            description: `Route ${route.route_code} status updated to ${status}`,
+            details: {
+                entityId: route._id,
+                entityCode: route.route_code,
+                oldStatus: route.status,
+                newStatus: status
             },
-            {
-                path: 'shop2_id',
-                select: 'shop_id shop_name latitude longitude'
-            },
-            {
-                path: 'vehicle_type_id',
-                select: 'code name'
-            }
-        ]);
+            status: 'unread'
+        });
 
         res.json({
             success: true,
@@ -413,17 +424,23 @@ exports.assignRoute = async (req, res) => {
         ]);
 
         // Log activity
-        await logActivity(
-            'ASSIGN',
-            'ROUTE',
-            `Route ${route.route_code} assigned to ${deliveryStaff.fullName || deliveryStaff.username}`,
-            req.user._id,
-            {
+        await Activity.create({
+            performedBy: req.user._id,
+            action: 'ASSIGN',
+            target_type: 'ROUTE',
+            description: `You have been assigned to route ${route.route_code}`,
+            details: {
                 entityId: route._id,
                 entityCode: route.route_code,
-                assignedTo: delivery_staff_id
-            }
-        );
+                routeDetails: {
+                    shops: route.shops,
+                    distance: route.distance,
+                    vehicle_type: route.vehicle_type_id
+                }
+            },
+            affectedUsers: [delivery_staff_id],
+            status: 'unread'
+        });
 
         res.json({
             success: true,
@@ -599,6 +616,50 @@ exports.claimRoute = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error claiming route',
+            error: error.message
+        });
+    }
+};
+
+exports.getRouteById = async (req, res) => {
+    try {
+        const route = await Route.findById(req.params.id)
+            .populate('delivery_staff_id', 'username fullName')
+            .populate({
+                path: 'shops.shop_id',
+                model: 'Shop',
+                localField: 'shops.shop_id',
+                foreignField: 'shop_id',
+                select: 'shop_id shop_name address latitude longitude'
+            });
+
+        if (!route) {
+            return res.status(404).json({
+                success: false,
+                message: 'Route not found'
+            });
+        }
+
+        // Transform data để đảm bảo shops được sắp xếp theo order
+        const transformedRoute = {
+            ...route.toObject(),
+            shops: route.shops
+                .sort((a, b) => a.order - b.order)
+                .map(shop => ({
+                    ...shop,
+                    shop_details: shop.shop_id // shop_id bây giờ chứa thông tin chi tiết của shop
+                }))
+        };
+
+        res.status(200).json({
+            success: true,
+            data: transformedRoute
+        });
+    } catch (error) {
+        console.error('Error getting route:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error getting route',
             error: error.message
         });
     }

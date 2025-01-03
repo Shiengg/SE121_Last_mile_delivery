@@ -1,34 +1,41 @@
 const Activity = require('../models/Activity');
 
-exports.logActivity = async (action, target_type, description, user_id, details = {}) => {
+exports.logActivity = async (action, target_type, description, userId, details = {}) => {
   try {
-    const activity = new Activity({
-      user_id,
+    await Activity.create({
+      performedBy: userId,
       action,
       target_type,
       description,
-      details
+      details,
+      status: 'unread'
     });
-
-    await activity.save();
-    return activity;
   } catch (error) {
     console.error('Error logging activity:', error);
-    return null;
   }
 };
 
 exports.getRecentActivities = async (req, res) => {
   try {
     const activities = await Activity.find()
-      .populate('user_id', 'username fullName')
+      .populate('performedBy', 'username fullName')
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(20)
       .lean();
+
+    const formattedActivities = activities.map(activity => ({
+      _id: activity._id,
+      type: activity.type || activity.action,
+      description: activity.description,
+      createdAt: activity.createdAt,
+      performedBy: activity.performedBy 
+        ? (activity.performedBy.fullName || activity.performedBy.username)
+        : 'System'
+    }));
 
     res.json({
       success: true,
-      data: activities
+      data: formattedActivities
     });
   } catch (error) {
     console.error('Error fetching recent activities:', error);
@@ -58,7 +65,6 @@ exports.clearAllActivities = async (req, res) => {
 
 exports.clearNotifications = async (req, res) => {
   try {
-    // Xóa tất cả activities
     await Activity.deleteMany({});
     
     res.json({
@@ -66,7 +72,7 @@ exports.clearNotifications = async (req, res) => {
       message: 'Notifications cleared successfully'
     });
   } catch (error) {
-    console.error('Error in clearNotifications:', error); // Thêm log để debug
+    console.error('Error in clearNotifications:', error);
     res.status(500).json({
       success: false,
       message: 'Error clearing notifications',
