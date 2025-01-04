@@ -17,7 +17,20 @@ exports.logActivity = async (action, target_type, description, userId, details =
 
 exports.getRecentActivities = async (req, res) => {
   try {
-    const activities = await Activity.find()
+    let query = {};
+    
+    // Nếu là DeliveryStaff, chỉ lấy các activities liên quan đến họ
+    if (req.user.role === 'DeliveryStaff') {
+      query = {
+        $or: [
+          { performedBy: req.user._id },
+          { affectedUsers: req.user._id },
+          { target_type: 'ROUTE' } // DeliveryStaff có thể xem tất cả route activities
+        ]
+      };
+    }
+
+    const activities = await Activity.find(query)
       .populate('performedBy', 'username fullName')
       .sort({ createdAt: -1 })
       .limit(20)
