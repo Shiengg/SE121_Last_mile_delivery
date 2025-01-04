@@ -65,16 +65,6 @@ const RouteDetails = React.memo(({ route, navigate }) => (
           <h3 className="text-xl font-semibold mb-2">Route {route.route_code}</h3>
           <StatusBadge status={route.status} />
         </div>
-        {route.status === 'delivering' && (
-          <button
-            onClick={() => navigate(`/tracking/map/${route._id}`)}
-            className="px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 
-              transition-colors duration-200 flex items-center space-x-2"
-          >
-            <FiMapPin className="w-4 h-4" />
-            <span>View Map</span>
-          </button>
-        )}
       </div>
     </div>
 
@@ -107,28 +97,8 @@ const RouteDetails = React.memo(({ route, navigate }) => (
         </div>
       </div>
 
-      {/* Delivery Sequence */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-4">Delivery Sequence</h4>
-        <div className="space-y-4">
-          {route.shops.map((shop, index) => (
-            <div key={shop._id} className="flex items-start space-x-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full 
-                flex items-center justify-center text-blue-600 font-medium">
-                {shop.order}
-              </div>
-              <div className="flex-grow">
-                <p className="font-medium text-gray-900">{shop.shop_id.name}</p>
-                <p className="text-sm text-gray-500">{shop.shop_id.address}</p>
-                <p className="text-sm text-gray-500">{shop.shop_id.phone}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Timeline */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
+      <div className="pt-6 border-t border-gray-200">
         <h4 className="text-sm font-medium text-gray-500 mb-4">Timeline</h4>
         <div className="space-y-4">
           <TimelineItem
@@ -146,6 +116,20 @@ const RouteDetails = React.memo(({ route, navigate }) => (
             title="Delivery Started"
             status={route.status === 'delivering' ? 'completed' : 'pending'}
           />
+          {route.status === 'delivered' && (
+            <TimelineItem
+              date={route.updatedAt}
+              title="Delivery Completed"
+              status="completed"
+            />
+          )}
+          {route.status === 'failed' && (
+            <TimelineItem
+              date={route.updatedAt}
+              title="Delivery Failed"
+              status="completed"
+            />
+          )}
         </div>
       </div>
     </div>
