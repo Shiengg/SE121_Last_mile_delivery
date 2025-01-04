@@ -13,7 +13,7 @@ const Login = () => {
     email: '',
     phone: ''
   });
-  const [error, setError] = useState('');
+  const [notification, setNotification] = useState({ type: '', message: '' });
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -25,7 +25,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setNotification({ type: '', message: '' });
     
     try {
       const role = await authService.login(formData.username, formData.password);
@@ -42,20 +42,26 @@ const Login = () => {
           navigate('/customer-tracking');
           break;
         default:
-          setError('Invalid role received');
+          setNotification({ type: 'error', message: 'Invalid role received' });
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed. Please try again.');
+      setNotification({ 
+        type: 'error', 
+        message: error.response?.data?.message || 'Login failed. Please try again.' 
+      });
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError('');
+    setNotification({ type: '', message: '' });
 
     try {
       await authService.register(formData);
-      setError('Registration successful! Please login.');
+      setNotification({ 
+        type: 'success', 
+        message: 'Registration successful! Please login.' 
+      });
       setIsLoginMode(true);
       setFormData({
         ...formData,
@@ -63,7 +69,10 @@ const Login = () => {
         role: 'Customer'
       });
     } catch (error) {
-      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      setNotification({ 
+        type: 'error', 
+        message: error.response?.data?.message || 'Registration failed. Please try again.' 
+      });
     }
   };
 
@@ -82,9 +91,22 @@ const Login = () => {
           </p>
         </div>
 
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg animate-fade-in" role="alert">
-            <p className="text-sm text-red-700">{error}</p>
+        {notification.message && (
+          <div 
+            className={`border-l-4 p-4 rounded-lg animate-fade-in ${
+              notification.type === 'success' 
+                ? 'bg-green-50 border-green-500' 
+                : 'bg-red-50 border-red-500'
+            }`} 
+            role="alert"
+          >
+            <p className={`text-sm ${
+              notification.type === 'success' 
+                ? 'text-green-700' 
+                : 'text-red-700'
+            }`}>
+              {notification.message}
+            </p>
           </div>
         )}
 
