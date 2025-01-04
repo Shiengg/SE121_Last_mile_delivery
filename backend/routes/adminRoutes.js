@@ -14,4 +14,7 @@ router.get('/test', (req, res) => {
 // Dashboard stats
 router.get('/dashboard-stats', protect, authorize('Admin'), adminController.getDashboardStats);
 
+// Delivery staff
+router.get('/delivery-staff', protect, authorize('Admin'), adminController.getDeliveryStaff);
+
 module.exports = router;

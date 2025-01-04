@@ -49,6 +49,16 @@ class AuthService {
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   };
+
+  register = async (userData) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      return response.data;
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
+  };
 }
 
 export default new AuthService();

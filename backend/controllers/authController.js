@@ -60,3 +60,53 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+exports.register = async (req, res) => {
+    try {
+        const { username, password, role, fullName, email, phone } = req.body;
+
+        // Kiểm tra role hợp lệ
+        if (!['DeliveryStaff', 'Customer'].includes(role)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid role. Must be either DeliveryStaff or Customer'
+            });
+        }
+
+        // Kiểm tra username đã tồn tại
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username already exists'
+            });
+        }
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Tạo user mới
+        const user = await User.create({
+            username,
+            password: hashedPassword,
+            role,
+            fullName,
+            email,
+            phone,
+            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName || username)}&background=0D8ABC&color=fff`
+        });
+
+        res.status(201).json({
+            success: true,
+            message: 'User registered successfully'
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error registering user',
+            error: error.message
+        });
+    }
+};

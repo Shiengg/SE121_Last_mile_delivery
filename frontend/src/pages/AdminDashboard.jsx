@@ -13,12 +13,15 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     shops: 0,
     routes: 0,
-    vehicles: 0
+    vehicles: 0,
+    deliveryStaff: 0
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingActivities, setLoadingActivities] = useState(true);
   const { notifications, updateNotifications } = useNotifications();
+  const [deliveryStaff, setDeliveryStaff] = useState([]);
+  const [loadingStaff, setLoadingStaff] = useState(true);
 
   const fetchStats = async () => {
     try {
@@ -63,10 +66,28 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchDeliveryStaff = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/admin/delivery-staff', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      if (response.data.success) {
+        setDeliveryStaff(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching delivery staff:', error);
+    } finally {
+      setLoadingStaff(false);
+    }
+  };
+
   useEffect(() => {
     Promise.all([
       fetchStats(),
-      fetchActivities()
+      fetchActivities(),
+      fetchDeliveryStaff()
     ]);
   }, []);
 
@@ -392,63 +413,70 @@ const AdminDashboard = () => {
 
               {/* Quick Stats Card */}
               <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">System Overview</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Active Routes</p>
-                        <p className="text-2xl font-bold text-blue-700">24</p>
-                      </div>
-                      <div className="p-2 bg-blue-100 rounded-lg">
-                        <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                        </svg>
-                      </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Delivery Staff List</h3>
+                <div className="overflow-x-auto">
+                  {loadingStaff ? (
+                    <div className="animate-pulse space-y-4">
+                      {[1, 2, 3].map(i => (
+                        <div key={i} className="flex items-center space-x-4">
+                          <div className="w-10 h-10 bg-gray-200 rounded-full"/>
+                          <div className="flex-1 space-y-2">
+                            <div className="h-4 bg-gray-200 rounded w-1/4"/>
+                            <div className="h-3 bg-gray-200 rounded w-1/3"/>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-
-                  <div className="p-4 bg-green-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-green-600 font-medium">Deliveries Today</p>
-                        <p className="text-2xl font-bold text-green-700">156</p>
-                      </div>
-                      <div className="p-2 bg-green-100 rounded-lg">
-                        <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-purple-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-purple-600 font-medium">Active Staff</p>
-                        <p className="text-2xl font-bold text-purple-700">12</p>
-                      </div>
-                      <div className="p-2 bg-purple-100 rounded-lg">
-                        <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 bg-yellow-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-yellow-600 font-medium">Pending Orders</p>
-                        <p className="text-2xl font-bold text-yellow-700">38</p>
-                      </div>
-                      <div className="p-2 bg-yellow-100 rounded-lg">
-                        <svg className="w-6 h-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
+                  ) : deliveryStaff.length === 0 ? (
+                    <p className="text-gray-500 text-center py-4">No delivery staff found</p>
+                  ) : (
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Staff</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {deliveryStaff.map((staff) => (
+                          <tr key={staff._id} className="hover:bg-gray-50">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="flex-shrink-0 h-10 w-10">
+                                  <img 
+                                    className="h-10 w-10 rounded-full object-cover" 
+                                    src={staff.avatar} 
+                                    alt={staff.fullName}
+                                  />
+                                </div>
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{staff.fullName}</div>
+                                  <div className="text-sm text-gray-500">{staff.username}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{staff.email}</div>
+                              <div className="text-sm text-gray-500">{staff.phone}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${staff.status === 'active' 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-red-100 text-red-800'}`}>
+                                {staff.status}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {new Date(staff.createdAt).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               </div>
             </div>
