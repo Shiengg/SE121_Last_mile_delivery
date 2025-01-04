@@ -123,12 +123,24 @@ const DeliveryDashboard = () => {
           cancelButtonColor: '#EF4444',
           confirmButtonText: 'Yes, Delivered',
           cancelButtonText: 'No, Failed',
-          reverseButtons: true
+          reverseButtons: true,
+          allowOutsideClick: true,
+          showCloseButton: true,
+          allowEscapeKey: true,
         });
 
-        newStatus = result.isConfirmed ? 'delivered' : 'failed';
+        // Chỉ set newStatus khi người dùng thực sự chọn một option
+        if (result.isConfirmed) {
+          newStatus = 'delivered';
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          newStatus = 'failed';
+        } else {
+          // Người dùng click ra ngoài hoặc nhấn ESC hoặc nhấn nút X
+          return; // Thoát khỏi hàm, không thực hiện thay đổi
+        }
       }
 
+      // Chỉ thực hiện API call nếu có newStatus
       if (newStatus) {
         const token = localStorage.getItem('token');
         const response = await axios.put(
@@ -139,7 +151,7 @@ const DeliveryDashboard = () => {
 
         if (response.data.success) {
           toast.success(`Route status updated to ${newStatus}`);
-          fetchRoutes(); // Refresh routes
+          fetchRoutes();
         }
       }
     } catch (error) {
