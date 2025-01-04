@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getRecentActivities } = require('../controllers/activityController');
+const { getRecentActivities, clearNotifications } = require('../controllers/activityController');
 const { protect, authorize } = require('../middlewares/authMiddleware');
 
 // Middleware để log requests
@@ -9,7 +9,10 @@ router.use((req, res, next) => {
     next();
 });
 
-// Get recent activities - accessible by Admin only
-router.get('/recent', protect, authorize('Admin'), getRecentActivities);
+// Get recent activities - accessible by Admin and DeliveryStaff
+router.get('/recent', protect, authorize('Admin', 'DeliveryStaff'), getRecentActivities);
+
+// Clear notifications - accessible by Admin and DeliveryStaff 
+router.delete('/clear-notifications', protect, authorize('Admin', 'DeliveryStaff'), clearNotifications);
 
 module.exports = router; 

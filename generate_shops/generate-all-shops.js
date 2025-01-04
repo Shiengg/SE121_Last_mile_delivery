@@ -7,6 +7,34 @@ require('dotenv').config();
 let requestCount = 0;
 const MAX_REQUESTS = 1000;
 
+// Thêm hằng số cho số lần thử lại tối đa
+const MAX_RETRY_ATTEMPTS = 1;
+
+const SPECIAL_DISTRICTS = {
+    '769': { // Thủ Đức
+        center: { lat: 10.8429, lng: 106.7554 },
+        radius: 8000, // Bán kính lớn hơn để bao phủ toàn bộ Thủ Đức
+        searchTerms: [
+            'siêu thị',
+            'cửa hàng tiện lợi',
+            'trung tâm thương mại',
+            'shop',
+            'store',
+            'market',
+            'chợ',
+            'cửa hàng tạp hóa',
+            'nhà thuốc',
+            'quán ăn'
+        ],
+        subAreas: [
+            { name: 'Khu Công nghệ cao', lat: 10.8556, lng: 106.7854 },
+            { name: 'Đại học Quốc gia', lat: 10.8708, lng: 106.7998 },
+            { name: 'Khu đô thị mới Thủ Thiêm', lat: 10.7868, lng: 106.7519 }
+        ],
+        retryCount: 3
+    }
+};
+
 function generateObjectId() {
     return crypto.randomBytes(12).toString('hex');
 }
@@ -18,68 +46,31 @@ function generateShopId(wardCode, index) {
 // Danh sách mở rộng các chuỗi cửa hàng theo ngành hàng
 const POPULAR_CHAINS = {
     convenience: [
-        'Circle K',
-        'Vinmart+',
-        'Bach Hoa Xanh',
-        'Ministop',
-        'GS25',
-        'Family Mart',
-        'Co.op Food',
-        'Co.op Smile',
-        '7-Eleven'
+        'Circle K', 'Vinmart+', 'Bach Hoa Xanh', 'Ministop', 'GS25',
+        'Family Mart', 'Co.op Food', 'Co.op Smile', '7-Eleven'
     ],
     supermarket: [
-        'VinMart',
-        'Co.opmart',
-        'Mega Market',
-        'AEON',
-        'Lotte Mart',
-        'MM Mega Market',
-        'Big C',
-        'Lan Chi'
+        'VinMart', 'Co.opmart', 'Mega Market', 'AEON', 'Lotte Mart',
+        'MM Mega Market', 'Big C', 'Lan Chi'
     ],
     restaurant: [
-        'KFC',
-        'McDonald',
-        'Jollibee',
-        'Pizza Hut',
-        'Domino Pizza',
-        'Lotteria',
-        'Highland Coffee',
-        'Starbucks',
-        'Phuc Long',
+        'KFC', 'McDonald', 'Jollibee', 'Pizza Hut', 'Domino Pizza',
+        'Lotteria', 'Highland Coffee', 'Starbucks', 'Phuc Long',
         'The Coffee House'
     ],
     pharmacy: [
-        'Pharmacity',
-        'Long Chau',
-        'An Khang',
-        'Phano',
-        'Medicare',
+        'Pharmacity', 'Long Chau', 'An Khang', 'Phano', 'Medicare',
         'Guardian'
     ],
     electronics: [
-        'FPT Shop',
-        'The Gioi Di Dong',
-        'Dien May Xanh',
-        'CellphoneS',
-        'Vien Thong A',
-        'Nguyen Kim'
+        'FPT Shop', 'The Gioi Di Dong', 'Dien May Xanh', 'CellphoneS',
+        'Vien Thong A', 'Nguyen Kim'
     ],
     fashion: [
-        'Uniqlo',
-        'H&M',
-        'Zara',
-        'Canifa',
-        'Routine',
-        'NEM'
+        'Uniqlo', 'H&M', 'Zara', 'Canifa', 'Routine', 'NEM'
     ],
     beauty: [
-        'Guardian',
-        'Watson',
-        'The Face Shop',
-        'Innisfree',
-        'Olive Young'
+        'Guardian', 'Watson', 'The Face Shop', 'Innisfree', 'Olive Young'
     ]
 };
 
@@ -312,214 +303,269 @@ function validateAddress(item, ward, district) {
     }
 }
 
-async function findShopsInWard(ward, district) {
+// Thêm hàm xử lý đặc biệt cho Thủ Đức
+async function handleThuDucDistrict(ward) {
+    let shops = [];
+    const thuducConfig = SPECIAL_DISTRICTS['769'];
+    
+    // Tìm kiếm theo từng khu vực con
+    for (const area of thuducConfig.subAreas) {
+        for (const searchTerm of thuducConfig.searchTerms) {
+            const searchQuery = `${searchTerm} gần ${area.name} ${ward.name}`;
+            console.log(`🔍 Searching in Thủ Đức sub-area: ${searchQuery}`);
+            
+            try {
+                const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchQuery)}&in=circle:${area.lat},${area.lng};r=2000&limit=20&apiKey=${process.env.HERE_API_KEY_1}`;
+                const response = await makeRequestWithRetry(url);
+                
+                if (response.data.items) {
+                    const validShops = response.data.items
+                        .filter(item => validateAddress(item, ward, { name: 'Thành phố Thủ Đức', code: '769' }))
+                        .map(item => createShopObject(item, ward, { name: 'Thành phố Thủ Đức', code: '769' }));
+                    
+                    shops.push(...validShops);
+                }
+            } catch (error) {
+                console.error(`Error searching in Thủ Đức sub-area:`, error.message);
+            }
+            await sleep(1000);
+        }
+    }
+    
+    return shops;
+}
+
+// Sửa lại hàm findShopsInWard
+async function findShopsInWard(ward, district, isRetry = false) {
     let allShops = [];
+    const MIN_SHOPS_PER_WARD = 3;
 
     try {
+        const districtCoords = DISTRICT_COORDINATES[ward.district_id];
+        if (!districtCoords) {
+            console.log(`⚠️ Warning: No coordinates found for district ${ward.district_id}`);
+            await saveWardsWithoutShops(ward, district);
+            return [];
+        }
+
+        // Xử lý đặc biệt cho Thủ Đức
+        if (ward.district_id === '769' && !isRetry) {
+            console.log(`🏙️ Special handling for Thủ Đức - Ward: ${ward.name}`);
+            const thuducShops = await handleThuDucDistrict(ward);
+            if (thuducShops.length > 0) {
+                console.log(`Found ${thuducShops.length} shops in Thủ Đức - ${ward.name}`);
+                return thuducShops;
+            }
+        }
+
+        // Tìm kiếm theo loại
         const searchTypes = [
             'shop store retail',
             'restaurant cafe food',
             'supermarket convenience',
         ];
 
-        const districtCoords = DISTRICT_COORDINATES[ward.district_id];
-        if (!districtCoords) {
-            console.log(`⚠️ Warning: No coordinates found for district ${ward.district_id}`);
-            return [];
-        }
-
         for (const searchType of searchTypes) {
+            if (allShops.length >= MIN_SHOPS_PER_WARD) break;
+
             requestCount++;
             if (requestCount >= MAX_REQUESTS) {
                 if (switchToNextApiKey()) {
                     requestCount = 0;
-                    console.log('Continuing with new API key...');
                 } else {
                     throw new Error('DAILY_LIMIT_REACHED');
                 }
             }
 
-            console.log(`\nRequest #${requestCount}: Searching for "${searchType}" in ${ward.full_location}...`);
-            
-            // Thêm tên phường vào query tìm kiếm
             const searchQuery = `${searchType} ${ward.name} ${district.name}`;
-            const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchQuery)}&in=circle:${districtCoords.center.lat},${districtCoords.center.lng};r=${districtCoords.radius}&limit=20&apiKey=${getCurrentApiKey()}`;
+            console.log(`Searching for "${searchType}" in ${ward.full_location}`);
             
             try {
+                const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchQuery)}&in=circle:${districtCoords.center.lat},${districtCoords.center.lng};r=${districtCoords.radius}&limit=20&apiKey=${getCurrentApiKey()}`;
                 const response = await makeRequestWithRetry(url);
                 
                 if (response.data.items) {
-                    const shops = response.data.items
+                    const validShops = response.data.items
                         .filter(item => validateAddress(item, ward, district))
-                        .map((item, index) => {
-                            const { houseNumber, street } = parseAddress(item);
-                            const shopType = getShopType(item.title, item.categories);
-                            
-                            if (!shopType) return null;
-
-                            return {
-                                _id: generateObjectId(),
-                                shop_id: generateShopId(ward.code, index + 1),
-                                shop_name: item.title,
-                                country_id: "VN",
-                                province_id: "79",
-                                district_id: ward.district_id,
-                                ward_code: ward.code,
-                                house_number: houseNumber,
-                                street: street,
-                                full_address: item.address.label,
-                                latitude: item.position.lat,
-                                longitude: item.position.lng,
-                                shop_type: shopType,
-                                categories: item.categories || []
-                            };
-                        }).filter(shop => shop !== null);
+                        .map(item => createShopObject(item, ward, district));
                     
-                    if (shops.length > 0) {
-                        console.log(`Found ${shops.length} valid shops for ${searchType} in ${ward.full_location}`);
-                        allShops.push(...shops);
-                    }
+                    allShops.push(...validShops);
                 }
             } catch (error) {
                 if (error.response?.status === 429) {
                     if (switchToNextApiKey()) {
                         requestCount = 0;
-                        console.log('Retrying with new API key...');
                         continue;
                     }
                     throw new Error('RATE_LIMIT_REACHED');
                 }
                 console.error(`Error searching for ${searchType}:`, error.message);
             }
-            
-            await sleep(2000);
+            await sleep(1000);
+        }
+
+        // Nếu không tìm được đủ shop, thử tìm theo chuỗi cửa hàng
+        if (allShops.length < MIN_SHOPS_PER_WARD) {
+            for (const [type, chains] of Object.entries(POPULAR_CHAINS)) {
+                if (allShops.length >= MIN_SHOPS_PER_WARD) break;
+
+                for (const chain of chains) {
+                    const searchQuery = `${chain} ${ward.name} ${district.name}`;
+                    console.log(`Searching for chain: ${chain}`);
+
+                    try {
+                        const url = `https://discover.search.hereapi.com/v1/discover?q=${encodeURIComponent(searchQuery)}&in=circle:${districtCoords.center.lat},${districtCoords.center.lng};r=${districtCoords.radius}&limit=20&apiKey=${getCurrentApiKey()}`;
+                        const response = await makeRequestWithRetry(url);
+                        
+                        if (response.data.items) {
+                            const validShops = response.data.items
+                                .filter(item => validateAddress(item, ward, district))
+                                .map(item => createShopObject(item, ward, district));
+                            
+                            allShops.push(...validShops);
+                        }
+                    } catch (error) {
+                        console.error(`Error searching for ${chain}:`, error.message);
+                    }
+                    await sleep(1000);
+                }
+            }
+        }
+
+        // Log kết quả
+        console.log(`Found ${allShops.length} shops in ${ward.name}, ${district.name}`);
+        if (allShops.length < MIN_SHOPS_PER_WARD) {
+            console.log(`⚠️ Warning: Only found ${allShops.length} shops, minimum required is ${MIN_SHOPS_PER_WARD}`);
+            await saveWardsWithoutShops(ward, district);
+            return []; // Return empty array ngay sau khi lưu vào wards_without_shops
         }
 
         return allShops;
     } catch (error) {
-        if (error.message === 'RATE_LIMIT_REACHED' || 
-            error.message === 'DAILY_LIMIT_REACHED') {
-            throw error;
-        }
-        console.error(`Error searching shops in ${ward.full_location}:`, error.message);
+        console.error(`Error in findShopsInWard:`, error);
+        await saveWardsWithoutShops(ward, district);
         return [];
     }
 }
 
+// Hàm tạo đối tượng shop chuẩn
+function createShopObject(item, ward, district) {
+    const { houseNumber, street } = parseAddress(item);
+    const shopType = getShopType(item.title, item.categories);
+    
+    return {
+        _id: generateObjectId(),
+        shop_id: generateShopId(ward.code, Math.floor(Math.random() * 1000)),
+        shop_name: item.title,
+        country_id: "VN",
+        province_id: "79",
+        district_id: ward.district_id,
+        ward_code: ward.code,
+        house_number: houseNumber,
+        street: street,
+        full_address: item.address.label,
+        latitude: item.position.lat,
+        longitude: item.position.lng,
+        shop_type: shopType,
+        categories: item.categories || []
+    };
+}
+
+// Sửa lại hàm saveProgress để tạo thư mục nếu chưa tồn tại
 async function saveProgress(processedWards) {
-    await fs.writeFile(
-        './generate_shops/data/progress.json',
-        JSON.stringify({
-            lastProcessedIndex: processedWards,
-            timestamp: new Date().toISOString()
-        })
-    );
+    try {
+        // Tạo thư mục nếu chưa tồn tại
+        const dir = './generate_shops/data';
+        try {
+            await fs.mkdir(dir, { recursive: true });
+        } catch (err) {
+            if (err.code !== 'EEXIST') throw err;
+        }
+
+        await fs.writeFile(
+            `${dir}/progress.json`,
+            JSON.stringify({
+                lastProcessedIndex: processedWards,
+                timestamp: new Date().toISOString()
+            })
+        );
+    } catch (error) {
+        console.error('Error saving progress:', error);
+    }
 }
 
 async function loadProgress() {
     try {
-        // Tạm thời return 0 để bắt đầu từ đầu
-        return 0;
-        
-        // Hoặc uncomment đoạn code này sau khi đã test thành công
-        /*
         const progress = JSON.parse(
             await fs.readFile('./generate_shops/data/progress.json', 'utf8')
         );
         return progress.lastProcessedIndex;
-        */
     } catch (error) {
         return 0;
     }
 }
 
-async function processAllWards() {
+// Thêm hàm lưu danh sách phường không có shop
+async function saveWardsWithoutShops(ward, district) {
     try {
-        console.log('Reading districts and wards data...');
-        const wardsData = JSON.parse(
-            await fs.readFile('./generate_shops/data/data_ward_Hochiminh.json', 'utf8')
-        ).Sheet1;
+        const dir = './generate_shops/data';
+        const outputPath = `${dir}/wards_without_shops.json`;
         
-        const districtsData = JSON.parse(
-            await fs.readFile('./generate_shops/data/data_district_Hochiminh.json', 'utf8')
-        ).Sheet1;
-
-        const districtsMap = new Map(
-            districtsData.map(district => [district.code, district])
-        );
-        
-        const startIndex = await loadProgress();
-        console.log(`\n📍 Resuming from ward index: ${startIndex}`);
-        
-        const allShops = [];
-        let processedCount = startIndex;
-        const totalWards = wardsData.length;
-        
-        console.log(`\n🚀 Starting to process remaining ${totalWards - startIndex} wards...`);
-
-        for (let i = startIndex; i < wardsData.length; i++) {
-            const ward = wardsData[i];
-            const district = districtsMap.get(ward.district_id);
-            
-            if (!district) {
-                console.log(`⚠️ Warning: District not found for ward ${ward.name}`);
-                continue;
-            }
-
-            const searchLocation = `${ward.name}, ${district.name}, Ho Chi Minh City`;
-            console.log(`\n📌 Processing: ${searchLocation}`);
-            
-            try {
-                const shopsInWard = await findShopsInWard(
-                    { ...ward, full_location: searchLocation },
-                    district
-                );
-
-                if (shopsInWard.length > 0) {
-                    allShops.push(...shopsInWard);
-                    console.log(`✅ Found ${shopsInWard.length} shops in ${searchLocation}`);
-                }
-                
-                processedCount = i + 1;
-                await saveProgress(processedCount);
-                
-            } catch (error) {
-                if (error.message === 'RATE_LIMIT_REACHED') {
-                    console.log('\n⏸️  Process paused due to rate limit');
-                    console.log(`Last processed location: ${searchLocation} (index: ${i})`);
-                    console.log('You can resume later by running the script again\n');
-                    
-                    await saveShops(allShops);
-                    return;
-                }
-                throw error;
-            }
+        let wardsWithoutShops = [];
+        try {
+            wardsWithoutShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+        } catch (error) {
+            // File không tồn tại hoặc rỗng
         }
 
-        await saveShops(allShops);
-        console.log('\n✨ Completed!');
-        console.log(`📊 Total locations processed: ${processedCount}`);
-        console.log(`🏪 Total shops found: ${allShops.length}`);
+        // Thêm thông tin phường mới
+        wardsWithoutShops.push({
+            ward_name: ward.name,
+            ward_code: ward.code,
+            district_name: district.name,
+            district_id: ward.district_id,
+            timestamp: new Date().toISOString()
+        });
 
+        // Lưu lại file
+        await fs.writeFile(
+            outputPath,
+            JSON.stringify(wardsWithoutShops, null, 2)
+        );
+        
+        console.log(`⚠️ Added ${ward.name}, ${district.name} to wards_without_shops.json`);
     } catch (error) {
-        console.error('Error processing locations:', error);
+        console.error('Error saving wards without shops:', error);
     }
 }
 
+// Sửa lại hàm saveShops để tạo thư mục nếu chưa tồn tại
 async function saveShops(newShops) {
-    const outputPath = './generate_shops/data/shops.json';
-    let existingShops = [];
     try {
-        existingShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
-    } catch (error) {
-        // File không tồn tại hoặc rỗng
-    }
+        // Tạo thư mục nếu chưa tồn tại
+        const dir = './generate_shops/data';
+        try {
+            await fs.mkdir(dir, { recursive: true });
+        } catch (err) {
+            if (err.code !== 'EEXIST') throw err;
+        }
 
-    const allUniqueShops = [...existingShops, ...newShops];
-    await fs.writeFile(
-        outputPath,
-        JSON.stringify(allUniqueShops, null, 2)
-    );
+        const outputPath = `${dir}/shops.json`;
+        let existingShops = [];
+        try {
+            existingShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+        } catch (error) {
+            // File không tồn tại hoặc rỗng
+        }
+
+        const allUniqueShops = [...existingShops, ...newShops];
+        await fs.writeFile(
+            outputPath,
+            JSON.stringify(allUniqueShops, null, 2)
+        );
+    } catch (error) {
+        console.error('Error saving shops:', error);
+    }
 }
 
 // Thêm hàm kiểm tra vị trí có nằm trong phường không
@@ -557,6 +603,131 @@ function deg2rad(deg) {
     return deg * (Math.PI/180);
 }
 
+// Thêm hàm kiểm tra phường đã có trong danh sách không tìm thấy shop chưa
+async function isWardInWithoutShopsList(ward, district) {
+    try {
+        const dir = './generate_shops/data';
+        const outputPath = `${dir}/wards_without_shops.json`;
+        
+        try {
+            const wardsWithoutShops = JSON.parse(await fs.readFile(outputPath, 'utf8'));
+            return wardsWithoutShops.some(w => 
+                w.ward_code === ward.code && 
+                w.district_id === ward.district_id
+            );
+        } catch (error) {
+            // File không tồn tại hoặc rỗng
+            return false;
+        }
+    } catch (error) {
+        console.error('Error checking wards without shops:', error);
+        return false;
+    }
+}
+
 // Chạy script
 console.log('Starting shop generation for all wards...');
 processAllWards().catch(console.error); 
+
+async function processAllWards() {
+    try {
+        console.log('Reading districts and wards data...');
+        const wardsData = JSON.parse(
+            await fs.readFile('./data/data_ward_Hochiminh.json', 'utf8')
+        ).Sheet1;
+        
+        const districtsData = JSON.parse(
+            await fs.readFile('./data/data_district_Hochiminh.json', 'utf8')
+        ).Sheet1;
+
+        const districtsMap = new Map(
+            districtsData.map(district => [district.code, district])
+        );
+
+        // Log tổng số phường cần xử lý
+        console.log(`Total wards to process: ${wardsData.length}`);
+        
+        // Log danh sách các quận/huyện
+        console.log('Districts to process:');
+        districtsData.forEach(district => {
+            console.log(`- ${district.name} (code: ${district.code})`);
+        });
+        
+        const startIndex = await loadProgress();
+        console.log(`\n📍 Resuming from ward index: ${startIndex}`);
+        
+        const allShops = [];
+        let processedCount = startIndex;
+        const totalWards = wardsData.length;
+
+        // Tạo map để theo dõi số lượng shop mỗi phường
+        const wardShopCounts = new Map();
+        
+        for (let i = startIndex; i < wardsData.length; i++) {
+            const ward = wardsData[i];
+            const district = districtsMap.get(ward.district_id);
+            
+            if (!district) {
+                console.log(`⚠️ Warning: District not found for ward ${ward.name} (district_id: ${ward.district_id})`);
+                continue;
+            }
+
+            // Kiểm tra xem phường đã trong danh sách không tìm thấy shop chưa
+            const isInWithoutShopsList = await isWardInWithoutShopsList(ward, district);
+            if (isInWithoutShopsList) {
+                console.log(`⏩ Skipping ${ward.name}, ${district.name} (already in wards_without_shops.json)`);
+                processedCount = i + 1;
+                await saveProgress(processedCount);
+                continue;
+            }
+
+            const searchLocation = `${ward.name}, ${district.name}, Ho Chi Minh City`;
+            console.log(`\n📌 Processing: ${searchLocation}`);
+            console.log(`Ward code: ${ward.code}, District code: ${ward.district_id}`);
+            
+            try {
+                const shopsInWard = await findShopsInWard(
+                    { ...ward, full_location: searchLocation },
+                    district
+                );
+
+                if (shopsInWard.length > 0) {
+                    allShops.push(...shopsInWard);
+                    wardShopCounts.set(ward.code, shopsInWard.length);
+                    console.log(`✅ Found ${shopsInWard.length} shops in ${searchLocation}`);
+                }
+                
+                processedCount = i + 1;
+                await saveProgress(processedCount);
+                await saveShops(allShops);
+                
+            } catch (error) {
+                if (error.message === 'DAILY_LIMIT_REACHED') {
+                    console.log('\n⏸️  Process paused due to rate limit');
+                    console.log(`Last processed location: ${searchLocation} (index: ${i})`);
+                    await saveShops(allShops);
+                    return;
+                }
+                console.error(`Error processing ${searchLocation}:`, error);
+            }
+
+            // Log tiến trình
+            const progress = ((i + 1) / totalWards * 100).toFixed(2);
+            console.log(`Progress: ${progress}% (${i + 1}/${totalWards})`);
+        }
+
+        // Final check
+        console.log('\n📊 Final ward statistics:');
+        wardsData.forEach(ward => {
+            const shopCount = wardShopCounts.get(ward.code) || 0;
+            const district = districtsMap.get(ward.district_id);
+            console.log(`${ward.name}, ${district.name}: ${shopCount} shops`);
+        });
+
+        await saveShops(allShops);
+        console.log('\n✨ Completed!');
+
+    } catch (error) {
+        console.error('Error processing locations:', error);
+    }
+} 

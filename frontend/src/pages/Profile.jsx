@@ -4,6 +4,8 @@ import authService from '../services/authService';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { FiCamera, FiArrowLeft, FiSave, FiMail, FiPhone, FiUser, FiLock, FiShield } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({
@@ -169,191 +171,280 @@ const Profile = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Header title="Thông Tin Cá Nhân" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white shadow rounded-lg">
-            <div className="animate-pulse">
-              <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-                <div className="flex items-center space-x-5">
-                  <div className="flex-shrink-0">
-                    <div className="h-20 w-20 rounded-full bg-gray-200"></div>
-                  </div>
-                  <div>
-                    <div className="h-6 w-40 bg-gray-200 rounded"></div>
-                    <div className="mt-1 h-4 w-60 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-4 py-5 sm:p-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {[1, 2, 3, 4, 5].map((item) => (
-                    <div key={item}>
-                      <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
-                      <div className="h-10 bg-gray-200 rounded"></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-gray-50 to-indigo-50">
       <Header title="Thông Tin Cá Nhân" />
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl">
-          {/* Profile Header */}
-          <div className="px-6 py-8 sm:px-8 bg-gradient-to-r from-blue-500 to-blue-600 border-b border-gray-200">
-            <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <div className="flex-shrink-0 relative group cursor-pointer" onClick={handleImageClick}>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-                <img
-                  className="h-24 w-24 sm:h-32 sm:w-32 rounded-full ring-4 ring-white p-1 transition-transform duration-300 group-hover:scale-105"
-                  src={userInfo.avatar}
-                  alt="Profile"
-                />
-                <div className="absolute inset-0 rounded-full bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    Thay đổi ảnh
-                  </span>
-                </div>
-              </div>
-              <div className="text-center sm:text-left">
-                <h3 className="text-2xl leading-6 font-bold text-white">
-                  {userInfo.fullName || userInfo.username}
-                </h3>
-                <p className="mt-2 text-blue-100">
-                  {userInfo.role === 'Admin' ? '🌟 Quản trị viên' : '👤 Người dùng'}
-                </p>
-              </div>
-            </div>
-          </div>
+      {loading ? (
+        <LoadingState />
+      ) : (
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Profile Card */}
+            <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+              {/* Profile Header with Cover Image */}
+              <div className="relative h-48 sm:h-64 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 
+                overflow-hidden">
+                <div className="absolute inset-0 bg-pattern opacity-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                
+                {/* Profile Info Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
+                  <div className="flex items-end space-x-6">
+                    {/* Avatar Upload Section */}
+                    <div className="relative group">
+                      <div 
+                        onClick={handleImageClick}
+                        className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white p-1 shadow-lg cursor-pointer
+                          transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
+                      >
+                        <img
+                          src={userInfo.avatar}
+                          alt="Profile"
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                        <div className="absolute inset-0 bg-black/50 rounded-xl opacity-0 group-hover:opacity-100
+                          transition-all duration-300 flex flex-col items-center justify-center space-y-1">
+                          <FiCamera className="w-6 h-6 text-white" />
+                          <span className="text-xs text-white">Thay đổi ảnh</span>
+                        </div>
+                      </div>
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                      />
+                      
+                      {/* Upload Progress Indicator */}
+                      <motion.div
+                        initial={false}
+                        animate={{ scale: saving ? 1 : 0 }}
+                        className="absolute -bottom-2 left-1/2 transform -translate-x-1/2
+                          bg-white rounded-full shadow-lg px-3 py-1"
+                      >
+                        <span className="text-xs text-blue-600 font-medium">Đang tải...</span>
+                      </motion.div>
+                    </div>
 
-          {/* Profile Content */}
-          <div className="px-6 py-8 sm:p-8">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Tên đăng nhập
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      className="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 shadow-sm transition-all duration-300"
-                      value={userInfo.username}
-                      disabled
-                    />
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                      🔒
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Họ và tên
-                  </label>
-                  <input
-                    type="text"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
-                    value={userInfo.fullName}
-                    onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}
-                    placeholder="Nhập họ và tên của bạn"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Vai trò
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      className="mt-1 block w-full rounded-lg border-gray-300 bg-gray-50 shadow-sm transition-all duration-300"
-                      value={userInfo.role === 'Admin' ? 'Quản trị viên' : 'Người dùng'}
-                      disabled
-                    />
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                      {userInfo.role === 'Admin' ? '🌟' : '👤'}
-                    </span>
+                    {/* User Info */}
+                    <div>
+                      <h2 className="text-3xl font-bold mb-1">{userInfo.fullName || userInfo.username}</h2>
+                      <div className="flex items-center space-x-2">
+                        <span className="px-3 py-1 bg-white/20 rounded-full text-sm backdrop-blur-sm">
+                          {userInfo.role === 'Admin' ? '🌟 Quản trị viên' : '👤 Người dùng'}
+                        </span>
+                        <span className="px-3 py-1 bg-white/20 rounded-full text-sm backdrop-blur-sm">
+                          ID: {userInfo.username}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
-                    value={userInfo.email}
-                    onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-                    placeholder="example@email.com"
-                  />
-                </div>
+              {/* Profile Content */}
+              <div className="p-6 sm:p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Basic Info Section */}
+                  <div className="space-y-6">
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <FiUser className="w-5 h-5 mr-2 text-blue-500" />
+                        Thông tin cơ bản
+                      </h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Tên đăng nhập
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={userInfo.username}
+                              disabled
+                              className="w-full pl-10 pr-10 py-3 rounded-lg bg-white border border-gray-200 
+                                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            />
+                            <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              🔒
+                            </span>
+                          </div>
+                        </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Số điện thoại
-                  </label>
-                  <input
-                    type="tel"
-                    className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
-                    value={userInfo.phone}
-                    onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                    placeholder="Nhập số điện thoại của bạn"
-                  />
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Họ và tên
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={userInfo.fullName}
+                              onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}
+                              className="w-full pl-10 py-3 rounded-lg border border-gray-200 
+                                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                              placeholder="Nhập họ và tên của bạn"
+                            />
+                            <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Vai trò hệ thống
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={userInfo.role === 'Admin' ? 'Quản trị viên' : 'Người dùng'}
+                              disabled
+                              className="w-full pl-10 pr-10 py-3 rounded-lg bg-white border border-gray-200 
+                                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            />
+                            <FiShield className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              {userInfo.role === 'Admin' ? '🌟' : '👤'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Contact Info Section */}
+                  <div className="space-y-6">
+                    <div className="bg-gray-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <FiPhone className="w-5 h-5 mr-2 text-blue-500" />
+                        Thông tin liên hệ
+                      </h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Email
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="email"
+                              value={userInfo.email}
+                              onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+                              className="w-full pl-10 py-3 rounded-lg border border-gray-200 
+                                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                              placeholder="example@email.com"
+                            />
+                            <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Số điện thoại
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="tel"
+                              value={userInfo.phone}
+                              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                              className="w-full pl-10 py-3 rounded-lg border border-gray-200 
+                                focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                              placeholder="Nhập số điện thoại của bạn"
+                            />
+                            <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Last Updated Info */}
+                    <div className="bg-blue-50 p-4 rounded-xl">
+                      <p className="text-sm text-blue-600">
+                        Cập nhật lần cuối: {new Date().toLocaleDateString('vi-VN')}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex justify-end">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-300 text-gray-700
+                  hover:bg-gray-50 transition-all duration-300 flex items-center justify-center space-x-2"
+              >
+                <FiArrowLeft className="w-5 h-5" />
+                <span>Quay lại</span>
+              </button>
+              
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex justify-center items-center py-2.5 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
+                className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white
+                  rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300
+                  disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2
+                  transform hover:scale-105 hover:shadow-lg"
               >
                 {saving ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Đang lưu...
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Đang lưu thay đổi...</span>
                   </>
                 ) : (
                   <>
+                    <FiSave className="w-5 h-5" />
                     <span>Lưu thay đổi</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
                   </>
                 )}
               </button>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </motion.div>
+      )}
     </div>
   );
 };
+
+// Loading State Component
+const LoadingState = () => (
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="animate-pulse">
+        {/* Header Skeleton */}
+        <div className="h-48 bg-gray-200" />
+        
+        {/* Avatar Skeleton */}
+        <div className="relative px-8">
+          <div className="absolute -top-16 flex items-end space-x-4">
+            <div className="w-32 h-32 rounded-xl bg-gray-300" />
+            <div className="pb-4 space-y-2">
+              <div className="h-8 w-48 bg-gray-300 rounded" />
+              <div className="h-4 w-24 bg-gray-300 rounded" />
+            </div>
+          </div>
+        </div>
+
+        {/* Content Skeleton */}
+        <div className="pt-20 p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="space-y-2">
+                <div className="h-4 w-24 bg-gray-200 rounded" />
+                <div className="h-10 bg-gray-200 rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 export default Profile; 
