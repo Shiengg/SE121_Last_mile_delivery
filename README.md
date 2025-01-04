@@ -6,7 +6,7 @@
 |**STT**|**MSSV**|     **Họ và tên**   |       **Email**      |  **Github** |
 |-------|--------|---------------------|----------------------|-------------|
 |   1   |22521312|    Trần Nhật Tân    |22521312@gm.uit.edu.vn|[Shiengg](https://github.com/Shiengg) |
-|   2   |22521693|    Nguyễn Duy Vũ    |22521693@gm.uit.edu.vn|[Github](https://github.com/username) |
+|   2   |22521693|    Nguyễn Duy Vũ    |22521693@gm.uit.edu.vn|[Torrence](https://github.com/LilRaynee) |
 
 ## Giới thiệu môn học:
 * **Tên môn học:** Đồ án 1
