@@ -241,7 +241,7 @@ const Header = ({ title }) => {
           {/* Right Section */}
           <div className="flex items-center space-x-6">
             {/* Search Bar */}
-            <div className="hidden md:block">
+            {/* <div className="hidden md:block">
               <div className="relative">
                 <input
                   type="text"
@@ -254,7 +254,7 @@ const Header = ({ title }) => {
                   </svg>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Notification Button - Ẩn ở tất cả màn hình customer */}
             {!isCustomerScreen && (

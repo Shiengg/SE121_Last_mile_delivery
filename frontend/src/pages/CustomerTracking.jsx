@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiPackage, FiTruck, FiMapPin, FiClock, FiPhone, FiUser, FiBox } from 'react-icons/fi';
+import { FiSearch, FiPackage, FiTruck, FiMapPin, FiClock, FiPhone, FiUser, FiBox, FiMail } from 'react-icons/fi';
 import Header from '../components/Shared/Header';
 import { useNavigate } from 'react-router-dom';
 
@@ -136,10 +136,96 @@ const RouteDetails = React.memo(({ route, navigate }) => (
   </motion.div>
 ));
 
+const StudentInfoDialog = ({ isOpen, onClose }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <div className="fixed inset-0 z-[100] overflow-y-auto">
+        {/* Overlay */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="fixed inset-0 bg-black/50"
+        />
+        
+        {/* Dialog Container - for centering */}
+        <div className="fixed inset-0 z-10">
+          <div className="flex min-h-full items-center justify-center p-4">
+            {/* Dialog */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-lg bg-white rounded-2xl shadow-xl relative"
+            >
+              {/* Header */}
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4 flex justify-between items-center rounded-t-2xl">
+                <h3 className="text-xl font-semibold text-white">Project Information</h3>
+                <button
+                  onClick={onClose}
+                  className="text-white hover:text-blue-100 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="space-y-6">
+                  {/* Student 1 */}
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Student 1</h4>
+                    <div className="space-y-2">
+                      <p className="text-gray-700">
+                        <span className="font-medium">Full Name:</span> Trần Nhật Tân
+                      </p>
+                      <p className="text-gray-700">
+                        <span className="font-medium">Student ID:</span> 22521312
+                      </p>
+                      <p className="text-gray-700">
+                        <span className="font-medium">Email:</span> 22521312@gm.uit.edu.vn
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Student 2 */}
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Student 2</h4>
+                    <div className="space-y-2">
+                      <p className="text-gray-700">
+                        <span className="font-medium">Full Name:</span> Nguyễn Duy Vũ
+                      </p>
+                      <p className="text-gray-700">
+                        <span className="font-medium">Student ID:</span> 22521693
+                      </p>
+                      <p className="text-gray-700">
+                        <span className="font-medium">Email:</span> 22521693@gm.uit.edu.vn
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="text-center text-gray-500 text-sm">
+                    <p>Last Mile Delivery Management System</p>
+                    <p>Project 1 - 2024</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    )}
+  </AnimatePresence>
+);
+
 const CustomerTracking = () => {
   const [routeCode, setRouteCode] = useState('');
   const [route, setRoute] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   // Poll route status every 30 seconds if route is delivering
@@ -347,7 +433,7 @@ const CustomerTracking = () => {
           />
         </motion.div>
 
-        {/* Footer Section - Enhanced & Responsive */}
+        {/* Footer Section - Modified */}
         <div className="mt-12 sm:mt-24 text-center px-4">
           <div className="p-6 sm:p-8 bg-white/80 backdrop-blur-lg rounded-3xl shadow-lg border border-gray-100">
             <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 sm:mb-4">
@@ -356,18 +442,24 @@ const CustomerTracking = () => {
             <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
               Our customer support team is available 24/7 to assist you with any questions
             </p>
-            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <button className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 
-                transition-colors duration-300 text-sm sm:text-base">
-                Contact Support
-              </button>
-              <button className="px-6 py-3 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 
-                transition-colors duration-300 text-sm sm:text-base">
-                FAQs
-              </button>
-            </div>
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white 
+                rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 
+                transform hover:scale-105 shadow-lg text-sm sm:text-base flex items-center 
+                justify-center mx-auto"
+            >
+              <FiUser className="w-5 h-5 mr-2" />
+              <span>Contact Information</span>
+            </button>
           </div>
         </div>
+
+        {/* Add StudentInfoDialog */}
+        <StudentInfoDialog 
+          isOpen={isDialogOpen} 
+          onClose={() => setIsDialogOpen(false)} 
+        />
       </div>
     </div>
   );
