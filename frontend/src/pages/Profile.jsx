@@ -39,7 +39,7 @@ const Profile = () => {
       }
 
       const response = await axios.get('http://localhost:5000/api/users/profile', {
-        headers: { 
+        headers: {
           'Authorization': `Bearer ${token}`
         }
       });
@@ -83,7 +83,7 @@ const Profile = () => {
       // Nén ảnh trước khi chuyển thành base64
       const compressedFile = await compressImage(file);
       const reader = new FileReader();
-      
+
       reader.onloadend = () => {
         setUserInfo(prev => ({
           ...prev,
@@ -174,11 +174,11 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-gray-50 to-indigo-50">
       <Header title="Thông Tin Cá Nhân" />
-      
+
       {loading ? (
         <LoadingState />
       ) : (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
@@ -191,13 +191,13 @@ const Profile = () => {
                 overflow-hidden">
                 <div className="absolute inset-0 bg-pattern opacity-10"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                
+
                 {/* Profile Info Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
                   <div className="flex items-end space-x-6">
                     {/* Avatar Upload Section */}
                     <div className="relative group">
-                      <div 
+                      <div
                         onClick={handleImageClick}
                         className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white p-1 shadow-lg cursor-pointer
                           transform transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
@@ -220,7 +220,7 @@ const Profile = () => {
                         accept="image/*"
                         onChange={handleImageChange}
                       />
-                      
+
                       {/* Upload Progress Indicator */}
                       <motion.div
                         initial={false}
@@ -237,7 +237,8 @@ const Profile = () => {
                       <h2 className="text-3xl font-bold mb-1">{userInfo.fullName || userInfo.username}</h2>
                       <div className="flex items-center space-x-2">
                         <span className="px-3 py-1 bg-white/20 rounded-full text-sm backdrop-blur-sm">
-                          {userInfo.role === 'Admin' ? '🌟 Quản trị viên' : '👤 Người dùng'}
+                          {userInfo.role === 'Admin' ? '🌟 Quản trị viên'
+                            : userInfo.role === 'DeliveryStaff' ? '💁‍♂️ Nhân viên giao hàng' : '🗣️  Người dùng'}
                         </span>
                         <span className="px-3 py-1 bg-white/20 rounded-full text-sm backdrop-blur-sm">
                           ID: {userInfo.username}
@@ -309,7 +310,7 @@ const Profile = () => {
                             />
                             <FiShield className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                              {userInfo.role === 'Admin' ? '🌟' : '👤'}
+                              {userInfo.role === 'Admin' ? '🌟' : userInfo.role === 'DeliveryStaff' ? '💁‍♂️' : '🗣️'}
                             </span>
                           </div>
                         </div>
@@ -383,7 +384,7 @@ const Profile = () => {
                 <FiArrowLeft className="w-5 h-5" />
                 <span>Quay lại</span>
               </button>
-              
+
               <button
                 type="submit"
                 disabled={saving}
@@ -419,7 +420,7 @@ const LoadingState = () => (
       <div className="animate-pulse">
         {/* Header Skeleton */}
         <div className="h-48 bg-gray-200" />
-        
+
         {/* Avatar Skeleton */}
         <div className="relative px-8">
           <div className="absolute -top-16 flex items-end space-x-4">
