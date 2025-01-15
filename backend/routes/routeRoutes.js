@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect, authorize } = require('../middlewares/authMiddleware');
+const Route = require('../models/Route');
 const { 
     createRoute, 
     getAllRoutes, 
@@ -56,7 +57,10 @@ router.post('/assign', protect, authorize('Admin'), async (req, res) => {
                 status: 'assigned',
                 assigned_at: new Date()
             },
-            { new: true }
+            { 
+                new: true,
+                runValidators: true
+            }
         ).populate('delivery_staff_id');
 
         if (!route) {
