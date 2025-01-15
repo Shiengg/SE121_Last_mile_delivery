@@ -433,6 +433,23 @@ const DeliveryDashboard = () => {
     );
   };
 
+  const handleStatusUpdate = async (routeId, newStatus) => {
+    try {
+      const response = await axios.put(`/api/routes/${routeId}/status`, {
+        status: newStatus
+      });
+
+      if (response.data.success) {
+        // Refresh routes sau khi cập nhật
+        fetchRoutes();
+        toast.success('Route status updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating route status:', error);
+      toast.error('Failed to update route status');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
