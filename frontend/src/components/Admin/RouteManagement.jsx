@@ -4,7 +4,6 @@ import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import AddRouteModal from './AddRouteModal';
-import { useSocket } from '../../contexts/SocketContext';
 
 const RouteManagement = () => {
   const [routes, setRoutes] = useState([]);
@@ -19,7 +18,6 @@ const RouteManagement = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [deliveryStaff, setDeliveryStaff] = useState([]);
   const [error, setError] = useState(null);
-  const socket = useSocket();
 
   useEffect(() => {
     fetchRoutes();

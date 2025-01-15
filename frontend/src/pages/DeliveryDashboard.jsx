@@ -6,7 +6,6 @@ import { FiMapPin, FiTruck, FiClock, FiPackage, FiUser, FiMail, FiPhone, FiCheck
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { useSocket } from '../contexts/SocketContext';
 
 const DeliveryDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ const DeliveryDashboard = () => {
   const [currentPage, setCurrentPage] = useState({ assigned: 1, pending: 1 });
   const [itemsPerPage] = useState(5);
   const [currentTab, setCurrentTab] = useState('assigned');
-  const socket = useSocket();
 
   // Animation variants
   const containerVariants = {
@@ -47,15 +45,6 @@ const DeliveryDashboard = () => {
       fetchRoutes();
     }
   }, [userInfo]);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('newRouteAssigned', () => {
-        // Refresh routes khi nhận được route mới
-        fetchDeliveryRoutes();
-      });
-    }
-  }, [socket]);
 
   const fetchUserInfo = async () => {
     try {
@@ -451,12 +440,13 @@ const DeliveryDashboard = () => {
       });
 
       if (response.data.success) {
-        // Emit event khi update status thành công
-        socket.emit('routeStatusUpdated');
-        // ... rest of success handling
+        // Refresh routes sau khi cập nhật
+        fetchRoutes();
+        toast.success('Route status updated successfully');
       }
     } catch (error) {
       console.error('Error updating route status:', error);
+      toast.error('Failed to update route status');
     }
   };
 
