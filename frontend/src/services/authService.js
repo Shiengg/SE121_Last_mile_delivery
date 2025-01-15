@@ -3,13 +3,10 @@ import axios from 'axios';
 class AuthService {
   login = async (username, password) => {
     try {
-      console.log('Attempting login with:', { username }); // Debug log
       const response = await axios.post('http://localhost:5000/api/auth/login', {
         username,
         password
       });
-
-      console.log('Login response:', response.data); // Debug log
 
       if (response.data.success) {
         const { token, user } = response.data;
@@ -24,8 +21,13 @@ class AuthService {
       }
       return false;
     } catch (error) {
-      console.error('Login error:', error);
-      throw error;
+      if (error.response) {
+        throw new Error(error.response.data.message || 'Login failed');
+      } else if (error.request) {
+        throw new Error('No response from server. Please try again later.');
+      } else {
+        throw new Error('Error setting up request. Please try again.');
+      }
     }
   };
 

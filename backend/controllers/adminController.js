@@ -65,3 +65,42 @@ exports.getDeliveryStaff = async (req, res) => {
         });
     }
 };
+
+exports.updateDeliveryStaffStatus = async (req, res) => {
+    try {
+        const { userId, status } = req.body;
+
+        if (!['active', 'inactive'].includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid status value'
+            });
+        }
+
+        const user = await User.findOneAndUpdate(
+            { _id: userId, role: 'DeliveryStaff' },
+            { status },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Delivery staff not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Status updated successfully',
+            data: user
+        });
+    } catch (error) {
+        console.error('Error updating delivery staff status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error updating status',
+            error: error.message
+        });
+    }
+};

@@ -4,6 +4,7 @@ import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import AddRouteModal from './AddRouteModal';
+import { useSocket } from '../../contexts/SocketContext';
 
 const RouteManagement = () => {
   const [routes, setRoutes] = useState([]);
@@ -18,6 +19,7 @@ const RouteManagement = () => {
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [deliveryStaff, setDeliveryStaff] = useState([]);
   const [error, setError] = useState(null);
+  const socket = useSocket();
 
   useEffect(() => {
     fetchRoutes();
@@ -452,9 +454,9 @@ const RouteManagement = () => {
     }
   };
 
-  const handleAssignRoute = async (route_id, delivery_staff_id) => {
+  const handleAssignRoute = async (routeId, deliveryStaffId) => {
     try {
-        if (!route_id || !delivery_staff_id) {
+        if (!routeId || !deliveryStaffId) {
             toast.error('Please select a delivery staff');
             return;
         }
@@ -463,8 +465,8 @@ const RouteManagement = () => {
         const response = await axios.post(
             'http://localhost:5000/api/routes/assign',
             {
-                route_id,
-                delivery_staff_id
+                route_id: routeId,
+                delivery_staff_id: deliveryStaffId
             },
             {
                 headers: { 

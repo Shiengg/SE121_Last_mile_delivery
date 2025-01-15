@@ -29,8 +29,15 @@ const Login = () => {
     
     try {
       const role = await authService.login(formData.username, formData.password);
-      console.log('Login successful, role:', role);
       
+      if (!role) {
+        setNotification({ 
+          type: 'error', 
+          message: 'Login failed. Please check your credentials.' 
+        });
+        return;
+      }
+
       switch(role) {
         case 'Admin':
           navigate('/admin-dashboard');
@@ -42,13 +49,20 @@ const Login = () => {
           navigate('/customer-tracking');
           break;
         default:
-          setNotification({ type: 'error', message: 'Invalid role received' });
+          setNotification({ 
+            type: 'error', 
+            message: 'Invalid role received' 
+          });
       }
     } catch (error) {
       setNotification({ 
-        type: 'error', 
-        message: error.response?.data?.message || 'Login failed. Please try again.' 
+        type: 'error',
+        message: error.message || 'Login failed. Please try again.'
       });
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Login error details:', error);
+      }
     }
   };
 

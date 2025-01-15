@@ -17,4 +17,7 @@ router.get('/dashboard-stats', protect, authorize('Admin'), adminController.getD
 // Delivery staff
 router.get('/delivery-staff', protect, authorize('Admin'), adminController.getDeliveryStaff);
 
+// Add new route for updating delivery staff status
+router.put('/delivery-staff/status', protect, authorize('Admin'), adminController.updateDeliveryStaffStatus);
+
 module.exports = router;
