@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { FiArrowLeft, FiList, FiX, FiMapPin, FiClock } from 'react-icons/fi';
+import { FiArrowLeft, FiList, FiX, FiMapPin, FiClock, FiSun, FiMoon, FiPackage, FiAlertTriangle, FiPhone, FiMenu } from 'react-icons/fi';
 import mapboxgl from 'mapbox-gl';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Thêm Mapbox access token
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hpZW5nIiwiYSI6ImNtNTkwY3R4ZDNybHUyanNmM2hoaDAxa2oifQ.ZUcv_MrKBuTc2lZ2jyofmQ';
@@ -63,27 +64,36 @@ const StopCard = ({ shop, index, total, isDarkMode }) => {
   const isLast = index === total - 1;
   
   return (
-    <div className="bg-white dark:bg-gray-700 rounded-lg shadow-sm p-4 mb-3 transition-colors">
-      <div className="flex items-center gap-3">
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="bg-white dark:bg-gray-700 rounded-lg shadow-sm p-4 
+        border border-gray-100 dark:border-gray-600 transition-all duration-200"
+    >
+      <div className="flex items-center gap-4">
         <div 
-          className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${
-            isFirst ? 'bg-[#1B5E20]' : 
-            isLast ? 'bg-[#B71C1C]' : 
-            'bg-[#1976D2]'
+          className={`w-10 h-10 rounded-full flex items-center justify-center 
+            text-white font-medium shadow-sm transition-colors ${
+            isFirst ? 'bg-emerald-500 dark:bg-emerald-600' : 
+            isLast ? 'bg-red-500 dark:bg-red-600' : 
+            'bg-blue-500 dark:bg-blue-600'
           }`}
         >
           {index + 1}
         </div>
-        <div className="flex-1">
-          <h3 className="font-medium text-gray-900 dark:text-white">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-medium text-gray-900 dark:text-white truncate">
             {shop.shop_details.shop_name}
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 truncate">
             {shop.shop_details.address}
           </p>
+          <div className="flex items-center mt-2 text-xs text-gray-400 dark:text-gray-500">
+            <FiPhone className="w-3 h-3 mr-1" />
+            <span>{shop.shop_details.phone || 'N/A'}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -350,73 +360,94 @@ const DeliveryMap = () => {
 
   return (
     <div className={`h-screen flex flex-col ${isDarkMode ? 'dark' : ''}`}>
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm px-4 py-3 flex items-center justify-between transition-colors">
-        <div className="flex items-center">
+      {/* Header với thiết kế mới */}
+      <div className="bg-white dark:bg-gray-800 shadow-sm px-6 py-4 flex items-center justify-between transition-colors">
+        <div className="flex items-center space-x-4">
           <button 
             onClick={() => navigate(-1)}
-            className="mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+            className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all duration-200 
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             aria-label="Back"
           >
             <FiArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
+
           {route && (
-            <div>
-              <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {route.route_code}
-              </h1>
-              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                <FiMapPin className="w-4 h-4 mr-1" />
-                <span>{route.distance.toFixed(2)} km</span>
-                <span className="mx-2">•</span>
-                <FiClock className="w-4 h-4 mr-1" />
-                <span>~{Math.ceil(route.distance * 3)} phút</span>
+            <div className="flex flex-col">
+              <div className="flex items-center space-x-2">
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  {route.route_code}
+                </h1>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                  getStatusColor(route.status)
+                }`}>
+                  {route.status.charAt(0).toUpperCase() + route.status.slice(1)}
+                </span>
+              </div>
+              <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1 space-x-4">
+                <div className="flex items-center">
+                  <FiMapPin className="w-4 h-4 mr-1.5" />
+                  <span>{route.distance.toFixed(2)} km</span>
+                </div>
+                <div className="flex items-center">
+                  <FiClock className="w-4 h-4 mr-1.5" />
+                  <span>~{Math.ceil(route.distance * 3)} mins</span>
+                </div>
+                <div className="flex items-center">
+                  <FiPackage className="w-4 h-4 mr-1.5" />
+                  <span>{route.shops.length} stops</span>
+                </div>
               </div>
             </div>
           )}
         </div>
         
-        <div className="flex items-center gap-2">
-          {/* Dark Mode Toggle */}
+        <div className="flex items-center space-x-3">
+          {/* Dark mode toggle với animation */}
           <button
             onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Toggle dark mode"
+            className="p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 
+              transition-all duration-200 focus:outline-none focus:ring-2 
+              focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {isDarkMode ? (
-              <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            )}
+            <motion.div
+              initial={false}
+              animate={{ rotate: isDarkMode ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {isDarkMode ? (
+                <FiSun className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+              ) : (
+                <FiMoon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+              )}
+            </motion.div>
           </button>
-          
-          {/* Sidebar Toggle */}
+
+          {/* Mobile sidebar toggle */}
           <button
             onClick={() => setShowSidebar(!showSidebar)}
-            className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+            className="md:hidden p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 
+              transition-all duration-200 focus:outline-none focus:ring-2 
+              focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             aria-label="Toggle stops list"
           >
-            {showSidebar ? 
-              <FiX className="w-5 h-5 text-gray-600 dark:text-gray-300" /> : 
-              <FiList className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-            }
+            <FiList className="w-5 h-5 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex relative">
+      {/* Main Content với Golden Ratio (1.618) */}
+      <div className="flex-1 flex">
         {/* Sidebar - Desktop */}
-        <div className="hidden md:block w-96 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto transition-colors">
-          <div className="p-4">
-            <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-              Điểm dừng ({route?.shops?.length || 0})
+        <div className="hidden md:block w-[382px] bg-white dark:bg-gray-800 shadow-lg 
+          overflow-y-auto transition-colors border-r border-gray-200 dark:border-gray-700">
+          <div className="p-6">
+            <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center">
+              <FiMapPin className="w-5 h-5 mr-2 text-blue-500" />
+              Stops ({route?.shops?.length || 0})
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {route?.shops?.map((shop, index) => (
                 <StopCard 
                   key={shop.shop_details.shop_id}
@@ -433,62 +464,108 @@ const DeliveryMap = () => {
         {/* Map Container */}
         <div ref={mapContainerRef} className="flex-1" />
 
-        {/* Sidebar - Mobile */}
-        {showSidebar && (
-          <div className="absolute inset-0 z-20 md:hidden">
-            <div className="h-full bg-white overflow-y-auto">
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-semibold">
-                    Điểm dừng ({route?.shops?.length || 0})
-                  </h2>
-                  <button
-                    onClick={() => setShowSidebar(false)}
-                    className="p-2 hover:bg-gray-100 rounded-full"
-                  >
-                    <FiX className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div>
-                <div className="space-y-3">
-                  {route?.shops?.map((shop, index) => (
-                    <StopCard 
-                      key={shop.shop_details.shop_id}
-                      shop={shop}
-                      index={index}
-                      total={route.shops.length}
-                    />
-                  ))}
+        {/* Sidebar - Mobile với animation */}
+        <AnimatePresence>
+          {showSidebar && (
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute inset-0 z-20 md:hidden"
+            >
+              <div className="h-full bg-white dark:bg-gray-800 overflow-y-auto">
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                      <FiMapPin className="w-5 h-5 mr-2 text-blue-500" />
+                      Stops ({route?.shops?.length || 0})
+                    </h2>
+                    <button
+                      onClick={() => setShowSidebar(false)}
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full
+                        transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <FiX className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    </button>
+                  </div>
+                  <div className="space-y-4">
+                    {route?.shops?.map((shop, index) => (
+                      <StopCard 
+                        key={shop.shop_details.shop_id}
+                        shop={shop}
+                        index={index}
+                        total={route.shops.length}
+                        isDarkMode={isDarkMode}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Loading & Error States */}
+        {/* Loading State với animation đẹp hơn */}
         {loading && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center bg-white bg-opacity-75">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+          <div className="absolute inset-0 z-30 flex items-center justify-center 
+            bg-white/75 dark:bg-gray-900/75 backdrop-blur-sm transition-colors">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full"
+            />
           </div>
         )}
 
+        {/* Error State với thiết kế mới */}
         {error && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center bg-white bg-opacity-75">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-4">
-              <div className="text-red-500 text-center">
-                <p className="mb-4">{error}</p>
+          <div className="absolute inset-0 z-30 flex items-center justify-center 
+            bg-white/75 dark:bg-gray-900/75 backdrop-blur-sm transition-colors">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl max-w-sm mx-4"
+            >
+              <div className="text-center">
+                <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full 
+                  flex items-center justify-center mx-auto mb-4">
+                  <FiAlertTriangle className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  An error occurred
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-6">{error}</p>
                 <button
                   onClick={() => navigate(-1)}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors w-full"
+                  className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 
+                    text-white rounded-lg transition-colors focus:outline-none 
+                    focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
+                    dark:focus:ring-offset-gray-800"
+                  aria-label="Go back to previous page"
                 >
-                  Quay lại
+                  Go Back
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         )}
       </div>
     </div>
   );
+};
+
+// Helper function để lấy màu status
+const getStatusColor = (status) => {
+  const colors = {
+    pending: 'bg-yellow-100 text-yellow-800',
+    assigned: 'bg-blue-100 text-blue-800',
+    delivering: 'bg-purple-100 text-purple-800',
+    delivered: 'bg-green-100 text-green-800',
+    failed: 'bg-red-100 text-red-800',
+    cancelled: 'bg-gray-100 text-gray-800'
+  };
+  return colors[status] || 'bg-gray-100 text-gray-800';
 };
 
 export default DeliveryMap; 
